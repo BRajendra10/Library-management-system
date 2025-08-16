@@ -1,29 +1,27 @@
 import React from 'react'
-import { AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineMenu, AiFillSetting } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { IoSearch } from "react-icons/io5";
-import { IoOptionsSharp } from "react-icons/io5";
-import { RiLayoutMasonryFill } from "react-icons/ri";
+import { IoSearch, IoOptionsSharp } from "react-icons/io5";
+import { RiLayoutMasonryFill, RiCloseLargeFill } from "react-icons/ri";
 import { BiSolidBookAlt } from "react-icons/bi";
 import { HiUsers } from "react-icons/hi2";
-import { AiFillSetting } from "react-icons/ai";
 import { PiWarningCircleBold } from "react-icons/pi";
-import { RiCloseLargeFill } from "react-icons/ri";
 
+import Navigation from '../routes/Navigation';
 import user from "../assets/user-1.jpg";
 import { NavLink } from "react-router-dom";
-import Navigation from '../routes/Navigation';
-import { useState } from 'react'
+import { useContext } from 'react'
+import { SidebarContext } from '../context/sidebarContext';
 
 
 function Dashboard() {
-    const [isClicked, setIsClicked] = useState(false);
+    const {isOpen, toggleSidebar} = useContext(SidebarContext);
 
     return (
         <div className="w-full h-screen grid grid-cols-30 xl:grid-cols-22 bg-stone-200">
 
             {/* sidebar modal */}
-            <div className={`w-[16rem] h-[100vh] absolute top-0 left-0 flex-col gap-3 bg-stone-50 duration-700 ${isClicked ? "flex" : "hidden"}`}>
+            <div className={`w-[16rem] h-[100vh] absolute top-0 left-0 flex-col gap-3 bg-stone-50 duration-700 ${isOpen ? "flex" : "hidden"}`}>
                 {/* Logo */}
                 <div className="w-full h-[4rem] flex justify-between items-center px-4 py-3">
                     <div className="h-full flex items-center gap-3">
@@ -38,7 +36,7 @@ function Dashboard() {
                         <span className="text-2xl">Libra</span>
                     </div>
 
-                    <button className="p-2 text-xl" onClick={() => setIsClicked(false)}><RiCloseLargeFill /></button>
+                    <button className="p-2 text-xl" onClick={() => toggleSidebar()}><RiCloseLargeFill /></button>
                 </div>
 
                 <div className="w-full flex justify-center items-center px-4 py-2">
@@ -122,7 +120,7 @@ function Dashboard() {
 
             {/* left sidebar before 1280px(xl) for small screens */}
             <div className="col-span-4 sm:col-span-3 lg:col-span-2 xl:hidden bg-sky-950">
-                <button className="w-full h-[4rem] flex justify-center items-center" onClick={() => setIsClicked(true)}>
+                <button className="w-full h-[4rem] flex justify-center items-center" onClick={() => toggleSidebar(true)}>
                     <AiOutlineMenu className="text-2xl font-bold text-blue-500" />
                 </button>
 
