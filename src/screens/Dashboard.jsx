@@ -64,26 +64,26 @@ function Dashboard() {
 
 
                 <nav className="w-full flex flex-col gap-0 my-5">
-                    <NavLink className="flex justify-center items-center p-2" to={"/"}>
-                        <RiLayoutMasonryFill className="text-xl text-blue-800 focus:text-blue-600" />
+                    <NavLink  className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/"}>
+                        <RiLayoutMasonryFill  />
                     </NavLink>
-                    <NavLink className="flex justify-center items-center p-2" to={"/books"}>
-                        <BiSolidBookAlt className="text-xl text-blue-800 focus:text-blue-600" />
+                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/books"}>
+                        <BiSolidBookAlt />
                     </NavLink>
-                    <NavLink className="flex justify-center items-center p-2" to={"/members"}>
-                        <HiUsers className="text-xl text-blue-800 focus:text-blue-600" />
+                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/members"}>
+                        <HiUsers />
                     </NavLink>
                 </nav>
 
                 <nav className="w-full flex flex-col gap-0 my-5">
-                    <NavLink className="flex justify-center items-center p-2" to={"/settings"}>
-                        <AiFillSetting className="text-xl text-blue-800 focus:text-blue-600" />
+                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/settings"}>
+                        <AiFillSetting />
                     </NavLink>
-                    <NavLink className="flex justify-center items-center p-2" to={"/about"}>
-                        <PiWarningCircleBold className="text-xl text-blue-800 focus:text-blue-600" />
+                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/about"}>
+                        <PiWarningCircleBold />
                     </NavLink>
-                    <NavLink className="flex justify-center items-center p-2" to={"/help-support"}>
-                        <HiUsers className="text-xl text-blue-800 focus:text-blue-600" />
+                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/help-support"}>
+                        <HiUsers />
                     </NavLink>
                 </nav>
 
