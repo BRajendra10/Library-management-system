@@ -1,9 +1,10 @@
 import './App.css'
+import Dashboard from './screens/Dashboard'
 
 function App() {
   return(
     <div>
-      app
+      <Dashboard />
     </div>
   )
 }
