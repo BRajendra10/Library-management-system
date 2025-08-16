@@ -18,7 +18,7 @@ function Dashboard() {
     return (
         <div className="w-full h-screen grid grid-cols-30 xl:grid-cols-22 bg-stone-200">
 
-            {/* left sidebar after 1280px(xl) */}
+            {/* left sidebar after 1280px(xl) for large screens */}
             <div className="col-span-4 2xl:col-span-3 hidden xl:flex flex-col gap-3 bg-stone-50">
 
                 {/* Logo */}
@@ -41,11 +41,6 @@ function Dashboard() {
                     <button className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400">Lend / return</button>
                 </div>
 
-                {/* <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/"}>
-                    <RiLayoutMasonryFill />
-                </NavLink> */}
-
-                {/* Navigation */}
                 <nav className="py-2 pr-3 flex flex-col justify-between gap-0">
                     <NavLink
                         className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
@@ -72,12 +67,11 @@ function Dashboard() {
                 </nav>
             </div>
 
-            {/* left sidebar before 1280px(xl) */}
+            {/* left sidebar before 1280px(xl) for small screens */}
             <div className="col-span-4 sm:col-span-3 lg:col-span-2 xl:hidden bg-sky-950">
                 <div className="w-full h-[4rem] flex justify-center items-center">
                     <AiOutlineMenu className="text-xl font-bold text-blue-500" />
                 </div>
-
 
                 <nav className="w-full flex flex-col gap-0 my-5">
                     <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/"}>
@@ -136,6 +130,7 @@ function Dashboard() {
                     </div>
                 </div>
 
+                {/* All pages */}
                 <Navigation />
             </div>
         </div>
