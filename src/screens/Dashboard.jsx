@@ -1,13 +1,24 @@
 import React from 'react'
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { IoSearch } from "react-icons/io5";
+import { IoOptionsSharp } from "react-icons/io5";
+import { RiLayoutMasonryFill } from "react-icons/ri";
+import { BiSolidBookAlt } from "react-icons/bi";
+import { HiUsers } from "react-icons/hi2";
+import { AiFillSetting } from "react-icons/ai";
+import { PiWarningCircleBold } from "react-icons/pi";
+
 import user from "../assets/user-1.jpg";
+import { NavLink } from "react-router-dom";
+import Navigation from '../routes/Navigation';
+
 
 function Dashboard() {
     return (
-        <div className="w-full h-screen grid grid-cols-22 bg-stone-200">
+        <div className="w-full h-screen grid grid-cols-30 xl:grid-cols-22 bg-stone-200">
 
-            {/* left sidebar before 1280px(xl) */}
+            {/* left sidebar after 1280px(xl) */}
             <div className="col-span-4 2xl:col-span-3 hidden xl:flex flex-col gap-3 bg-stone-50">
 
                 {/* Logo */}
@@ -30,40 +41,77 @@ function Dashboard() {
                     <button className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400">Lend / return</button>
                 </div>
 
-                {/* Navigation(temperary) */}
-                <nav className="py-2 pr-3">
-                    <ul className="w-full flex flex-col justify-between gap-0">
-                        <li className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2"><a className="" href="#">Overview</a></li>
-                        <li className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2"><a className="" href="#">Books</a></li>
-                        <li className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2"><a className="" href="#">Members</a></li>
-                    </ul>
+                {/* Navigation */}
+                <nav className="py-2 pr-3 flex flex-col justify-between gap-0">
+                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/"}>Overview</NavLink>
+                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/books"}>Books</NavLink>
+                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/members"}>Members</NavLink>
                 </nav>
 
-                {/* Navigation(temperary) */}
-                <nav className="py-2 pr-3">
-                    <ul className="w-full flex flex-col justify-between gap-0">
-                        <li className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2"><a className="" href="#">Settings</a></li>
-                        <li className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2"><a className="" href="#">About</a></li>
-                        <li className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2"><a className="" href="#">Help & support</a></li>
-                    </ul>
+                {/* Navigation */}
+                <nav className="py-2 pr-3 flex flex-col justify-between gap-0">
+                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/settings"}>Settings</NavLink>
+                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/about"}>About</NavLink>
+                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/help-support"}>Help & Support</NavLink>
                 </nav>
             </div>
 
-            {/* left sidebar after 1280px(xl) */}
-            <div className="grid-cols-[minmax(250px,2fr)_auto] xl:hidden bg-blue-300">
+            {/* left sidebar before 1280px(xl) */}
+            <div className="col-span-4 sm:col-span-3 lg:col-span-2 xl:hidden bg-sky-950">
                 <div className="w-full h-[4rem] flex justify-center items-center">
-                    <AiOutlineMenu className="text-xl" />
+                    <AiOutlineMenu className="text-xl font-bold text-blue-500" />
                 </div>
+
+
+                <nav className="w-full flex flex-col gap-0 my-5">
+                    <NavLink className="flex justify-center items-center p-2" to={"/"}>
+                        <RiLayoutMasonryFill className="text-xl text-blue-800 focus:text-blue-600" />
+                    </NavLink>
+                    <NavLink className="flex justify-center items-center p-2" to={"/books"}>
+                        <BiSolidBookAlt className="text-xl text-blue-800 focus:text-blue-600" />
+                    </NavLink>
+                    <NavLink className="flex justify-center items-center p-2" to={"/members"}>
+                        <HiUsers className="text-xl text-blue-800 focus:text-blue-600" />
+                    </NavLink>
+                </nav>
+
+                <nav className="w-full flex flex-col gap-0 my-5">
+                    <NavLink className="flex justify-center items-center p-2" to={"/settings"}>
+                        <AiFillSetting className="text-xl text-blue-800 focus:text-blue-600" />
+                    </NavLink>
+                    <NavLink className="flex justify-center items-center p-2" to={"/about"}>
+                        <PiWarningCircleBold className="text-xl text-blue-800 focus:text-blue-600" />
+                    </NavLink>
+                    <NavLink className="flex justify-center items-center p-2" to={"/help-support"}>
+                        <HiUsers className="text-xl text-blue-800 focus:text-blue-600" />
+                    </NavLink>
+                </nav>
+
             </div>
 
             {/* Right side of dashboard */}
-            <div className="col-span-21 xl:col-span-18 2xl:col-span-19 flex flex-col bg-stone-50">
+            <div className="col-span-26 sm:col-span-27 lg:col-span-28 xl:col-span-18 2xl:col-span-19 flex flex-col bg-stone-50">
 
                 {/* right top navigation */}
                 <div className="w-full h-[4rem] flex justify-between items-center p-2">
-                    {/* <button className="xl:hidden p-2 text-2xl text-stone-500 hover:text-stone-950 rounded-full duration-300"><AiOutlineMenu /></button> */}
-                    
-                    <div className="flex items-center gap-4">
+
+                    <div className="w-fit md:w-[30rem] lg:w-[40rem] h-fit hidden sm:grid grid-cols-15 border border-stone-400 bg-white p-1 rounded-sm">
+                        <button className="col-span-1 flex justify-center items-center p-1">
+                            <IoSearch className="text-xl font-normal" />
+                        </button>
+
+                        <input className="block col-span-13 border-none outline-none py-1 px-2" type="text" />
+
+                        <button className="col-span-1 flex justify-center items-center p-1">
+                            <IoOptionsSharp className="text-xl font-normal" />
+                        </button>
+                    </div>
+
+                    <button className="col-span-1 flex sm:hidden justify-center items-center p-2 text-stone-500 hover:text-stone-950 duration-300">
+                        <IoSearch className="text-xl font-normal" />
+                    </button>
+
+                    <div className="w-[7rem] flex justify-evenly items-center gap-4">
                         <span className="p-2 text-2xl text-stone-500 hover:text-stone-950 rounded-full duration-300"><IoMdNotificationsOutline /></span>
 
                         <div className="w-12 h-12 rounded-full border-2 border-blue-400 p-1">
@@ -72,7 +120,7 @@ function Dashboard() {
                     </div>
                 </div>
 
-                <div className="w-full h-220 bg-stone-200"></div>
+                <Navigation />
             </div>
         </div>
     )
