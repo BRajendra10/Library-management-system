@@ -45,24 +45,24 @@ function Dashboard() {
                     <NavLink
                         className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
                         to={"/"}>Overview</NavLink>
-                    <NavLink 
-                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`} 
+                    <NavLink
+                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
                         to={"/books"}>Books</NavLink>
-                    <NavLink 
-                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`} 
+                    <NavLink
+                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
                         to={"/members"}>Members</NavLink>
                 </nav>
 
                 {/* Navigation */}
                 <nav className="py-2 pr-3 flex flex-col justify-between gap-0">
-                    <NavLink 
-                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`} 
+                    <NavLink
+                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
                         to={"/settings"}>Settings</NavLink>
-                    <NavLink 
-                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`} 
+                    <NavLink
+                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
                         to={"/about"}>About</NavLink>
-                    <NavLink 
-                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`} 
+                    <NavLink
+                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
                         to={"/help-support"}>Help & Support</NavLink>
                 </nav>
             </div>
@@ -103,7 +103,7 @@ function Dashboard() {
             <div className="col-span-26 sm:col-span-27 lg:col-span-28 xl:col-span-18 2xl:col-span-19 flex flex-col bg-stone-50">
 
                 {/* right top navigation */}
-                <div className="w-full h-[4rem] flex justify-between items-center p-2">
+                <div className="w-full h-[4rem] flex justify-end sm:justify-between items-center p-2">
 
                     <div className="w-fit md:w-[30rem] lg:w-[40rem] h-fit hidden sm:grid grid-cols-15 border border-stone-400 bg-white p-1 rounded-sm">
                         <button className="col-span-1 flex justify-center items-center p-1">
@@ -117,12 +117,12 @@ function Dashboard() {
                         </button>
                     </div>
 
-                    <button className="col-span-1 flex sm:hidden justify-center items-center p-2 text-stone-500 hover:text-stone-950 duration-300">
-                        <IoSearch className="text-xl font-normal" />
-                    </button>
+                    <div className="w-[10rem] sm:w-[7rem] flex justify-evenly items-center gap-4">
+                        <button className="col-span-1 flex sm:hidden justify-center items-center p-2 text-stone-500 hover:text-stone-950 duration-300">
+                            <IoSearch className="text-xl font-normal" />
+                        </button>
 
-                    <div className="w-[7rem] flex justify-evenly items-center gap-4">
-                        <span className="p-2 text-2xl text-stone-500 hover:text-stone-950 rounded-full duration-300"><IoMdNotificationsOutline /></span>
+                        <button className="p-2 text-2xl text-stone-500 hover:text-stone-950 rounded-full duration-300"><IoMdNotificationsOutline /></button>
 
                         <div className="w-12 h-12 rounded-full border-2 border-blue-400 p-1">
                             <img className="w-full h-full object-cover rounded-full" src={user} alt="curr-user" />
