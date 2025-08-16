@@ -41,18 +41,34 @@ function Dashboard() {
                     <button className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400">Lend / return</button>
                 </div>
 
+                {/* <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/"}>
+                    <RiLayoutMasonryFill />
+                </NavLink> */}
+
                 {/* Navigation */}
                 <nav className="py-2 pr-3 flex flex-col justify-between gap-0">
-                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/"}>Overview</NavLink>
-                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/books"}>Books</NavLink>
-                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/members"}>Members</NavLink>
+                    <NavLink
+                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
+                        to={"/"}>Overview</NavLink>
+                    <NavLink 
+                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`} 
+                        to={"/books"}>Books</NavLink>
+                    <NavLink 
+                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`} 
+                        to={"/members"}>Members</NavLink>
                 </nav>
 
                 {/* Navigation */}
                 <nav className="py-2 pr-3 flex flex-col justify-between gap-0">
-                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/settings"}>Settings</NavLink>
-                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/about"}>About</NavLink>
-                    <NavLink className="text-stone-700 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2" to={"/help-support"}>Help & Support</NavLink>
+                    <NavLink 
+                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`} 
+                        to={"/settings"}>Settings</NavLink>
+                    <NavLink 
+                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`} 
+                        to={"/about"}>About</NavLink>
+                    <NavLink 
+                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`} 
+                        to={"/help-support"}>Help & Support</NavLink>
                 </nav>
             </div>
 
@@ -64,25 +80,25 @@ function Dashboard() {
 
 
                 <nav className="w-full flex flex-col gap-0 my-5">
-                    <NavLink  className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/"}>
-                        <RiLayoutMasonryFill  />
+                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/"}>
+                        <RiLayoutMasonryFill />
                     </NavLink>
-                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/books"}>
+                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/books"}>
                         <BiSolidBookAlt />
                     </NavLink>
-                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/members"}>
+                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/members"}>
                         <HiUsers />
                     </NavLink>
                 </nav>
 
                 <nav className="w-full flex flex-col gap-0 my-5">
-                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/settings"}>
+                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/settings"}>
                         <AiFillSetting />
                     </NavLink>
-                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/about"}>
+                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/about"}>
                         <PiWarningCircleBold />
                     </NavLink>
-                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${ isActive ? "text-blue-600" : "text-blue-800"}`} to={"/help-support"}>
+                    <NavLink className={({ isActive }) => `flex justify-center items-center text-xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/help-support"}>
                         <HiUsers />
                     </NavLink>
                 </nav>
