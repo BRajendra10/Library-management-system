@@ -151,7 +151,7 @@ function Dashboard() {
             </div>
 
             {/* Right side of dashboard */}
-            <div className="col-span-26 sm:col-span-27 lg:col-span-28 xl:col-span-18 2xl:col-span-19 flex flex-col bg-stone-50">
+            <div className="col-span-26 sm:col-span-27 lg:col-span-28 xl:col-span-18 2xl:col-span-19 max-h-screen flex flex-col bg-stone-50">
 
                 {/* right top navigation */}
                 <div className="w-full h-[4rem] flex justify-end sm:justify-between items-center p-2">
@@ -168,7 +168,7 @@ function Dashboard() {
                         </button>
                     </div>
 
-                    <div className="w-[10rem] sm:w-[7rem] flex justify-evenly items-center gap-4">
+                    <div className="w-[10rem] sm:w-[7rem] flex justify-evenly items-center gap-2">
                         <button className="sm:hidden block p-2 text-stone-500 hover:text-stone-950 duration-300">
                             <IoSearch className="text-xl font-normal" />
                         </button>
