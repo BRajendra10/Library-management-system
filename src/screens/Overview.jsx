@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector , useDispatch } from 'react-redux'
+import { fetachedBooksData } from '../features/BookSlice'
+import { fetchedMembersData } from '../features/MemberSlice'
 import Card from '../Components/Card'
 import { FaBook, FaRegClock } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
@@ -8,6 +11,18 @@ import OverdueCard from '../components/OverdueCard';
 import RequestCard from '../components/RequestCard';
 
 function Overview() {
+  const dispatch = useDispatch()
+
+  const {books} = useSelector((state)=>state.books)
+  const {members} = useSelector((state)=>state.members)
+
+  console.log(books, members);
+
+  useEffect(()=>{
+    dispatch(fetachedBooksData())
+    dispatch(fetchedMembersData())
+  },[])
+
   return (
     <div className="w-full h-full">
       <div className="w-full h-fit grid grid-cols-12 grid-rows-35 gap-5 p-3">
