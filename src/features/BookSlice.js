@@ -15,20 +15,20 @@ export const fetachedBooksData = createAsyncThunk(
 );
 
 //Delete books data from api
-export const removeBooksData = createAsyncThunk("removeBooksData" , async (id)=> {
-    const res = await axios.delete(`${booksDataUrl}/${id}`);
-    return res.id;   
-})
+// export const removeBooksData = createAsyncThunk("removeBooksData" , async (id)=> {
+//     const res = await axios.delete(`${booksDataUrl}/${id}`);
+//     return res.id;   
+// })
 
-// Post new books data from api
-export const postBookData = createAsyncThunk("postBookData" , async (newbookdata)=> {
-    const res = await axios.post(booksDataUrl , newbookdata)
-    return res.data;
+// // Post new books data from api
+// export const postBookData = createAsyncThunk("postBookData" , async (newbookdata)=> {
+//     const res = await axios.post(booksDataUrl , newbookdata)
+//     return res.data;
 
-})
+// })
 
 //InitialState
- const initialState = {
+const initialState = {
   books: [],
   status: "neutral",
   error: null,
@@ -39,68 +39,56 @@ const bookSlice = createSlice({
   initialState,
   reducers: {},
 
-
   extraReducers: (builder) => {
 
-      //Get api 
+    //Get api 
     builder.addCase(fetachedBooksData.pending, (state) => {
       state.status = " loading...";
     });
 
-    builder.addCase(fetachedBooksData.fulfilled, (state,action) => {
+    builder.addCase(fetachedBooksData.fulfilled, (state, action) => {
       state.status = "success";
       state.books = action.payload;
     });
 
-    builder.addCase(fetachedBooksData.rejected, (state,action) => {
+    builder.addCase(fetachedBooksData.rejected, (state, action) => {
       state.status = "error";
       state.error = action.payload.error;
     });
 
     // remove api 
-    builder.addCase(removeBooksData.pending , (state ) => {
-        state.status = "loading"
-    })
+    // builder.addCase(removeBooksData.pending , (state ) => {
+    //     state.status = "loading"
+    // })
 
-    builder.addCase(removeBooksData.fulfilled , (state , action ) => {
-        state.status = "success"
-        state.books.splice(action.payload , 1);
-    })
+    // builder.addCase(removeBooksData.fulfilled , (state , action ) => {
+    //     state.status = "success"
+    //     state.books.splice(action.payload , 1);
+    // })
 
-    
-    builder.addCase(removeBooksData.rejected, (state, action) => {
-      state.status = "error";
-      state.error = action.payload.error;
-    });
+
+    // builder.addCase(removeBooksData.rejected, (state, action) => {
+    //   state.status = "error";
+    //   state.error = action.payload.error;
+    // });
 
     // Post New book Data
-     builder.addCase(postBookData.pending , (state ) => {
-        state.status = "loading"
-    })
+    //  builder.addCase(postBookData.pending , (state ) => {
+    //     state.status = "loading"
+    // })
 
-    builder.addCase(postBookData.fulfilled , (state , action ) => {
-        state.status = "success"
-        state.books.push(action.payload);
-    })
+    // builder.addCase(postBookData.fulfilled , (state , action ) => {
+    //     state.status = "success"
+    //     state.books.push(action.payload);
+    // })
 
-    
-    builder.addCase(postBookData.rejected, (state, action) => {
-      state.status = "error";
-      state.error = action.payload.error;
-    });
+
+    // builder.addCase(postBookData.rejected, (state, action) => {
+    //   state.status = "error";
+    //   state.error = action.payload.error;
+    // });
 
   },
 });
 
-
 export default bookSlice.reducer;
-
-
-
-//  Redux slice for Books
-// - Fetching books data from API
-// - Integrated in Overview component
-// - Add (POST) new book action ready
-// - Remove (DELETE) book action ready
-// Form submission (for POST) and Remove button (for DELETE)
-// will trigger these actions once implemented
