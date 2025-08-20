@@ -18,7 +18,7 @@ function Dashboard() {
     const {isOpen, toggleSidebar} = useContext(SidebarContext);
 
     return (
-        <div className="w-full h-screen grid grid-cols-30 xl:grid-cols-22 bg-stone-200">
+        <div className="w-full h-screen grid grid-cols-30 xl:grid-cols-22 bg-white gap-3">
 
             {/* sidebar modal */}
             <div className={`w-[16rem] h-[100vh] absolute top-0 left-0 flex-col gap-3 bg-stone-50 duration-700 ${isOpen ? "flex" : "hidden"}`}>
