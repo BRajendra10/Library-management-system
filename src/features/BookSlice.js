@@ -56,7 +56,7 @@ const bookSlice = createSlice({
       state.error = action.payload.error;
     });
 
-    remove api 
+    // remove api 
     builder.addCase(removeBooksData.pending , (state ) => {
         state.status = "loading"
     })
@@ -72,7 +72,7 @@ const bookSlice = createSlice({
       state.error = action.payload.error;
     });
 
-    Post New book Data
+    // Post New book Data
      builder.addCase(postBookData.pending , (state ) => {
         state.status = "loading"
     })
