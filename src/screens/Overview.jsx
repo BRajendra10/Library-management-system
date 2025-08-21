@@ -13,16 +13,14 @@ import { FaHandHolding } from "react-icons/fa6";
 
 function Overview() {
   const dispatch = useDispatch()
-
   const { books } = useSelector((state) => state.books)
   const { members } = useSelector((state) => state.members)
 
-  console.log(books, members);
 
   useEffect(() => {
     dispatch(fetachedBooksData())
     dispatch(fetchedMembersData())
-  }, [])
+  }, []);
 
   return (
     <div className="w-full h-full">
@@ -68,13 +66,6 @@ function Overview() {
 
             {/* details */}
             <div className="w-full h-full overflow-scroll">
-              <OverdueCard />
-              <OverdueCard />
-              <OverdueCard />
-              <OverdueCard />
-              <OverdueCard />
-              <OverdueCard />
-              <OverdueCard />
               <OverdueCard />
             </div>
           </section>

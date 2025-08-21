@@ -47,7 +47,6 @@ const memberSlice = createSlice({
 
 export default memberSlice.reducer;
 
-
 //  Redux slice for members
 // - Fetching books data from API
 // - Integrated in Overview component
