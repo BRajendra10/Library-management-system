@@ -14,18 +14,18 @@ export const fetachedBooksData = createAsyncThunk(
   }
 );
 
-//Delete books data from api
-// export const removeBooksData = createAsyncThunk("removeBooksData" , async (id)=> {
-//     const res = await axios.delete(`${booksDataUrl}/${id}`);
-//     return res.id;   
-// })
+// Delete books data from api
+export const removeBooksData = createAsyncThunk("removeBooksData" , async (id)=> {
+    const res = await axios.delete(`${booksDataUrl}/${id}`);
+    return res.id;   
+})
 
-// // Post new books data from api
-// export const postBookData = createAsyncThunk("postBookData" , async (newbookdata)=> {
-//     const res = await axios.post(booksDataUrl , newbookdata)
-//     return res.data;
+// Post new books data from api
+export const postBookData = createAsyncThunk("postBookData" , async (newbookdata)=> {
+    const res = await axios.post(booksDataUrl , newbookdata)
+    return res.data;
 
-// })
+})
 
 //InitialState
 const initialState = {
@@ -56,37 +56,37 @@ const bookSlice = createSlice({
       state.error = action.payload.error;
     });
 
-    // remove api 
-    // builder.addCase(removeBooksData.pending , (state ) => {
-    //     state.status = "loading"
-    // })
+    remove api 
+    builder.addCase(removeBooksData.pending , (state ) => {
+        state.status = "loading"
+    })
 
-    // builder.addCase(removeBooksData.fulfilled , (state , action ) => {
-    //     state.status = "success"
-    //     state.books.splice(action.payload , 1);
-    // })
-
-
-    // builder.addCase(removeBooksData.rejected, (state, action) => {
-    //   state.status = "error";
-    //   state.error = action.payload.error;
-    // });
-
-    // Post New book Data
-    //  builder.addCase(postBookData.pending , (state ) => {
-    //     state.status = "loading"
-    // })
-
-    // builder.addCase(postBookData.fulfilled , (state , action ) => {
-    //     state.status = "success"
-    //     state.books.push(action.payload);
-    // })
+    builder.addCase(removeBooksData.fulfilled , (state , action ) => {
+        state.status = "success"
+        state.books.splice(action.payload , 1);
+    })
 
 
-    // builder.addCase(postBookData.rejected, (state, action) => {
-    //   state.status = "error";
-    //   state.error = action.payload.error;
-    // });
+    builder.addCase(removeBooksData.rejected, (state, action) => {
+      state.status = "error";
+      state.error = action.payload.error;
+    });
+
+    Post New book Data
+     builder.addCase(postBookData.pending , (state ) => {
+        state.status = "loading"
+    })
+
+    builder.addCase(postBookData.fulfilled , (state , action ) => {
+        state.status = "success"
+        state.books.push(action.payload);
+    })
+
+
+    builder.addCase(postBookData.rejected, (state, action) => {
+      state.status = "error";
+      state.error = action.payload.error;
+    });
 
   },
 });
