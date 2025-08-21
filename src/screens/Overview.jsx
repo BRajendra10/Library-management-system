@@ -10,6 +10,8 @@ import { FaBook, FaRegClock } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
 import { MdArrowForwardIos } from "react-icons/md";
 import { FaHandHolding } from "react-icons/fa6";
+import { Navigate, useNavigate } from 'react-router-dom';
+import Books from './Books';
 
 function Overview() {
   const dispatch = useDispatch()
@@ -24,6 +26,7 @@ function Overview() {
     dispatch(fetchedMembersData())
   }, [])
 
+  const Navigate=useNavigate()
   return (
     <div className="w-full h-full">
       <div className="w-full h-fit grid grid-cols-12 grid-rows-30 gap-5 p-3">
@@ -61,21 +64,14 @@ function Overview() {
                 <span className="text-base font-semibold">Overdue details</span>
               </div>
 
-              <button>
+              <button onClick={()=>Navigate("/books")}>
                 <MdArrowForwardIos className="text-lg text-blue-500" />
               </button>
             </div>
 
             {/* details */}
             <div className="w-full h-full overflow-scroll">
-              <OverdueCard />
-              <OverdueCard />
-              <OverdueCard />
-              <OverdueCard />
-              <OverdueCard />
-              <OverdueCard />
-              <OverdueCard />
-              <OverdueCard />
+              {books.map((el,i)=><OverdueCard/>)}
             </div>
           </section>
 
@@ -88,22 +84,14 @@ function Overview() {
                 <span className="text-base font-semibold">Book requests</span>
               </div>
 
-              <button>
+              <button onClick={()=>Navigate("/books")}>
                 <MdArrowForwardIos className="text-lg text-blue-500" />
               </button>
             </div>
 
             {/* details */}
             <div className="w-full h-full overflow-scroll">
-              <RequestCard />
-              <RequestCard />
-              <RequestCard />
-              <RequestCard />
-              <RequestCard />
-              <RequestCard />
-              <RequestCard />
-              <RequestCard />
-              <RequestCard />
+              {books.map((el,i)=><RequestCard/>)}
             </div>
           </section>
         </div>
