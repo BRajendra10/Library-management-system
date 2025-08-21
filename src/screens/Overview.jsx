@@ -53,8 +53,8 @@ function Overview() {
         <div className="col-span-12 row-span-20 grid grid-cols-2 gap-5">
 
           {/* Overdue section */}
-          {/* <section className="col-span-1 h-[35rem] flex flex-col border border-blue-200 rounded-lg">
-            overvue books header
+          <section className="col-span-1 h-[35rem] flex flex-col border border-blue-200 rounded-lg">
+            {/* overvue books header */}
             <div className="w-full h-[4rem] flex justify-between items-center px-5">
               <div className="flex items-center gap-3">
                 <FaRegClock className="text-lg text-blue-500" />
@@ -66,7 +66,7 @@ function Overview() {
               </button>
             </div>
 
-            details
+            {/* details */}
             <div className="w-full h-full overflow-scroll">
               <OverdueCard />
               <OverdueCard />
@@ -77,11 +77,11 @@ function Overview() {
               <OverdueCard />
               <OverdueCard />
             </div>
-          </section> */}
+          </section>
 
           {/* Requested books container */}
-          {/* <section className="col-span-1 h-[35rem] flex flex-col border border-blue-200 rounded-lg">
-            request books header
+          <section className="col-span-1 h-[35rem] flex flex-col border border-blue-200 rounded-lg">
+            {/* request books header */}
             <div className="w-full h-[4rem] flex justify-between items-center px-5">
               <div className="flex items-center gap-3">
                 <FaHandHolding className="text-xl text-blue-500" />
@@ -93,7 +93,7 @@ function Overview() {
               </button>
             </div>
 
-            details
+            {/* details */}
             <div className="w-full h-full overflow-scroll">
               <RequestCard />
               <RequestCard />
@@ -105,7 +105,7 @@ function Overview() {
               <RequestCard />
               <RequestCard />
             </div>
-          </section> */}
+          </section>
         </div>
       </div>
     </div>
