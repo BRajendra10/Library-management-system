@@ -30,6 +30,8 @@ export const postBookData = createAsyncThunk("postBookData", async (newbookdata)
 //InitialState
 const initialState = {
   books: [],
+  overdueBooks: [],
+  overdueDetails: [],
   status: "neutral",
   error: null,
 };
@@ -37,10 +39,21 @@ const initialState = {
 const bookSlice = createSlice({
   name: "books",
   initialState,
-  reducers: {},
+  reducers: {
+    setOverdueBooks: (state, action) => {
+      const books = action.payload;
+      const today = new Date().toISOString().split("T")[0];
 
+      state.overdueBooks = books.filter((book) => {
+        return book?.borrowDetails?.some((el) => el.dueDate < today);
+      });
+    },
+
+    setOverdueDetails: (state, action) => {
+      console.log(state.overdueDetails, action);
+    }
+  },
   extraReducers: (builder) => {
-
     //Get api 
     builder.addCase(fetachedBooksData.pending, (state) => {
       state.status = " loading...";
@@ -87,8 +100,8 @@ const bookSlice = createSlice({
       state.status = "error";
       state.error = action.payload.error;
     });
-
-  },
+  }
 });
 
 export default bookSlice.reducer;
+export const { setOverdueBooks, setOverdueDetails } = bookSlice.actions;
