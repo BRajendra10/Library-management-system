@@ -1,13 +1,14 @@
 import './App'
 import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { fetachedBooksData, setOverdueBooks } from './features/BookSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetachedBooksData, setOverdueDetails } from './features/BookSlice'
 import { fetchedMembersData } from './features/MemberSlice'
 import Dashboard from './screens/Dashboard'
 
 function App() {
   const dispatch = useDispatch()
-  const { books } = useSelector((state) => state.books)
+  const { books, overdueDetails } = useSelector((state) => state.books);
+  const { members } = useSelector((state) => state.members)
 
   useEffect(() => {
     dispatch(fetachedBooksData())
@@ -15,8 +16,9 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(setOverdueBooks(books));
-  }, [books, dispatch])
+    dispatch(setOverdueDetails({ books, members }));
+  }, [dispatch, members, books])
+
   return (
     <div>
       <Dashboard />

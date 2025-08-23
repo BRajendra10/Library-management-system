@@ -16,8 +16,8 @@ export const fetachedBooksData = createAsyncThunk(
 
 // Delete books data from api
 export const removeBooksData = createAsyncThunk("removeBooksData", async (id) => {
-  const res = await axios.delete(`${booksDataUrl}/${id}`);
-  return res.id;
+  await axios.delete(`${booksDataUrl}/${id}`);
+  return id;
 })
 
 // Post new books data from api
@@ -40,17 +40,37 @@ const bookSlice = createSlice({
   name: "books",
   initialState,
   reducers: {
-    setOverdueBooks: (state, action) => {
-      const books = action.payload;
+    setOverdueDetails: (state, action) => {
+      const { books, members } = action.payload;
       const today = new Date().toISOString().split("T")[0];
+      state.overdueDetails = [];
 
-      state.overdueBooks = books.filter((book) => {
+      const overdueData = books.filter((book) => {
         return book?.borrowDetails?.some((el) => el.dueDate < today);
       });
-    },
 
-    setOverdueDetails: (state, action) => {
-      console.log(state.overdueDetails, action);
+      overdueData.map((book) => {
+        const borrowInfo = book.borrowDetails.find((el) => el.dueDate < today);
+        const member = members.find((m) => m.id === borrowInfo.userId);
+
+        const due = borrowInfo.dueDate;
+        const diffTime = parseInt(today.slice(-2)) - parseInt(due.slice(-2));
+        const fine = diffTime * 10;
+
+        state.overdueDetails.push({
+          bookId: book.id,
+          title: book.title,
+          author: book.author,
+          cover: book.thumbnail,
+          memberId: member?.id,
+          memberName: member?.name,
+          memberEmail: member?.email,
+          memberImage: member?.userImage,
+          dueDate: borrowInfo.dueDate,
+          overdueDays: diffTime,
+          fine,
+        })
+      });
     }
   },
   extraReducers: (builder) => {
@@ -62,6 +82,11 @@ const bookSlice = createSlice({
     builder.addCase(fetachedBooksData.fulfilled, (state, action) => {
       state.status = "success";
       state.books = action.payload;
+
+      const today = new Date().toISOString().split("T")[0];
+      state.overdueBooks = action.payload.filter((book) => {
+        return book?.borrowDetails?.some((el) => el.dueDate < today);
+      });
     });
 
     builder.addCase(fetachedBooksData.rejected, (state, action) => {
@@ -104,4 +129,4 @@ const bookSlice = createSlice({
 });
 
 export default bookSlice.reducer;
-export const { setOverdueBooks, setOverdueDetails } = bookSlice.actions;
+export const { setOverdueDetails } = bookSlice.actions;

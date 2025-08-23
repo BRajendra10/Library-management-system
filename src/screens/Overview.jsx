@@ -13,10 +13,8 @@ import Books from './Books';
 
 function Overview() {
   const navigate = useNavigate()
-  const { books, overdueBooks } = useSelector((state) => state.books)
+  const { books, overdueBooks, overdueDetails } = useSelector((state) => state.books)
   const { members } = useSelector((state) => state.members)
-
-  console.log(books, members, overdueBooks);
 
   return (
     <div className="w-full h-full">
@@ -24,21 +22,21 @@ function Overview() {
 
         {/* card one container */}
         <div className="col-span-4 row-span-10">
-          <Card booksNum={210} info={"borrowed"} num1={"+12"} num2={"+5%"}>
+          <Card booksNum={books.length} info={"borrowed"} num1={"+12"} num2={"+5%"}>
             <FaBook className="text-4xl text-blue-500" />
           </Card>
         </div>
 
         {/* card two container */}
         <div className="col-span-4 row-span-10">
-          <Card booksNum={32} info={"books overdue"} num1={"-2%"} num2={"$860"} >
+          <Card booksNum={overdueBooks.length} info={"books overdue"} num1={"-2%"} num2={"$860"} >
             <FaRegClock className="text-4xl text-blue-500" />
           </Card>
         </div>
 
         {/* card three container */}
         <div className="col-span-4 row-span-10">
-          <Card booksNum={340} info={"visitors"} num1={"+42"} num2={"+102%"} >
+          <Card booksNum={members.length} info={"visitors"} num1={"+42"} num2={"+102%"} >
             <FiUsers className="text-4xl text-blue-500" />
           </Card>
         </div>
@@ -62,7 +60,7 @@ function Overview() {
 
             {/* details */}
             <div className="w-full h-full overflow-scroll">
-              <OverdueCard />
+              {overdueDetails.map((el, inedx) => <OverdueCard id={inedx} data={el} />)}
             </div>
           </section>
 
