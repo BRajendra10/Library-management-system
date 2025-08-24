@@ -30,8 +30,6 @@ export const postBookData = createAsyncThunk("postBookData", async (newbookdata)
 //InitialState
 const initialState = {
   books: [],
-  overdueBooks: [],
-  overdueDetails: [],
   status: "neutral",
   error: null,
 };
@@ -39,40 +37,7 @@ const initialState = {
 const bookSlice = createSlice({
   name: "books",
   initialState,
-  reducers: {
-    setOverdueDetails: (state, action) => {
-      const { books, members } = action.payload;
-      const today = new Date().toISOString().split("T")[0];
-      state.overdueDetails = [];
-
-      const overdueData = books.filter((book) => {
-        return book?.borrowDetails?.some((el) => el.dueDate < today);
-      });
-
-      overdueData.map((book) => {
-        const borrowInfo = book.borrowDetails.find((el) => el.dueDate < today);
-        const member = members.find((m) => m.id === borrowInfo.userId);
-
-        const due = borrowInfo.dueDate;
-        const diffTime = parseInt(today.slice(-2)) - parseInt(due.slice(-2));
-        const fine = diffTime * 10;
-
-        state.overdueDetails.push({
-          bookId: book.id,
-          title: book.title,
-          author: book.author,
-          cover: book.thumbnail,
-          memberId: member?.id,
-          memberName: member?.name,
-          memberEmail: member?.email,
-          memberImage: member?.userImage,
-          dueDate: borrowInfo.dueDate,
-          overdueDays: diffTime,
-          fine,
-        })
-      });
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     //Get api 
     builder.addCase(fetachedBooksData.pending, (state) => {
@@ -82,11 +47,6 @@ const bookSlice = createSlice({
     builder.addCase(fetachedBooksData.fulfilled, (state, action) => {
       state.status = "success";
       state.books = action.payload;
-
-      const today = new Date().toISOString().split("T")[0];
-      state.overdueBooks = action.payload.filter((book) => {
-        return book?.borrowDetails?.some((el) => el.dueDate < today);
-      });
     });
 
     builder.addCase(fetachedBooksData.rejected, (state, action) => {
@@ -129,4 +89,3 @@ const bookSlice = createSlice({
 });
 
 export default bookSlice.reducer;
-export const { setOverdueDetails } = bookSlice.actions;

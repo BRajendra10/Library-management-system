@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Card from '../Components/Card'
 import OverdueCard from '../components/OverdueCard';
 import RequestCard from '../components/RequestCard';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setTotalFine } from '../features/overdueSlice'
 
 import { FaBook, FaRegClock } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
@@ -12,9 +13,16 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import Books from './Books';
 
 function Overview() {
-  const navigate = useNavigate()
-  const { books, overdueBooks, overdueDetails } = useSelector((state) => state.books)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { books } = useSelector((state) => state.books)
   const { members } = useSelector((state) => state.members)
+  const overDueBooks = useSelector((state) => state.overDue.overdueBooks)
+  const Fine = useSelector((state) => state.overDue.Fine)
+
+  useEffect(() => {
+    dispatch(setTotalFine(overDueBooks))
+  }, [overDueBooks, dispatch])
 
   return (
     <div className="w-full h-full">
@@ -29,7 +37,7 @@ function Overview() {
 
         {/* card two container */}
         <div className="col-span-4 row-span-10">
-          <Card booksNum={overdueBooks.length} info={"books overdue"} num1={"-2%"} num2={"$860"} >
+          <Card booksNum={overDueBooks.length} info={"books overdue"} num1={"-2%"} num2={`₹ ${Fine}`} >
             <FaRegClock className="text-4xl text-blue-500" />
           </Card>
         </div>
@@ -60,7 +68,7 @@ function Overview() {
 
             {/* details */}
             <div className="w-full h-full overflow-scroll">
-              {overdueDetails.map((el, inedx) => <OverdueCard id={inedx} data={el} />)}
+              {overDueBooks.map((el, inedx) => <OverdueCard id={inedx} data={el} />)}
             </div>
           </section>
 
