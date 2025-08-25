@@ -7,6 +7,7 @@ import Settings from '../screens/Settings'
 import About from '../screens/About'
 import HelpSupport from '../screens/HelpSupport'
 import Login from '../components/Login';
+import Register from '../components/Register';
 
 function Navigation() {
     return (
@@ -18,6 +19,7 @@ function Navigation() {
             <Route path="/about" element={<About />} />
             <Route path="/help-support" element={<HelpSupport />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
         </Routes>
     )
 }

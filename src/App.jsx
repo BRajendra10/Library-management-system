@@ -1,19 +1,27 @@
 import './App'
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { fetachedBooksData } from './features/BookSlice'
 import { fetchedMembersData } from './features/MemberSlice'
 import { fetchOverdueData } from './features/overdueSlice'
+import { loginUsersData } from './features/LoginSlice'
 import Dashboard from './screens/Dashboard'
+import { setIsLogedIn } from './features/LoginSlice'
 
 function App() {
   const dispatch = useDispatch()
+  const { login } = useSelector((state) => state.login);
 
   useEffect(() => {
     dispatch(fetachedBooksData())
     dispatch(fetchedMembersData())
     dispatch(fetchOverdueData())
+    dispatch(loginUsersData())
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(setIsLogedIn(login[0]?.isLogedIn));
+  }, [dispatch, login])
 
   return (
     <div>

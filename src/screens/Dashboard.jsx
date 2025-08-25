@@ -9,11 +9,22 @@ import { PiWarningCircleBold } from "react-icons/pi";
 import Navigation from '../routes/Navigation';
 import user from "../assets/user-1.jpg";
 import { NavLink } from "react-router-dom";
-// import { useContext } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { SidebarContext } from '../context/sidebarContext';
+import { updateLoginData } from '../features/LoginSlice';
 
 function Dashboard() {
-    // const { isOpen, toggleSidebar } = useContext(SidebarContext);
+    const { isLogedIn } = useSelector((state) => state.login);
+    const dispatch = useDispatch();
+
+    function HandleLogout() {
+        dispatch(updateLoginData({
+            id: 1,
+            updatedData: {
+                isLogedIn: false,
+            }
+        }))
+    }
 
     return (
         <div className="w-full h-screen grid grid-cols-30 bg-stone-100">
@@ -101,9 +112,10 @@ function Dashboard() {
 
                 {/* Navigation */}
                 <nav className="flex flex-col justify-center gap-1 p-3">
-                    <NavLink
-                        className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                        to={"/login"}>Login</NavLink>
+                    {isLogedIn ? <button className="text-stone-950 hover:bg-blue-500 text-left hover:text-white duration-300 text-base rounded-lg p-2 px-3" onClick={() => HandleLogout()}>Logout</button> :
+                        <NavLink
+                            className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                            to={"/login"}>Login</NavLink>}
                     <NavLink
                         className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                         to={"/about"}>About</NavLink>
@@ -118,7 +130,7 @@ function Dashboard() {
 
             {/* left sidebar before 1280px(xl) for small screens */}
             <div className="col-span-4 md:col-span-2 max-w-[4.5rem] lg:hidden bg-sky-950">
-                <button className="w-full h-[4rem] flex justify-center items-center" onClick={() => toggleSidebar(true)}>
+                <button className="w-full h-[4rem] flex justify-center items-center">
                     <AiOutlineMenu className="text-2xl font-bold text-blue-500" />
                 </button>
 
