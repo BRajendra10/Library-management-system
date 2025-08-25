@@ -25,73 +25,78 @@ function Overview() {
   }, [overDueBooks, dispatch])
 
   return (
-    <div className="w-full h-full">
-      <div className="w-full h-fit grid grid-cols-12 grid-rows-30 gap-5 p-3">
+    <div className="w-full h-fit grid grid-cols-12">
 
-        {/* card one container */}
-        <div className="col-span-4 row-span-10">
-          <Card booksNum={books.length} info={"borrowed"} num1={"+12"} num2={"+5%"}>
-            <FaBook className="text-4xl text-blue-500" />
-          </Card>
+      {/* card one container */}
+      <div className="col-span-12 h-[20rem] p-5 overflow-x-auto">
+        <div className="flex gap-5 min-w-max xl:grid xl:grid-cols-3 xl:gap-5 xl:overflow-x-visible">
+
+          {/* Card 1 */}
+          <div className="min-w-[25rem]">
+            <Card booksNum={books.length} info={"borrowed"} num1={"+12"} num2={"+5%"}>
+              <FaBook className="text-4xl text-blue-500" />
+            </Card>
+          </div>
+
+          {/* Card 2 */}
+          <div className="min-w-[25rem]">
+            <Card booksNum={overDueBooks.length} info={"books overdue"} num1={"-2%"} num2={`₹ ${Fine}`} >
+              <FaRegClock className="text-4xl text-blue-500" />
+            </Card>
+          </div>
+
+          {/* Card 3 */}
+          <div className="min-w-[25rem]">
+            <Card booksNum={members.length} info={"visitors"} num1={"+42"} num2={"+102%"} >
+              <FiUsers className="text-4xl text-blue-500" />
+            </Card>
+          </div>
+
         </div>
+      </div>
 
-        {/* card two container */}
-        <div className="col-span-4 row-span-10">
-          <Card booksNum={overDueBooks.length} info={"books overdue"} num1={"-2%"} num2={`₹ ${Fine}`} >
-            <FaRegClock className="text-4xl text-blue-500" />
-          </Card>
-        </div>
 
-        {/* card three container */}
-        <div className="col-span-4 row-span-10">
-          <Card booksNum={members.length} info={"visitors"} num1={"+42"} num2={"+102%"} >
-            <FiUsers className="text-4xl text-blue-500" />
-          </Card>
-        </div>
+      {/* bootom container with two section */}
+      <div className="col-span-12 h-full grid grid-cols-12 gap-5 px-5">
 
-        {/* bootom container with two section */}
-        <div className="col-span-12 row-span-20 grid grid-cols-2 gap-5">
-
-          {/* Overdue section */}
-          <section className="col-span-1 h-[35rem] flex flex-col border border-blue-200 rounded-lg">
-            {/* overvue books header */}
-            <div className="w-full h-[4rem] flex justify-between items-center px-5">
-              <div className="flex items-center gap-3">
-                <FaRegClock className="text-lg text-blue-500" />
-                <span className="text-base font-semibold">Overdue details</span>
-              </div>
-
-              <button onClick={() => navigate("/books")}>
-                <MdArrowForwardIos className="text-lg text-blue-500" />
-              </button>
+        <section className="col-span-6 h-[35rem] flex flex-col border border-blue-200 rounded-lg">
+          {/* overvue books header */}
+          <div className="w-full h-[4rem] flex justify-between items-center px-5">
+            <div className="flex items-center gap-3">
+              <FaRegClock className="text-lg text-blue-500" />
+              <span className="text-base font-semibold">Overdue details</span>
             </div>
 
-            {/* details */}
-            <div className="w-full h-full overflow-scroll">
-              {overDueBooks.map((el, inedx) => <OverdueCard id={inedx} data={el} />)}
-            </div>
-          </section>
+            <button onClick={() => navigate("/books")}>
+              <MdArrowForwardIos className="text-lg text-blue-500" />
+            </button>
+          </div>
 
-          {/* Requested books container */}
-          <section className="col-span-1 h-[35rem] flex flex-col border border-blue-200 rounded-lg">
-            {/* request books header */}
-            <div className="w-full h-[4rem] flex justify-between items-center px-5">
-              <div className="flex items-center gap-3">
-                <FaHandHolding className="text-xl text-blue-500" />
-                <span className="text-base font-semibold">Book requests</span>
-              </div>
+          {/* details */}
+          <div className="w-full h-full overflow-scroll">
+            {overDueBooks.map((el, inedx) => <OverdueCard id={inedx} data={el} />)}
+          </div>
+        </section>
 
-              <button onClick={() => navigate("/books")}>
-                <MdArrowForwardIos className="text-lg text-blue-500" />
-              </button>
+        {/* Requested books container */}
+        <section className="col-span-6 h-[35rem] flex flex-col border border-blue-200 rounded-lg">
+          {/* request books header */}
+          <div className="w-full h-[4rem] flex justify-between items-center px-5">
+            <div className="flex items-center gap-3">
+              <FaHandHolding className="text-xl text-blue-500" />
+              <span className="text-base font-semibold">Book requests</span>
             </div>
 
-            {/* details */}
-            <div className="w-full h-full overflow-scroll">
-              <RequestCard />
-            </div>
-          </section>
-        </div>
+            <button onClick={() => navigate("/books")}>
+              <MdArrowForwardIos className="text-lg text-blue-500" />
+            </button>
+          </div>
+
+          {/* details */}
+          <div className="w-full h-full overflow-scroll">
+            <RequestCard />
+          </div>
+        </section>
       </div>
     </div>
   )

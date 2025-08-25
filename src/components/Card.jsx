@@ -4,7 +4,7 @@ function Card({children, booksNum, info, num1, num2}) {
     return (
         <div className="w-full h-full border grid grid-cols-2 grid-rows-12 gap-5 text-center border-blue-200 bg-blue-100/20 rounded-lg p-5">
             <div className="col-span-2 row-span-7 flex justify-around items-center border-b-1 border-stone-300 gap-5">
-                <div className="flex items-center gap-5">
+                <div className="w-fit flex items-start gap-5">
                     <div className="inline-block border border-blue-400 rounded-full p-3">
                         {children}
                     </div>
@@ -22,11 +22,11 @@ function Card({children, booksNum, info, num1, num2}) {
                             </linearGradient>
                         </defs>
 
-                        {/* Line (upward trend) */}
+                        Line (upward trend)
                         <path d="M5 50 L30 40 L55 35 L80 20 L110 10"
                             stroke="currentColor" strokeWidth="2" fill="none" />
 
-                        {/* Area fill under line */}
+                        Area fill under line
                         <path d="M5 50 L30 40 L55 35 L80 20 L110 10 L110 60 L5 60 Z"
                             fill="url(#gradient)" />
                     </svg>

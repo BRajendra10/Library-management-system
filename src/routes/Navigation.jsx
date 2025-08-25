@@ -6,6 +6,7 @@ import Books from '../screens/Books'
 import Settings from '../screens/Settings'
 import About from '../screens/About'
 import HelpSupport from '../screens/HelpSupport'
+import Login from '../components/Login';
 
 function Navigation() {
     return (
@@ -16,6 +17,7 @@ function Navigation() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/about" element={<About />} />
             <Route path="/help-support" element={<HelpSupport />} />
+            <Route path="/login" element={<Login />} />
         </Routes>
     )
 }
