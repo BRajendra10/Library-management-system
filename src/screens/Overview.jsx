@@ -59,9 +59,9 @@ function Overview() {
       {/* bootom container with two section */}
       <div className="col-span-12 h-full grid grid-cols-12 gap-5 px-5">
 
-        <section className="col-span-6 h-[35rem] flex flex-col border border-blue-200 rounded-lg">
+        <section className="relative col-span-6 h-[35rem] flex flex-col border border-blue-200 rounded-lg overflow-scroll">
           {/* overvue books header */}
-          <div className="w-full h-[4rem] flex justify-between items-center px-5">
+          <div className="sticky top-0 left-0 w-full h-[4rem] flex justify-between items-center px-5 bg-white z-5">
             <div className="flex items-center gap-3">
               <FaRegClock className="text-lg text-blue-500" />
               <span className="text-base font-semibold">Overdue details</span>
@@ -73,15 +73,15 @@ function Overview() {
           </div>
 
           {/* details */}
-          <div className="w-full h-full overflow-scroll">
+          <div className="absolute top-12 left-0 w-full h-fit z-3">
             {overDueBooks.map((el, inedx) => <OverdueCard id={inedx} data={el} />)}
           </div>
         </section>
 
         {/* Requested books container */}
-        <section className="col-span-6 h-[35rem] flex flex-col border border-blue-200 rounded-lg">
+        <section className="relative col-span-6 h-[35rem] flex flex-col border border-blue-200 rounded-lg overflow-scroll">
           {/* request books header */}
-          <div className="w-full h-[4rem] flex justify-between items-center px-5">
+          <div className="sticky top-0 left-0 w-full h-[4rem] flex justify-between items-center px-5 z-5 bg-white">
             <div className="flex items-center gap-3">
               <FaHandHolding className="text-xl text-blue-500" />
               <span className="text-base font-semibold">Book requests</span>
@@ -93,7 +93,7 @@ function Overview() {
           </div>
 
           {/* details */}
-          <div className="w-full h-full overflow-scroll">
+          <div className="absolute top-12 left-0 w-full h-fit  z-3">
             <RequestCard />
           </div>
         </section>

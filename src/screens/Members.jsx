@@ -4,6 +4,7 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import Member from '../components/Member';
 import { useSelector } from 'react-redux'
+import SearchBar from '../components/Search';
 
 function Members() {
   const { members } = useSelector((state) => state.members);
@@ -15,17 +16,20 @@ function Members() {
         <div className="w-full min-h-[3.7rem] grid grid-cols-20">
           <nav className="col-span-5 2xl:col-span-5 grid grid-cols-3 gap-2">
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/members"}>
-              All <span className="bg-blue-500 text-white rounded-xl px-2">{members.length}</span>
+              All <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{members.length}</span>
             </NavLink>
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/members/students"}>
-              Students <span className="bg-blue-500 text-white rounded-xl px-2">{members.length-1}</span>
+              Students <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{members.length - 1}</span>
             </NavLink>
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/members/admin"}>
-              Admin <span className="bg-blue-500 text-white rounded-xl px-2">{login.length}</span>
+              Admin <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{login.length}</span>
             </NavLink>
           </nav>
 
           <button className="col-end-21 col-span-2 uppercase text-blue-700 hover:bg-blue-300/50 bg-blue-300"> + add member </button>
+        </div>
+        <div className="w-full h-[4.5rem] flex justify-between items-center bg-white p-2">
+          <SearchBar />
         </div>
         <div className="relative w-full h-full bg-white rounded-lg overflow-scroll">
           <ul className="sticky top-0 left-0 w-full h-[3rem] grid grid-cols-25 text-sm/6 p-2 gap-1 bg-white z-5">
