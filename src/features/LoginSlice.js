@@ -39,6 +39,7 @@ export const updateLoginData = createAsyncThunk(
 
 const initialState = {
   login: [],
+  admin: {},
   isLogedIn: false,
   status: "neutral",
   error: null,
@@ -49,7 +50,10 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     setIsLogedIn: (state, action) => {
-      state.isLogedIn = action.payload;
+      state.isLogedIn = action.payload?.isLogedIn;
+      if(action.payload?.isLogedIn){
+        state.admin = action.payload;
+      }
     }
   },
   extraReducers: (builder) => {
