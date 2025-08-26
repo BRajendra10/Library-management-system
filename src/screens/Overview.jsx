@@ -29,7 +29,7 @@ function Overview() {
 
       {/* card one container */}
       <div className="col-span-12 h-[20rem] p-5 overflow-x-auto">
-        <div className="flex gap-5 min-w-max xl:grid xl:grid-cols-3 xl:gap-5 xl:overflow-x-visible">
+        <div className="h-full flex gap-5 min-w-max xl:grid xl:grid-cols-3 xl:gap-5 xl:overflow-x-visible">
 
           {/* Card 1 */}
           <div className="min-w-[25rem]">

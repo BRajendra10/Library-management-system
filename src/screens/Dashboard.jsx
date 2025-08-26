@@ -12,6 +12,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { SidebarContext } from '../context/sidebarContext';
 import { updateLoginData } from '../features/LoginSlice';
+import { GrSearch } from "react-icons/gr";
 
 function Dashboard() {
     const { isLogedIn } = useSelector((state) => state.login);
@@ -94,9 +95,9 @@ function Dashboard() {
                     <span className="text-2xl">Library</span>
                 </div>
 
-                {/* <div className="w-full flex justify-center items-center px-4 py-2">
+                <div className="w-full flex justify-center items-center px-4 py-2">
                     <button className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400">Lend / return</button>
-                </div> */}
+                </div>
 
                 <nav className="flex flex-col justify-center gap-1 p-3">
                     <NavLink
@@ -108,6 +109,9 @@ function Dashboard() {
                     <NavLink
                         className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                         to={"/members"}>Members</NavLink>
+                    <NavLink
+                        className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                        to={"/about"}>About</NavLink>
                 </nav>
 
                 {/* Navigation */}
@@ -116,9 +120,6 @@ function Dashboard() {
                         <NavLink
                             className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                             to={"/login"}>Login</NavLink>}
-                    <NavLink
-                        className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                        to={"/about"}>About</NavLink>
                     <NavLink
                         className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                         to={"/settings"}>Settings</NavLink>
@@ -164,14 +165,23 @@ function Dashboard() {
             <div className="col-span-26 md:col-span-28 lg:col-span-24 xl:col-span-25 2xl:col-span-26 min-h-screen flex flex-col bg-white">
 
                 {/* right top navigation */}
-                <div className="w-full h-[4rem] flex justify-end items-center p-2">
-                    <div className="w-[8rem] flex justify-evenly items-center gap-2">
+                <div className="w-full h-[4rem] flex justify-between items-center p-2">
+                    <div className="w-[30rem] h-[2.7rem] flex flex-start items-center border border-blue-200 rounded-sm">
+                        <div className="w-10 h-full flex justify-center items-center p-1"><GrSearch className="text-lg" /></div>
+                        <input className="w-90 h-full py-1 px-2 outline-none" type="text" placeholder="Search books, author, members etc." />
+                    </div>
+
+                    <div className="w-fit flex justify-evenly items-center gap-2">
                         <button className="p-2 text-stone-500 hover:text-stone-950 duration-300">
                             <IoMdNotificationsOutline className="text-2xl font-normal" />
                         </button>
 
-                        <div className="w-12 h-12 rounded-full border-2 border-blue-400 p-1">
-                            <img className="w-full h-full object-cover rounded-full" src={user} alt="curr-user" />
+                        <div className="w-fit h-full flex justify-start gap-2 p-1">
+                            <img className="w-11 h-11 object-cover rounded-full" src={user} alt="curr-user" />
+                            {/* <div className="w-[10rem] overflow-hidden">
+                                <h3>{login[0]?.name}</h3>
+                                <span className="truncate">{login[0]?.email}</span>
+                            </div> */}
                         </div>
                     </div>
                 </div>
