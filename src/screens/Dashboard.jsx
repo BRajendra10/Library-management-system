@@ -175,9 +175,13 @@ function Dashboard() {
                         </button>
 
                         <div className="w-fit h-full flex justify-start gap-3 p-1">
-                            {admin && <img
+                            {admin ? <img
                                 className="w-11 h-11 object-cover rounded-full"
                                 src={admin.userImage}
+                                alt="curr-user"
+                            /> : <img
+                                className="w-11 h-11 object-cover rounded-full"
+                                src={user}
                                 alt="curr-user"
                             />}
                         </div>
