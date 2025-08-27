@@ -17,12 +17,11 @@ function Overview() {
   const dispatch = useDispatch();
   const { books } = useSelector((state) => state.books)
   const { members } = useSelector((state) => state.members)
-  const overDueBooks = useSelector((state) => state.overDue.overdueBooks)
-  const Fine = useSelector((state) => state.overDue.Fine)
+  const { overdueBooks, Fine } = useSelector((state) => state.overDue);
 
   useEffect(() => {
-    dispatch(setTotalFine(overDueBooks))
-  }, [overDueBooks, dispatch])
+    dispatch(setTotalFine(overdueBooks))
+  }, [overdueBooks, dispatch])
 
   return (
     <div className="w-full h-fit grid grid-cols-12">
@@ -40,7 +39,7 @@ function Overview() {
 
           {/* Card 2 */}
           <div className="min-w-[25rem]">
-            <Card booksNum={overDueBooks.length} info={"books overdue"} num1={"-2%"} num2={`₹ ${Fine}`} >
+            <Card booksNum={overdueBooks.length} info={"books overdue"} num1={"-2%"} num2={`₹ ${Fine}`} >
               <FaRegClock className="text-4xl text-blue-500" />
             </Card>
           </div>
@@ -74,7 +73,7 @@ function Overview() {
 
           {/* details */}
           <div className="absolute top-12 left-0 w-full h-fit z-3">
-            {overDueBooks.map((el, inedx) => <OverdueCard id={inedx} data={el} />)}
+            {overdueBooks.map((el, inedx) => <OverdueCard id={inedx} data={el} />)}
           </div>
         </section>
 

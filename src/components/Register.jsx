@@ -42,7 +42,7 @@ const Register = () => {
     onSubmit: (values) => {
       console.log(values);
       formik.resetForm();
-      navigate('/login');
+      navigate('/members');
     },
   });
 

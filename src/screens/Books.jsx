@@ -3,8 +3,10 @@ import { useSelector } from 'react-redux'
 import { NavLink } from "react-router-dom";
 import Book from '../components/Book';
 import SearchBar from '../components/Search';
+import { useNavigate } from 'react-router-dom';
 
 function Books() {
+  const navigate = useNavigate();
   const { books } = useSelector((state) => state.books)
   const { overdueBooks } = useSelector((state) => state.overDue);
 
@@ -27,7 +29,7 @@ function Books() {
             </NavLink>
           </nav>
 
-          <button className="col-end-21 col-span-2 uppercase text-blue-700 hover:bg-blue-300/50 bg-blue-300"> + add Book </button>
+          <button className="col-end-21 col-span-2 uppercase text-blue-700 hover:bg-blue-300/50 bg-blue-300" onClick={() => navigate('/addbook')}> + add Book </button>
         </div>
         <div className="w-full h-[4.5rem] flex justify-between items-center bg-white p-2">
           <SearchBar />

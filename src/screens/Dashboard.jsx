@@ -172,17 +172,11 @@ function Dashboard() {
                         </button>
 
                         <div className="w-fit h-full flex justify-start gap-3 p-1">
-                            <img
+                            {admin && <img
                                 className="w-11 h-11 object-cover rounded-full"
-                                src={admin ? admin.userImage : user}
+                                src={admin.userImage}
                                 alt="curr-user"
-                            />
-                            {/* <div className="w-[10rem]">
-                                <h3 className="text-sm font-semibold">{admin.name}</h3>
-                                <span className="block w-full text-sm text-stone-400 truncate">
-                                    {admin.email}
-                                </span>
-                            </div> */}
+                            />}
                         </div>
 
                     </div>

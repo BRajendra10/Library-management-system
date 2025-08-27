@@ -20,7 +20,7 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    login.map((el) => dispatch(setIsLogedIn(el)));
+    login.forEach((el) => dispatch(setIsLogedIn(el)));
   }, [dispatch, login])
 
   return (

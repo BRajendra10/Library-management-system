@@ -6,8 +6,6 @@ import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 function Book({ data, index }) {
     const [isOpen, setIsOpen] = useState(false);
 
-    console.log(data);
-
     return (
         <div className="w-full rounded-md shadow-sm mb-1">
             {/* Main Row */}
@@ -52,7 +50,10 @@ function Book({ data, index }) {
                         </li>
                         <li className="col-span-5 flex flex-col">
                             <span className="font-semibold">Keywords:</span>
-                            <span className="">{data?.keywords?.join(', ')}</span>
+                            <div className="flex gap-1 flex-wrap">
+                                {data?.keywords.map((el) => <span className="px-1 bg-blue-200/50 border border-blue-200 rounded-sm">{el}</span>)}
+                            </div>
+                            {/* <span className="">{data?.keywords?.join(', ')}</span> */}
                         </li>
                         <li className="col-span-3 flex flex-col">
                             <span className="font-semibold">Department:</span>

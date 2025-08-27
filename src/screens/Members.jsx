@@ -5,8 +5,10 @@ import { NavLink } from "react-router-dom";
 import Member from '../components/Member';
 import { useSelector } from 'react-redux'
 import SearchBar from '../components/Search';
+import { useNavigate } from 'react-router-dom';
 
 function Members() {
+  const navigate = useNavigate();
   const { members } = useSelector((state) => state.members);
   const { login } = useSelector((state) => state.login);
 
@@ -26,7 +28,7 @@ function Members() {
             </NavLink>
           </nav>
 
-          <button className="col-end-21 col-span-2 uppercase text-blue-700 hover:bg-blue-300/50 bg-blue-300"> + add member </button>
+          <button className="col-end-21 col-span-2 uppercase text-blue-700 hover:bg-blue-300/50 bg-blue-300" onClick={() => navigate('/register')}> + add member </button>
         </div>
         <div className="w-full h-[4.5rem] flex justify-between items-center bg-white p-2">
           <SearchBar />
