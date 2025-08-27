@@ -23,7 +23,7 @@ function Member({ data }) {
   }
 
   return (
-    <ul className="w-full h-[4.5rem] grid grid-cols-25 p-2 gap-1 text-sm rounded-md hover:bg-gray-100 transition-shadow">
+    <ul className="w-full h-[4.5rem] grid grid-cols-25 p-2 gap-1 text-sm rounded-md hover:bg-gray-100 transition-shadow" key={id}>
       <li className="flex items-center">
         <input className="w-4 h-4" type="checkbox" />
       </li>

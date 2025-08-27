@@ -1,182 +1,197 @@
-import { useFormik } from "formik";
-import { object, string, number, date } from "yup";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { FaBook } from "react-icons/fa";
+import React from "react";
+import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
+import * as Yup from "yup";
+import { FiBookOpen, FiHash, FiBarChart2, FiFileText } from "react-icons/fi";
 
-const schema = object({
-    title: string().required("Title is required"),
-    author: string().required("Author is required"),
-    publisher: string().required("Publisher is required"),
-    isbn: string().required("ISBN is required"),
-    status: string().oneOf(["Available", "Borrowed", "Damaged", "Missing"]).required(),
-    description: string().required("Description is required"),
-    keywords: string().required("Keywords are required"),
-    edition: string().nullable(),
-    series: string().nullable(),
-    language: string().required("Language is required"),
-    pageNo: number().positive().integer().required("Page number required"),
-    publishDate: date().required("Publish date required"),
-    addedDate: date().required("Added date required"),
-    cost: number().positive().required("Cost is required"),
-    callNumber: string().required("Call number is required"),
-    department: string().required("Department is required"),
-    subject: string().required("Subject is required"),
-    coverImage: string().url("Invalid URL").required("Cover image is required"),
+// ✅ Validation Schema based on book data structure
+const BookSchema = Yup.object().shape({
+  title: Yup.string().required("Title is required"),
+  author: Yup.string().required("Author is required"),
+  publisher: Yup.string().required("Publisher is required"),
+  publicationDate: Yup.date().required("Publication date is required"),
+  edition: Yup.string(),
+  series: Yup.string(),
+  language: Yup.string().required("Language is required"),
+  pageCount: Yup.number().positive(),
+  callNumber: Yup.string(),
+  department: Yup.string(),
+  subject: Yup.string(),
+  status: Yup.string().required("Status is required"),
+  description: Yup.string(),
+  isbn: Yup.array().of(Yup.string().required("ISBN required")),
+  keywords: Yup.array().of(Yup.string()),
+  thumbnail: Yup.string().url("Must be a valid URL"),
 });
 
-const BookForm = ({ initialBook }) => {
-    const navigate = useNavigate();
-    const { books } = useSelector((state) => state.books);
+export default function AddBookForm() {
+  return (
+    <div className="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-2xl p-6 sm:p-8 overflow-scroll">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6 border-b pb-3">
+        <h2 className="text-xl font-semibold flex items-center gap-2">
+          <FiBookOpen className="text-stone-600" />
+          Add / Edit Book
+        </h2>
+      </div>
 
-    const formik = useFormik({
-        initialValues: initialBook || {
-            title: "",
-            author: "",
-            publisher: "",
-            bookId: books.length + 1,
-            isbn: "",
-            status: "Available",
-            description: "",
-            keywords: "",
-            edition: "",
-            series: "",
-            language: "English",
-            pageNo: "",
-            publishDate: "",
-            addedDate: new Date().toISOString().split("T")[0],
-            cost: "",
-            callNumber: "",
-            department: "",
-            subject: "",
-            coverImage: "",
-        },
-        validationSchema: schema,
-        onSubmit: (values) => {
-            console.log("Submitted Book:", values);
-            navigate("/books");
-        },
-    });
+      <Formik
+        initialValues={{
+          title: "",
+          author: "",
+          publisher: "",
+          publicationDate: "",
+          edition: "",
+          series: "",
+          language: "",
+          pageCount: "",
+          callNumber: "",
+          department: "",
+          subject: "",
+          status: "Available",
+          description: "",
+          isbn: [""],
+          keywords: [""],
+          thumbnail: "",
+        }}
+        validationSchema={BookSchema}
+        onSubmit={(values) => console.log("✅ Submitted:", values)}
+      >
+        {({ values, isSubmitting }) => (
+          <Form className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            {/* LEFT COLUMN */}
+            <div className="space-y-8">
+              {/* 🔹 Basic Info */}
+              <section>
+                <div className="grid grid-cols-2 gap-6">
+                  <FormInput name="title" label="Book Title" placeholder="Enter title" />
+                  <FormInput name="author" label="Author" placeholder="Enter author" />
+                  <FormInput name="publisher" label="Publisher" placeholder="Enter publisher" />
+                  <FormInput name="publicationDate" label="Publication Date" type="date" />
+                  <FormInput name="edition" label="Edition" placeholder="Enter edition" />
+                  <FormInput name="series" label="Series" placeholder="Enter series" />
+                </div>
+              </section>
 
-    const { errors, touched, handleChange, values, handleSubmit } = formik;
-
-    // Reusable Field
-    const InputField = ({ label, name, type = "text", ...rest }) => (
-        <div className="flex flex-col">
-            <label className="my-1 text-sm font-medium">{label}</label>
-            <input
-                id={name}
-                name={name}
-                type={type}
-                value={values[name]}
-                onChange={handleChange}
-                className="p-2 border border-stone-400 rounded-md"
-                {...rest}
-            />
-            {errors[name] && touched[name] && (
-                <span className="text-sm text-red-600">{errors[name]}</span>
-            )}
-        </div>
-    );
-
-    const SelectField = ({ label, name, options, ...rest }) => (
-        <div className="flex flex-col">
-            <label className="my-1 font-medium">{label}</label>
-            <select
-                id={name}
-                name={name}
-                value={values[name]}
-                onChange={handleChange}
-                className="p-2 border border-stone-400 rounded-md my-1"
-                {...rest}
-            >
-                <option value="">Select {label}</option>
-                {options.map((op) => (
-                    <option key={op} value={op}>
-                        {op}
-                    </option>
-                ))}
-            </select>
-            {errors[name] && touched[name] && (
-                <span className="text-sm text-red-600">{errors[name]}</span>
-            )}
-        </div>
-    );
-
-    const TextAreaField = ({ label, name }) => (
-        <div className="flex flex-col col-span-2">
-            <label className="mb-1 font-medium">{label}</label>
-            <textarea
-                id={name}
-                name={name}
-                rows="3"
-                value={values[name]}
-                onChange={handleChange}
-                className="p-2 border border-stone-400 rounded-md"
-            />
-            {errors[name] && touched[name] && (
-                <span className="text-sm text-red-600">{errors[name]}</span>
-            )}
-        </div>
-    );
-
-    return (
-        <div className="w-full min-h-screen flex justify-center items-center bg-stone-100 p-6 overflow-y-auto">
-            <div className="w-full max-w-5xl bg-white p-6 rounded-lg shadow-md">
-                <h2 className="text-2xl font-semibold text-center mb-6">
-                    {initialBook ? "Update Book" : "Add New Book"}
-                </h2>
-
-                <form
-                    onSubmit={handleSubmit}
-                    className="grid md:grid-cols-3 gap-4"
-                >
-                    {/* Book Info */}
-                    <div>
-                        <InputField label="Title" name="title" />
-                        <InputField label="Author" name="author" />
-                        <InputField label="Publisher" name="publisher" />
-                        <InputField label="ISBN" name="isbn" />
-                        <InputField label="Series" name="series" />
-                        <InputField label="Subject" name="subject" />
-                    </div>
-
-                    {/* Library Info */}
-                    <div>
-                        <SelectField label="Status" name="status" options={["Available", "Borrowed", "Damaged", "Missing"]} />
-                        <InputField label="Edition" name="edition" />
-                        <InputField label="Department" name="department" />
-                        <InputField label="Call Number" name="callNumber" />
-                        <InputField label="Book ID" name="  "/>
-                        <InputField label="Added Date" name="addedDate" type="date" />
-                    </div>
-
-                    {/* Details */}
-                    <div className="col-span-2">
-                        <TextAreaField label="Description" name="description" />
-                        <InputField label="Keywords" name="keywords" />
-                        <InputField label="Language" name="language" />
-                        <InputField label="Page No." name="pageNo" type="number" />
-                        <InputField label="Publish Date" name="publishDate" type="date" />
-                        <InputField label="Cost (₹)" name="cost" type="number" />
-                    </div>
-
-                    {/* Media */}
-                    {/* <InputField label="Cover Image URL" name="coverImage" className="col-span-2" /> */}
-
-                    {/* Submit */}
-                    <div className="col-span-4 flex justify-end mt-4">
-                        <button
-                            type="submit"
-                            className="flex items-center gap-2 bg-sky-500 text-white px-6 py-2 rounded-md"
-                        >
-                            <FaBook /> {initialBook ? "Update Book" : "Add Book"}
+              {/* 🔹 Identifiers */}
+              <section>
+                <div className="grid grid-cols-2 gap-6">
+                  {/* Multiple ISBNs */}
+                  <FieldArray name="isbn">
+                    {({ push, remove }) => (
+                      <div className="col-span-2">
+                        <label className="mb-2 block text-sm font-medium text-stone-700">ISBN(s)</label>
+                        {values.isbn.map((_, index) => (
+                          <div key={index} className="flex items-center gap-2 mb-2">
+                            <Field
+                              name={`isbn.${index}`}
+                              placeholder="Enter ISBN"
+                              className="flex-1 px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
+                            />
+                            <button type="button" onClick={() => remove(index)} className="text-red-500">✕</button>
+                          </div>
+                        ))}
+                        <button type="button" onClick={() => push("")} className="text-sm text-blue-600">
+                          + Add ISBN
                         </button>
-                    </div>
-                </form>
+                      </div>
+                    )}
+                  </FieldArray>
+                  <FormInput name="language" label="Language" placeholder="Enter language" />
+                  <FormInput name="pageCount" label="Pages" type="number" placeholder="e.g. 1312" />
+                </div>
+              </section>
             </div>
-        </div>
-    );
-};
 
-export default BookForm;
+            {/* RIGHT COLUMN */}
+            <div className="space-y-8">
+              {/* 🔹 Metadata */}
+              <section>
+                <div className="grid grid-cols-2 gap-6">
+                  <FormInput name="callNumber" label="Call Number" placeholder="Enter call number" />
+                  <FormInput name="department" label="Department" placeholder="Enter department" />
+                  <FormInput name="subject" label="Subject" placeholder="Enter subject" />
+                  <FormInput name="status" label="Status" placeholder="Available / Borrowed" />
+                  <FormInput name="thumbnail" label="Thumbnail URL" placeholder="https://..." />
+                </div>
+              </section>
+
+              {/* 🔹 Extra Details */}
+              <section>
+                <div className="space-y-6">
+                  {/* Multiple Keywords */}
+                  <FieldArray name="keywords">
+                    {({ push, remove }) => (
+                      <div>
+                        <label className="mb-2 block text-sm font-medium text-stone-700">Keywords</label>
+                        {values.keywords.map((_, index) => (
+                          <div key={index} className="flex items-center gap-2 mb-2">
+                            <Field
+                              name={`keywords.${index}`}
+                              placeholder="Enter keyword"
+                              className="flex-1 px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
+                            />
+                            <button type="button" onClick={() => remove(index)} className="text-red-500">✕</button>
+                          </div>
+                        ))}
+                        <button type="button" onClick={() => push("")} className="text-sm text-blue-600">
+                          + Add Keyword
+                        </button>
+                      </div>
+                    )}
+                  </FieldArray>
+
+                  <FormTextarea name="description" label="Description" placeholder="Write a short description..." />
+                </div>
+              </section>
+            </div>
+
+            {/* Submit Button - Full Width */}
+            <div className="lg:col-span-2 pt-6 border-t flex justify-end">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="px-6 py-3 bg-stone-900 text-white rounded-md"
+              >
+                Save Book
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
+}
+
+// ✅ Reusable input components
+const FormInput = ({ name, label, type = "text", placeholder }) => (
+  <div className="flex flex-col">
+    <label htmlFor={name} className="mb-1 text-sm font-medium text-stone-700">
+      {label}
+    </label>
+    <Field
+      type={type}
+      name={name}
+      id={name}
+      placeholder={placeholder}
+      className="w-full px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
+    />
+    <ErrorMessage name={name} component="p" className="text-sm text-red-500 mt-1" />
+  </div>
+);
+
+const FormTextarea = ({ name, label, placeholder }) => (
+  <div className="flex flex-col">
+    <label htmlFor={name} className="mb-1 text-sm font-medium text-stone-700">
+      {label}
+    </label>
+    <Field
+      as="textarea"
+      name={name}
+      id={name}
+      rows="4"
+      placeholder={placeholder}
+      className="w-full px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
+    />
+    <ErrorMessage name={name} component="p" className="text-sm text-red-500 mt-1" />
+  </div>
+);
