@@ -3,9 +3,6 @@ import { useFormik } from "formik";
 import { object, string, date, number } from "yup";
 import { NavLink } from "react-router-dom";
 
-//
-// Lending Form
-//
 const LendingForm = () => {
   const schema = object({
     memberId: string().required("Member ID is required"),
@@ -112,9 +109,7 @@ const LendingForm = () => {
   );
 };
 
-//
-// Returning Form
-//
+
 const ReturningForm = () => {
   const schema = object({
     returnDate: date().required("Return Date is required"),

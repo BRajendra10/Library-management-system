@@ -3,15 +3,18 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.jsx";
 import { SidebarContextProvider } from "./context/SidebarContext.jsx";
+import { MemberContextProvider } from "./context/editmemberContext";
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
 
 createRoot(document.getElementById("root")).render(
   <SidebarContextProvider>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
+    <MemberContextProvider>
+      <BrowserRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </BrowserRouter>
+    </MemberContextProvider>
   </SidebarContextProvider>
 );

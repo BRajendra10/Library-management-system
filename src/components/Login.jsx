@@ -20,21 +20,21 @@ function Login() {
       password: ''
     },
     validationSchema: schema,
-    onSubmit: values => {
-      login.forEach((el) => {
-        if (el.email == values.email && el.password == values.password) {
-          dispatch(updateLoginData({
-            id: el.id,
-            updatedData: {
-              isLogedIn: true,
-            }
-          }))
-        } else {
-          console.log("login failes");
-        }
+    onSubmit: (values) => {
+      const matchedUser = login.find(
+        (el) => el.email === values.email && el.password === values.password
+      );
 
+      if (matchedUser) {
+        dispatch(updateLoginData({
+          id: matchedUser.id,
+          updatedData: { isLogedIn: true }
+        }));
         navigate("/");
-      });
+      } else {
+        console.log("login failed");
+      }
+
       formik.resetForm();
     },
   });
