@@ -73,7 +73,7 @@ function Overview() {
 
           {/* details */}
           <div className="absolute top-12 left-0 w-full h-fit z-3">
-            {overdueBooks.map((el, inedx) => <OverdueCard id={inedx} data={el} />)}
+            {overdueBooks.map((el) => <OverdueCard data={el} />)}
           </div>
         </section>
 

@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEdit } from "react-icons/tb";
+import { MemberContext } from '../context/editmemberContext';
+import { delteMember } from '../features/MemberSlice';
 
 function Member({ data }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { handleEdit, handleId } = useContext(MemberContext);
   const { id, userImage, name, email, phone, lastVisited, department, year, fineDue } = data;
+
+  const handleEditMember = () => {
+    handleId(id);
+    handleEdit(data);
+    navigate('/register');
+  }
+
+  const handleDeleteMember = () => {
+    dispatch(delteMember({id}));
+  }
 
   return (
     <ul className="w-full h-[4.5rem] grid grid-cols-25 p-2 gap-1 text-sm rounded-md hover:bg-gray-100 transition-shadow">
@@ -31,10 +48,10 @@ function Member({ data }) {
       </li>
 
       <li className="col-span-3 flex items-center gap-2">
-        <button className="p-2 bg-gray-100 hover:bg-gray-200 rounded-md transition">
+        <button className="p-2 bg-gray-100 hover:bg-gray-200 rounded-md transition" onClick={() => handleEditMember()}>
           <TbEdit size={18} />
         </button>
-        <button className="p-2 bg-gray-100 hover:bg-gray-200 rounded-md transition">
+        <button className="p-2 bg-gray-100 hover:bg-gray-200 rounded-md transition" onClick={handleDeleteMember}>
           <MdDeleteOutline size={18} />
         </button>
       </li>

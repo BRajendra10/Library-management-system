@@ -4,7 +4,7 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import Member from '../components/Member';
 import { useSelector } from 'react-redux'
-import SearchBar from '../components/Search';
+import SearchBar from '../components/SearchMember';
 import { useNavigate } from 'react-router-dom';
 
 function Members() {
