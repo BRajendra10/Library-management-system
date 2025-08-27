@@ -13,8 +13,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { SidebarContext } from '../context/sidebarContext';
 import { updateLoginData } from '../features/LoginSlice';
 import { GrSearch } from "react-icons/gr";
+import { Navigate, useNavigate } from 'react-router-dom';
+
 
 function Dashboard() {
+    const navigate = useNavigate();
     const { admin, isLogedIn } = useSelector((state) => state.login);
     const dispatch = useDispatch();
 
@@ -96,7 +99,7 @@ function Dashboard() {
                 </div>
 
                 <div className="w-full flex justify-center items-center px-4 py-2">
-                    <button className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400">Lend / return</button>
+                    <button className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400" onClick={() => navigate("/lend")}>Lend / return</button>
                 </div>
 
                 <nav className="flex flex-col justify-center gap-1 p-3">

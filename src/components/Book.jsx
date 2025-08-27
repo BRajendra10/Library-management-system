@@ -7,7 +7,7 @@ function Book({ data, index }) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className="w-full rounded-md shadow-sm mb-1">
+        <div className="w-full rounded-md mb-1">
             {/* Main Row */}
             <ul className={`w-full grid grid-cols-25 p-2 gap-1 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100 transition"`}>
                 <li className="flex items-center"><input type="checkbox" className="w-4 h-4" /></li>
