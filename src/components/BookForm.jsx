@@ -26,6 +26,34 @@ const BookSchema = Yup.object().shape({
   isbn: Yup.array().of(Yup.string().required("ISBN required")),
   keywords: Yup.array().of(Yup.string()),
   thumbnail: Yup.string().url("Must be a valid URL"),
+  requests: Yup.number().min(0).default(0),
+  requestDetails: Yup.array().of(
+    Yup.object().shape({
+      isbn: Yup.string().required(),
+      userId: Yup.number().required(),
+      memberName: Yup.string().required(),
+      memberImage: Yup.string().url(),
+      requestDate: Yup.date().nullable(),
+      borrowDate: Yup.date().nullable(),
+      dueDate: Yup.date().nullable(),
+      totalDelayDays: Yup.number().min(0).default(0),
+      fineRate: Yup.number().min(0).default(0),
+      totalFine: Yup.number().min(0).default(0),
+    })
+  ),
+  borrowDetails: Yup.array().of(
+    Yup.object().shape({
+      isbn: Yup.string().required(),
+      userId: Yup.number().required(),
+      memberName: Yup.string().required(),
+      memberImage: Yup.string().url(),
+      borrowDate: Yup.date().required(),
+      dueDate: Yup.date().required(),
+      totalDelayDays: Yup.number().min(0).default(0),
+      fineRate: Yup.number().min(0).default(0),
+      totalFine: Yup.number().min(0).default(0),
+    })
+  )
 });
 
 export default function AddBookForm() {
@@ -62,6 +90,9 @@ export default function AddBookForm() {
           isbn: editedBook?.isbn || [""],
           keywords: editedBook?.keywords || [""],
           thumbnail: editedBook?.thumbnail || "",
+          requests: editedBook?.requests ?? 0,
+          requestDetails: editedBook?.requestDetails ?? [],
+          borrowDetails: editedBook?.borrowDetails ?? []
         }}
         validationSchema={BookSchema}
         onSubmit={(values, { resetForm }) => {
