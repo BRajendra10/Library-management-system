@@ -4,34 +4,53 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import Member from '../components/Member';
 import { useSelector } from 'react-redux'
+import SearchBar from '../components/SearchMember';
+import { useNavigate } from 'react-router-dom';
 
 function Members() {
+  const navigate = useNavigate();
   const { members } = useSelector((state) => state.members);
+  const { login } = useSelector((state) => state.login);
 
   return (
-    <div className="w-full h-220 flex flex-col items-center border border-blue-200 bg-blue-100/40 rounded-lg">
-      <div className="w-full h-[3.8rem] grid grid-cols-20">
-        <nav className="col-span-5 2xl:col-span-3 grid grid-cols-2">
-          <NavLink className="flex justify-center hover:bg-blue-200 items-center">Students</NavLink>
-          <NavLink className="flex justify-center hover:bg-blue-200 items-center">Admin</NavLink>
-        </nav>
+    <div className="w-full h-full px-2">
+      <div className="w-full h-220 flex flex-col items-center border border-blue-200 bg-blue-100/40 rounded-lg">
+        <div className="w-full min-h-[3.7rem] grid grid-cols-20">
+          <nav className="col-span-5 2xl:col-span-5 grid grid-cols-3 gap-2">
+            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/members"}>
+              All <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{members.length}</span>
+            </NavLink>
+            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/members/students"}>
+              Students <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{members.length - 1}</span>
+            </NavLink>
+            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/members/admin"}>
+              Admin <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{login.length}</span>
+            </NavLink>
+          </nav>
 
-        <button className="col-end-21 col-span-2 uppercase text-blue-700 hover:bg-blue-300/50 bg-blue-300"> + add member </button>
-      </div>
-      <div className="w-full h-full bg-white rounded-lg">
-        {/* <div className="w-full h-[3.8rem] grid grid-cols-20">
-          <div className="col-span-5 grid grid-cols-12 p-2 py-3">
-            <div className="col-span-1 flex justify-center items-center rounded-l-lg bg-gray-200">
-              <LuSearch className="text-xl" />
-            </div>
-            <input className="col-span-11 border-1 border-black rounded-lg outline-none p-2" type="text" name="" id="" />
+          <button className="col-end-21 col-span-2 uppercase text-blue-700 hover:bg-blue-300/50 bg-blue-300" onClick={() => navigate('/register')}> + add member </button>
+        </div>
+        <div className="w-full h-[4.5rem] flex justify-between items-center bg-white p-2">
+          <SearchBar />
+        </div>
+        <div className="relative w-full h-full bg-white rounded-lg overflow-scroll">
+          <ul className="sticky top-0 left-0 w-full h-[3rem] grid grid-cols-25 text-sm/6 p-2 gap-1 bg-white z-5">
+            <li className="flex items-center text-stone-500">
+              <input className="w-4 h-4" type="checkbox" name="select-all-member" id="select-all-member" />
+            </li>
+            <li className="col-span-5 flex items-center text-stone-500">Name & Email </li>
+            <li className="col-span-2 flex items-center text-stone-500">Member ID</li>
+            <li className="col-span-3 flex items-center text-stone-500">Phone number</li>
+            <li className="col-span-3 flex items-center text-stone-500">Last visited</li>
+            <li className="col-span-3 flex items-center text-stone-500">Department</li>
+            <li className="col-span-2 flex items-center text-stone-500">Year</li>
+            <li className="col-span-3 flex items-center text-stone-500">Fine Due</li>
+            <li className="col-span-3 flex items-center text-stone-500">Actions</li>
+          </ul>
+          <div className="absolute top-10 left-0 w-full h-fit flex flex-col gap-1 overflow-scroll z-3">
+            {members.map((el) => <Member data={el} />)}
           </div>
-
-          <div className="col-end-21 col-span-2 bg-red-400"></div>
-        </div> */}
-        {/* <div className="w-full h-[20rem]">
-          {members.map((el) => <Member data={el} /> )}
-        </div> */}
+        </div>
       </div>
     </div>
   )

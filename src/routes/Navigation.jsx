@@ -8,6 +8,8 @@ import About from '../screens/About'
 import HelpSupport from '../screens/HelpSupport'
 import Login from '../components/Login';
 import Register from '../components/Register';
+import BookForm from '../components/BookForm';
+import { LendingForm, ReturningForm } from '../components/Lend&Return'
 
 function Navigation() {
     return (
@@ -20,6 +22,9 @@ function Navigation() {
             <Route path="/help-support" element={<HelpSupport />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/addbook" element={<BookForm />} />
+            <Route path="/lend" element={<LendingForm />} />
+            <Route path="/return" element={<ReturningForm />} />
         </Routes>
     )
 }

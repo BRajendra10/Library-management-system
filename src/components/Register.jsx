@@ -1,14 +1,18 @@
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
-import { FaUserPlus } from "react-icons/fa6";
-import { object, string, mixed } from 'yup';
+import { FaUserPlus } from 'react-icons/fa6';
+import { object, string, mixed, number } from 'yup'; // Added 'number' from Yup
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { postMemberData, updateMemberData } from '../features/MemberSlice';
+import { MemberContext } from '../context/editmemberContext';
 
 const schema = object({
   name: string().required('Name is required'),
   email: string().required('Email is required').email('Invalid email format'),
   phone: string()
     .required('Phone number is required')
-    .min(8),
+    .min(8, 'Phone number must be at least 8 digits'),
   department: string()
     .required('Department is required')
     .oneOf(['CSE', 'ECE', 'ME', 'IT', 'Mathematics', 'Administration'], 'Invalid department'),
@@ -23,26 +27,39 @@ const schema = object({
     .oneOf(['student', 'admin'], 'Invalid membership type'),
   password: string().required('Password is required').min(8, 'Password must be at least 8 characters'),
   userImage: string().required('Image URL is required').url('Invalid URL format'),
+  fineDue: number() // Added validation for fineDue
+    .required('Fine amount is required')
+    .min(0, 'Fine cannot be negative')
+    .typeError('Fine must be a number'),
 });
 
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { memberId, editedMember } = useContext(MemberContext);
+
   const formik = useFormik({
     initialValues: {
-      name: '',
-      email: '',
-      phone: '',
-      department: '',
-      year: '',
-      membershipType: 'student',
-      password: '',
-      userImage: '',
+      name: editedMember?.name || '',
+      email: editedMember?.email || '',
+      phone: editedMember?.phone || '',
+      department: editedMember?.department || '',
+      year: editedMember?.year || '',
+      fineDue: editedMember?.fineDue || 0, // Initialize with editedMember value or 0
+      lastVisited: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).split('/').join('-'),
+      membershipType: editedMember?.membershipType || 'student',
+      password: editedMember?.password || '',
+      userImage: editedMember?.userImage || '',
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      console.log(values);
+      if(memberId){
+        dispatch(updateMemberData({updatedMember: values, id: memberId}))
+      }else{
+        dispatch(postMemberData({ newMember: values }));
+      }
       formik.resetForm();
-      navigate('/login');
+      navigate('/members');
     },
   });
 
@@ -153,7 +170,20 @@ const Register = () => {
             {errors.year && touched.year && <span className="text-sm text-red-700">{errors.year}</span>}
           </div>
 
-          <div className="md:col-span-2">
+          <div>
+            <label className="text-base mb-1 block" htmlFor="fineDue">Fine Due</label>
+            <input
+              id="fineDue"
+              name="fineDue"
+              type="number"
+              className="w-full p-2 border border-stone-400 rounded-lg"
+              onChange={handleChange}
+              value={values.fineDue}
+            />
+            {errors.fineDue && touched.fineDue && <span className="text-sm text-red-700">{errors.fineDue}</span>}
+          </div>
+
+          <div>
             <label className="text-base mb-1 block" htmlFor="password">Password</label>
             <input
               id="password"

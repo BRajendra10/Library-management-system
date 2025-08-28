@@ -1,8 +1,8 @@
 import React from 'react'
 import { RiMore2Fill } from "react-icons/ri";
 
-function OverdueCard({id, data}) {
-    const {bookTitle, bookAuthor, bookThumbnail, memberName, memberImage, totalDelayDays, totalFine} = data;
+function OverdueCard({data}) {
+    const {id, bookTitle, bookAuthor, bookThumbnail, memberName, memberImage, totalDelayDays, totalFine} = data;
 
     return (
         <article className="w-full h-[5rem] flex items-center justify-between bg-white rounded-lg px-4" key={id}>

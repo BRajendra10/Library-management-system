@@ -4,8 +4,8 @@ import { useEffect } from "react";
 
 
 export default function BookRequestCard({id,data}){
-  console.log(data);
-  const {bookTitle,bookThumbnail,memberImage,memberName,requestDate} = data;
+  const {bookThumbnail,bookTitle,memberImage,memberName,requestDate}=data
+  
 
 //   const { requestbooks } = useSelector((state) => state.requestbooks)
 //   const dispatch = useDispatch()

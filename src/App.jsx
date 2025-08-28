@@ -26,8 +26,8 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(setIsLogedIn(login[0]?.isLogedIn));
-  }, [dispatch, login]);
+    login.forEach((el) => dispatch(setIsLogedIn(el)));
+  }, [dispatch, login])
 
   return (
     <div>

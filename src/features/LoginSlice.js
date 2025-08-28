@@ -39,6 +39,7 @@ export const updateLoginData = createAsyncThunk(
 
 const initialState = {
   login: [],
+  admin: {},
   isLogedIn: false,
   status: "neutral",
   error: null,
@@ -49,7 +50,10 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     setIsLogedIn: (state, action) => {
-      state.isLogedIn = action.payload;
+      state.isLogedIn = action.payload?.isLogedIn;
+      if (action.payload?.isLogedIn) {
+        state.admin = action.payload;
+      }
     }
   },
   extraReducers: (builder) => {
@@ -75,12 +79,19 @@ const loginSlice = createSlice({
 
     builder.addCase(updateLoginData.fulfilled, (state, action) => {
       state.status = "success";
-      state.login = action.payload;
-    })
+      state.login = state.login.map(user =>
+        user.id === action.payload.id ? action.payload : user
+      );
+      // also update admin if this is the logged-in user
+      if (action.payload.isLogedIn) {
+        state.admin = action.payload;
+        state.isLogedIn = true;
+      }
+    });
 
     builder.addCase(updateLoginData.rejected, (state, action) => {
       state.status = "error",
-      state.error = action.error.message;
+        state.error = action.error.message;
     })
 
     // //post new users data

@@ -12,9 +12,13 @@ import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { SidebarContext } from '../context/sidebarContext';
 import { updateLoginData } from '../features/LoginSlice';
+import { GrSearch } from "react-icons/gr";
+import { Navigate, useNavigate } from 'react-router-dom';
+
 
 function Dashboard() {
-    const { isLogedIn } = useSelector((state) => state.login);
+    const navigate = useNavigate();
+    const { admin, isLogedIn } = useSelector((state) => state.login);
     const dispatch = useDispatch();
 
     function HandleLogout() {
@@ -94,9 +98,9 @@ function Dashboard() {
                     <span className="text-2xl">Library</span>
                 </div>
 
-                {/* <div className="w-full flex justify-center items-center px-4 py-2">
-                    <button className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400">Lend / return</button>
-                </div> */}
+                <div className="w-full flex justify-center items-center px-4 py-2">
+                    <button className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400" onClick={() => navigate("/lend")}>Lend / return</button>
+                </div>
 
                 <nav className="flex flex-col justify-center gap-1 p-3">
                     <NavLink
@@ -108,6 +112,9 @@ function Dashboard() {
                     <NavLink
                         className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                         to={"/members"}>Members</NavLink>
+                    <NavLink
+                        className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                        to={"/about"}>About</NavLink>
                 </nav>
 
                 {/* Navigation */}
@@ -116,9 +123,6 @@ function Dashboard() {
                         <NavLink
                             className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                             to={"/login"}>Login</NavLink>}
-                    <NavLink
-                        className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                        to={"/about"}>About</NavLink>
                     <NavLink
                         className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                         to={"/settings"}>Settings</NavLink>
@@ -165,14 +169,23 @@ function Dashboard() {
 
                 {/* right top navigation */}
                 <div className="w-full h-[4rem] flex justify-end items-center p-2">
-                    <div className="w-[8rem] flex justify-evenly items-center gap-2">
+                    <div className="w-fit flex justify-evenly items-center gap-2">
                         <button className="p-2 text-stone-500 hover:text-stone-950 duration-300">
                             <IoMdNotificationsOutline className="text-2xl font-normal" />
                         </button>
 
-                        <div className="w-12 h-12 rounded-full border-2 border-blue-400 p-1">
-                            <img className="w-full h-full object-cover rounded-full" src={user} alt="curr-user" />
+                        <div className="w-fit h-full flex justify-start gap-3 p-1">
+                            {admin ? <img
+                                className="w-11 h-11 object-cover rounded-full"
+                                src={admin.userImage}
+                                alt="curr-user"
+                            /> : <img
+                                className="w-11 h-11 object-cover rounded-full"
+                                src={user}
+                                alt="curr-user"
+                            />}
                         </div>
+
                     </div>
                 </div>
 
