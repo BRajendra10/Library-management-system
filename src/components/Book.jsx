@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEdit } from "react-icons/tb";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
+import { useDispatch } from 'react-redux'
+import { removeBooksData } from '../features/BookSlice';
+import { BookContext } from '../context/BookContext';
 
 function Book({ data, index }) {
-    const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [ isOpen, setIsOpen ] = useState(false);
+    const { handleEdit, handleId } = useContext(BookContext);
+    const { id, title, author, publisher, isbn, status, requestDetails, description, keywords, department, subject, callNumber, language, pageCount, addedDate, edition } = data
+
+    const handleDelete = (id) => {
+        dispatch(removeBooksData(id));
+    }
+
+    const editedBookData = () => {
+        handleId(id)
+        handleEdit(data);
+        navigate('/addbook');
+    }
 
     return (
         <div className="w-full rounded-md mb-1">
@@ -13,24 +31,24 @@ function Book({ data, index }) {
                 <li className="flex items-center"><input type="checkbox" className="w-4 h-4" /></li>
                 <li className="col-span-2 flex justify-start items-center"><img className="w-16 h-20 rounded-sm object-cover shadow-sm" src={data?.thumbnail} /></li>
                 <li className="col-span-6 flex flex-col justify-center">
-                    <span className="w-80 text-base font-semibold truncate">{data?.title}</span>
-                    <span className="w-80 text-sm text-gray-500 truncate">by {data?.author}</span>
+                    <span className="w-80 text-base font-semibold truncate">{title}</span>
+                    <span className="w-80 text-sm text-gray-500 truncate">by {author}</span>
                 </li>
-                <li className="col-span-3 flex items-center">{data?.publisher}</li>
-                <li className="col-span-2 flex items-center">ID {data?.id}</li>
+                <li className="col-span-3 flex items-center">{publisher}</li>
+                <li className="col-span-2 flex items-center">ID {id}</li>
                 <li className="col-span-3 flex flex-col justify-center">
-                    <span>{data?.isbn[0]}</span>
-                    <span>{data?.isbn[1]}</span>
+                    <span>{isbn[0]}</span>
+                    <span>{isbn[1]}</span>
                 </li>
                 <li className="col-span-2 flex items-center">
                     <span className={`px-2 py-0.5 rounded-full text-sm font-medium ${data?.status === "Borrowed" ? "bg-red-100 text-red-500" : "bg-green-100 text-green-500"}`}>
-                        {data?.status}
+                        {status}
                     </span>
                 </li>
-                <li className="col-span-2 flex items-center">{data?.requestDetails.length}</li>
+                <li className="col-span-2 flex items-center">{requestDetails?.length}</li>
                 <li className="col-span-4 flex items-center gap-2">
-                    <button className="p-2 bg-gray-100 hover:bg-gray-200 rounded-md"><TbEdit size={18} /></button>
-                    <button className="p-2 bg-gray-100 hover:bg-gray-200 rounded-md"><MdDeleteOutline size={18} /></button>
+                    <button className="p-2 bg-gray-100 hover:bg-gray-200 rounded-md" onClick={() => editedBookData()}><TbEdit size={18} /></button>
+                    <button className="p-2 bg-gray-100 hover:bg-gray-200 rounded-md" onClick={() => handleDelete(data?.id)}><MdDeleteOutline size={18} /></button>
                     <button
                         className="p-2 bg-gray-100 hover:bg-gray-200 rounded-md transition"
                         onClick={() => setIsOpen(!isOpen)}
@@ -46,43 +64,43 @@ function Book({ data, index }) {
                     <ul className="grid grid-cols-28 gap-4 text-gray-700 text-sm">
                         <li className="col-start-2 col-span-6 flex flex-col">
                             <span className="font-semibold">Description:</span>
-                            <span className="">{data?.description}</span>
+                            <span className="">{description}</span>
                         </li>
                         <li className="col-span-5 flex flex-col">
                             <span className="font-semibold">Keywords:</span>
                             <div className="flex gap-1 flex-wrap">
-                                {data?.keywords.map((el) => <span className="px-1 bg-blue-200/50 border border-blue-200 rounded-sm">{el}</span>)}
+                                {keywords.map((el) => <span className="px-1 bg-blue-200/50 border border-blue-200 rounded-sm">{el}</span>)}
                             </div>
                             {/* <span className="">{data?.keywords?.join(', ')}</span> */}
                         </li>
                         <li className="col-span-3 flex flex-col">
                             <span className="font-semibold">Department:</span>
-                            <span>{data?.department}</span>
+                            <span>{department}</span>
                         </li>
                         <li className="col-span-2 flex flex-col">
                             <span className="font-semibold">Subject:</span>
-                            <span className="truncate">{data?.subject}</span>
+                            <span className="truncate">{subject}</span>
                         </li>
                         <li className="col-span-3 flex flex-col">
                             <span className="font-semibold">Books Call Number:</span>
-                            <span>{data?.callNumber}</span>
+                            <span>{callNumber}</span>
                         </li>
                         <li className="col-span-2 flex flex-col">
                             <span className="font-semibold">Language:</span>
-                            <span>{data?.language}</span>
+                            <span>{language}</span>
                         </li>
                         <li className="col-span-2 flex flex-col">
                             <span className="font-semibold">Page Count:</span>
-                            <span>{data?.pageCount}</span>
+                            <span>{pageCount}</span>
                         </li>
                         <li className="col-span-2 flex flex-col gap-5">
                             <div className="col-span-2 flex flex-col">
                                 <span className="font-semibold">Added Date:</span>
-                                <span>{data?.addedDate}</span>
+                                <span>{addedDate}</span>
                             </div>
                             <div className="col-span-2 flex flex-col">
                                 <span className="font-semibold">Edition:</span>
-                                <span>{data?.edition}</span>
+                                <span>{edition}</span>
                             </div>
                         </li>
 

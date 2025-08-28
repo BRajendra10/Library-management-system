@@ -16,13 +16,13 @@ function Books() {
         <div className="w-full min-h-[3.7rem] grid grid-cols-20">
           <nav className="col-span-5 2xl:col-span-7 grid grid-cols-4 gap-2">
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/books"}>
-              All <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{books.length}</span>
+              All <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{books?.length}</span>
             </NavLink>
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/books/request"}>
               Borrowed <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{22}</span>
             </NavLink>
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/books/overdue"}>
-              Overdue <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{overdueBooks.length}</span>
+              Overdue <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{overdueBooks?.length}</span>
             </NavLink>
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/books/request"}>
               Request <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{10}</span>

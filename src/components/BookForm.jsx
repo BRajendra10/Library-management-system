@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import * as Yup from "yup";
 import { FiBookOpen, FiHash, FiBarChart2, FiFileText } from "react-icons/fi";
+import { postBookData } from "../features/BookSlice";
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { BookContext } from '../context/BookContext';
+import { updateBook } from "../features/BookSlice";
 
 // ✅ Validation Schema based on book data structure
 const BookSchema = Yup.object().shape({
@@ -24,6 +29,11 @@ const BookSchema = Yup.object().shape({
 });
 
 export default function AddBookForm() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { bookId, editedBook } = useContext(BookContext);
+  console.log(bookId, editedBook);
+
   return (
     <div className="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-2xl p-6 sm:p-8 overflow-scroll">
       {/* Header */}
@@ -36,25 +46,33 @@ export default function AddBookForm() {
 
       <Formik
         initialValues={{
-          title: "",
-          author: "",
-          publisher: "",
-          publicationDate: "",
-          edition: "",
-          series: "",
-          language: "",
-          pageCount: "",
-          callNumber: "",
-          department: "",
-          subject: "",
+          title: editedBook?.title || "",
+          author: editedBook?.author || "",
+          publisher: editedBook?.publisher || "",
+          publicationDate: editedBook?.publicationDate || "",
+          edition: editedBook?.edition || "",
+          series: editedBook?.series || "",
+          language: editedBook?.language || "",
+          pageCount: editedBook?.pageCount || "",
+          callNumber: editedBook?.callNumber || "",
+          department: editedBook?.department || "",
+          subject: editedBook?.subject || "",
           status: "Available",
-          description: "",
-          isbn: [""],
-          keywords: [""],
-          thumbnail: "",
+          description: editedBook?.description || "",
+          isbn: editedBook?.isbn || [""],
+          keywords: editedBook?.keywords || [""],
+          thumbnail: editedBook?.thumbnail || "",
         }}
         validationSchema={BookSchema}
-        onSubmit={(values) => console.log("✅ Submitted:", values)}
+        onSubmit={(values, { resetForm }) => {
+          if (bookId) {
+            dispatch(updateBook({ id: bookId, newBook: values }))
+          } else {
+            dispatch(postBookData(values));
+          }
+          navigate("/books");
+          resetForm();
+        }}
       >
         {({ values, isSubmitting }) => (
           <Form className="grid grid-cols-1 lg:grid-cols-2 gap-10">

@@ -24,8 +24,12 @@ export const removeBooksData = createAsyncThunk("removeBooksData", async (id) =>
 export const postBookData = createAsyncThunk("postBookData", async (newbookdata) => {
   const res = await axios.post(booksDataUrl, newbookdata)
   return res.data;
-
 })
+
+export const updateBook = createAsyncThunk("books/updateBook", async ({ id, newBook }) => {
+  const res = await axios.put(`${booksDataUrl}/${id}`, newBook);
+  return res.data;
+});
 
 //InitialState
 const initialState = {
@@ -61,7 +65,7 @@ const bookSlice = createSlice({
 
     builder.addCase(removeBooksData.fulfilled, (state, action) => {
       state.status = "success"
-      state.books.splice(action.payload, 1);
+      state.books.filter(book => book.id !== action.payload);
     })
 
 
@@ -72,19 +76,33 @@ const bookSlice = createSlice({
 
     // Post New book Data
     builder.addCase(postBookData.pending, (state) => {
-      state.status = "loading"
+      state.status = "loading";
     })
 
     builder.addCase(postBookData.fulfilled, (state, action) => {
-      state.status = "success"
+      state.status = "success";
       state.books.push(action.payload);
     })
-
 
     builder.addCase(postBookData.rejected, (state, action) => {
       state.status = "error";
       state.error = action.payload.error;
     });
+
+    builder
+      .addCase(updateBook.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateBook.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.books = state.books.map((book) =>
+          book.id === action.payload.id ? action.payload : book
+        );
+      })
+      .addCase(updateBook.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
   }
 });
 
