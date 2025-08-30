@@ -8,10 +8,11 @@ import { loginUsersData } from './features/LoginSlice'
 import Dashboard from './screens/Dashboard'
 import { setIsLogedIn } from './features/LoginSlice'
 import { fetchBorrowedBook } from './features/borrowedBooksSlice'
+import { fetachedRequestBooksData } from './features/RequestBookSlice'
 import { getDate } from './features/borrowedBooksSlice'
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { login } = useSelector((state) => state.login);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ function App() {
     dispatch(fetchOverdueData())
     dispatch(loginUsersData())
     dispatch(fetchBorrowedBook())
+    dispatch(fetachedRequestBooksData())
     dispatch(getDate())
   }, [dispatch]);
 
@@ -31,7 +33,7 @@ function App() {
     <div>
       <Dashboard />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

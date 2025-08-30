@@ -18,6 +18,9 @@ function Overview() {
   const { books } = useSelector((state) => state.books)
   const { members } = useSelector((state) => state.members)
   const { overdueBooks, Fine } = useSelector((state) => state.overDue);
+  const { requestbooks } = useSelector((state) => state.requestbooks);
+
+  console.log(requestbooks);
 
   useEffect(() => {
     dispatch(setTotalFine(overdueBooks))
@@ -93,7 +96,7 @@ function Overview() {
 
           {/* details */}
           <div className="absolute top-12 left-0 w-full h-fit  z-3">
-            <RequestCard />
+            {requestbooks.map((el) => <RequestCard id={el.id} data={el} />)}
           </div>
         </section>
       </div>

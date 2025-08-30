@@ -1,32 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
-import { fetachedRequestBooksData , postRequestBookData , removeRequestBooksData } from "../features/RequestBookSlice";
-import { useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { fetachedRequestBooksData, postRequestBookData, removeRequestBooksData } from "../features/RequestBookSlice";
+// import { useEffect } from "react";
 
 
-export default function BookRequestCard() {
-
-  const { requestbooks } = useSelector((state) => state.requestbooks)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-  dispatch(fetachedRequestBooksData());
-}, [dispatch]);
-
+export default function BookRequestCard({ id, data }) {
+  const { bookThumbnail, bookTitle, memberImage, memberName, requestDate } = data
+  console.log(data, id);
 
   return (
-    <article className="w-full h-[5rem] flex items-center justify-between bg-white rounded-lg px-4">
-      
+    <article className="w-full h-[5rem] flex items-center justify-between bg-white rounded-lg px-4" key={id}>
+
       {/* Book Section */}
       <div className="flex items-center gap-3 w-[18rem]">
         <img
           className="w-10 h-14 object-cover rounded"
-          src="https://covers.openlibrary.org/b/isbn/9780451205360-L.jpg"
+          src={bookThumbnail}
           alt="book"
         />
         <div className="flex flex-col max-w-[12rem]">
           <h4 className="text-sm font-semibold text-stone-800 truncate">
-            The richest man in babylon{" "}
-            <span className="font-normal text-stone-500">by George s. calson</span>
+            {bookTitle}
+            {/* <span className="font-normal text-stone-500">by George s. calson</span> */}
           </h4>
           <span className="text-xs text-stone-500 bg-stone-100 px-2 py-[2px] rounded">
             #4235532
@@ -38,11 +32,11 @@ export default function BookRequestCard() {
       <div className="flex items-center gap-3 w-[14rem] pl-4">
         <img
           className="w-10 h-10 rounded-full object-cover"
-          src="https://randomuser.me/api/portraits/women/2.jpg"
+          src={memberImage}
           alt="user"
         />
         <div className="flex flex-col">
-          <h4 className="text-sm font-semibold text-stone-800">John Stone</h4>
+          <h4 className="text-sm font-semibold text-stone-800">{memberName}</h4>
           <span className="text-xs text-stone-500 bg-stone-100 px-2 py-[2px] rounded">
             #321352
           </span>
@@ -52,7 +46,7 @@ export default function BookRequestCard() {
       {/* Request Date */}
       <div className="flex flex-col items-start w-[10rem] border-l border-stone-300 pl-4">
         <span className="text-xs text-stone-500">Requested on</span>
-        <span className="text-sm font-bold text-stone-800">12-Dec-22</span>
+        <span className="text-sm font-bold text-stone-800">{requestDate}</span>
       </div>
 
       {/* Actions */}
