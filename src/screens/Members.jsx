@@ -10,8 +10,7 @@ import MembersRoute from '../routes/MembersRoutes';
 
 function Members() {
   const navigate = useNavigate();
-  const { login } = useSelector((state) => state.login);
-  const { members } = useSelector((state) => state.members);
+  const { members, admin } = useSelector((state) => state.members);
 
   return (
     <div className="w-full h-full px-2">
@@ -22,10 +21,10 @@ function Members() {
               All <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{members.length}</span>
             </NavLink>
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"students"}>
-              Students <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{members.length - 1}</span>
+              Students <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{members.length - admin.length}</span>
             </NavLink>
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"admin"}>
-              Admin <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{login.length}</span>
+              Admin <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{admin.length}</span>
             </NavLink>
           </nav>
 

@@ -10,7 +10,6 @@ import { SearchLendingMember } from "./SearchLendingMember";
 function ReturnBook() {
     const { memberResults } = useContext(LendingBookContext);
 
-
     (function FilterBooks() {
         if(memberResults.length == 1){
             console.log(memberResults);

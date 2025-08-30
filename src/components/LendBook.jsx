@@ -11,6 +11,7 @@ function LendBook() {
     const { bookResults, memberResults } = useContext(LendingBookContext);
     const { borrowedBooks, today, futureDate } = useSelector((state) => state.borrowedBooks);
 
+
     const handleClicking = () => {
         const { id, title, author, thumbnail } = bookResults[0];
         const { name, userImage } = memberResults[0];
@@ -51,7 +52,7 @@ function LendBook() {
                 <label className="text-lg my-1 mt-3" htmlFor="Book">Book</label>
                 <SearchLendingBook />
 
-                <div className="w-full h-[4.5rem] flex justify-between gap-1 bg-stone-100 mt-5">
+                <div className="w-full min-h-[4.5rem] flex justify-between gap-1 bg-stone-100 mt-5">
                     {bookResults.length === 1 && bookResults.map((el) => {
                         return <div className="flex items-center gap-3 max-w-[20rem] w-fit p-2 bg-red-100">
                             {/* Book Cover */}

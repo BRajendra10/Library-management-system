@@ -6,7 +6,7 @@ import { RxCross2 } from "react-icons/rx";
 import { LendingBookContext } from '../context/LendingBookContext';
 
 export function SearchLendingMember() {
-    const { borrowedBooks } = useSelector((state) => state.borrowedBooks);
+    const { members } = useSelector((state) => state.members);
     const {setMemberResults} = useContext(LendingBookContext);
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
@@ -16,8 +16,8 @@ export function SearchLendingMember() {
         setQuery(value);
 
         if (value.length > 0) {
-            const filteredMembers = borrowedBooks.filter((m) =>
-                m.memberName.toLowerCase().includes(value.toLowerCase())
+            const filteredMembers = members?.filter((m) =>
+                m.name.toLowerCase().includes(value.toLowerCase())
             );
             setResults(filteredMembers);
             setMemberResults(filteredMembers);
@@ -64,9 +64,8 @@ export function SearchLendingMember() {
                             }}
                         >
                             <div className="flex flex-col">
-                                <span className="font-medium">{member.memberName}</span>
-                                <span className="text-stone-500 text-sm">Book name: {member.bookTitle}</span>
-                                <span className="text-stone-500 text-sm">Book author: {member.bookAuthor}</span>
+                                <span className="font-medium">{member.name}</span>
+                                <span className="text-stone-500 text-sm">{member.email}</span>
                             </div>
                         </li>
                     ))}
