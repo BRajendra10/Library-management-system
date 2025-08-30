@@ -1,7 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Members from '../screens/Members'
-import { Navigate } from 'react-router-dom';
 import AllMembers from '../components/AllMembers';
 import Students from '../components/Students';
 import Admin from '../components/Admin'

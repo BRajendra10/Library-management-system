@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { NavLink } from "react-router-dom";
 import Book from '../components/Book';
 import SearchBar from '../components/Search';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 
 function Books() {
   const navigate = useNavigate();
@@ -15,16 +15,16 @@ function Books() {
       <div className="w-full h-220 flex flex-col items-center border border-blue-200 bg-blue-100/40 rounded-lg">
         <div className="w-full min-h-[3.7rem] grid grid-cols-20">
           <nav className="col-span-5 2xl:col-span-7 grid grid-cols-4 gap-2">
-            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/books"}>
+            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={""}>
               All <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{books?.length}</span>
             </NavLink>
-            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/books/request"}>
+            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"borrowed"}>
               Borrowed <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{22}</span>
             </NavLink>
-            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/books/overdue"}>
+            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"overdue"}>
               Overdue <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{overdueBooks?.length}</span>
             </NavLink>
-            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/books/request"}>
+            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"requested"}>
               Request <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{10}</span>
             </NavLink>
           </nav>
@@ -49,7 +49,7 @@ function Books() {
             <li className="col-span-3 flex items-center text-stone-500">Actions</li>
           </ul>
           <div className="absolute top-10 left-0 w-full h-fit flex flex-col gap-1 overflow-scroll z-3">
-            {books.map((el) => <Book data={el} />)}
+            <Outlet />
           </div>
         </div>
       </div>
