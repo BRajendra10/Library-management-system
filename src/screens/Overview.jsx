@@ -20,8 +20,6 @@ function Overview() {
   const { overdueBooks, Fine } = useSelector((state) => state.overDue);
   const { requestbooks } = useSelector((state) => state.requestbooks);
 
-  console.log(requestbooks);
-
   useEffect(() => {
     dispatch(setTotalFine(overdueBooks))
   }, [overdueBooks, dispatch])

@@ -11,23 +11,16 @@ import user from "../assets/user-1.jpg";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { SidebarContext } from '../context/sidebarContext';
-import { updateLoginData } from '../features/LoginSlice';
 import { GrSearch } from "react-icons/gr";
 import { Navigate, useNavigate } from 'react-router-dom';
-
+import { removeUsersData } from '../features/LoginSlice';
 
 function Dashboard() {
     const navigate = useNavigate();
     const { admin, isLogedIn } = useSelector((state) => state.login);
     const dispatch = useDispatch();
-
     function HandleLogout() {
-        dispatch(updateLoginData({
-            id: 1,
-            updatedData: {
-                isLogedIn: false,
-            }
-        }))
+        dispatch(removeUsersData(admin.id));
     }
 
     return (
@@ -175,7 +168,7 @@ function Dashboard() {
                         </button>
 
                         <div className="w-fit h-full flex justify-start gap-3 p-1">
-                            {admin ? <img
+                            {isLogedIn ? <img
                                 className="w-11 h-11 object-cover rounded-full"
                                 src={admin.userImage}
                                 alt="curr-user"

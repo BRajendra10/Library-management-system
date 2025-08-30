@@ -10,10 +10,12 @@ import { setIsLogedIn } from './features/LoginSlice'
 import { fetchBorrowedBook } from './features/borrowedBooksSlice'
 import { fetachedRequestBooksData } from './features/RequestBookSlice'
 import { getDate } from './features/borrowedBooksSlice'
+import { setAdmin } from './features/MemberSlice'
 
 function App() {
   const dispatch = useDispatch();
-  const { login } = useSelector((state) => state.login);
+  const { login } = useSelector((state) => state.login)
+  const { members } = useSelector((state) => state.members);
 
   useEffect(() => {
     dispatch(fetachedBooksData())
@@ -26,7 +28,11 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    login.forEach((el) => dispatch(setIsLogedIn(el)));
+    dispatch(setAdmin(members));
+  },[dispatch, members])
+
+  useEffect(() => {
+    login?.forEach((el) => dispatch(setIsLogedIn({isLogedIn: true, data: el})));
   }, [dispatch, login])
 
   return (

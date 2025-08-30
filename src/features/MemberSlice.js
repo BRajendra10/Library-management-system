@@ -32,6 +32,7 @@ export const updateMemberData = createAsyncThunk("updateMemberData", async ({ up
 //initial State
 const initialState = {
   members: [],
+  admin: [],
   status: "neutral",
   error: null,
 };
@@ -39,7 +40,11 @@ const initialState = {
 const memberSlice = createSlice({
   name: "member",
   initialState,
-  reducers: {},
+  reducers: {
+    setAdmin: (state, action) => {
+      state.admin = action.payload?.filter((member) => member.membershipType === 'admin') || [];
+    }
+  },
   extraReducers: (builder) => {
     //Get api data
 
@@ -105,6 +110,7 @@ const memberSlice = createSlice({
 
 
 export default memberSlice.reducer;
+export const { setAdmin } = memberSlice.actions;
 
 //  Redux slice for members
 // - Fetching books data from API

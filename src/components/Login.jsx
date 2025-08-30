@@ -3,7 +3,7 @@ import { FaArrowRightToBracket } from "react-icons/fa6";
 import { object, string } from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import { updateLoginData } from '../features/LoginSlice';
+import { postUsersData } from '../features/LoginSlice';
 
 const schema = object({
   email: string().required().email(),
@@ -13,7 +13,7 @@ const schema = object({
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { login } = useSelector((state) => state.login);
+  const { admin } = useSelector((state) => state.members);
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -21,20 +21,16 @@ function Login() {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      const matchedUser = login.find(
-        (el) => el.email === values.email && el.password === values.password
-      );
+      const matchedUser = admin.find(
+        (el) => el.email === values.email
+      )
 
       if (matchedUser) {
-        dispatch(updateLoginData({
-          id: matchedUser.id,
-          updatedData: { isLogedIn: true }
-        }));
+        dispatch(postUsersData(matchedUser));
         navigate("/");
       } else {
         console.log("login failed");
       }
-
       formik.resetForm();
     },
   });

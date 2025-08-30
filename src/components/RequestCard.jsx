@@ -1,11 +1,5 @@
-// import { useDispatch, useSelector } from "react-redux";
-// import { fetachedRequestBooksData, postRequestBookData, removeRequestBooksData } from "../features/RequestBookSlice";
-// import { useEffect } from "react";
-
-
 export default function BookRequestCard({ id, data }) {
   const { bookThumbnail, bookTitle, memberImage, memberName, requestDate } = data
-  console.log(data, id);
 
   return (
     <article className="w-full h-[5rem] flex items-center justify-between bg-white rounded-lg px-4" key={id}>
