@@ -4,6 +4,7 @@ import membersReducer from '../features/MemberSlice'
 import loginReducer from '../features/LoginSlice'
 import overdueSlice from "../features/overdueSlice";
 import requestBooksReducer from "../features/RequestBookSlice"
+import boorowedBookReducer from "../features/borrowedBooksSlice";
 
 export const store = configureStore({
     reducer  : {
@@ -11,6 +12,7 @@ export const store = configureStore({
         members : membersReducer,
         login : loginReducer,
         overDue: overdueSlice,
-        requestbooks : requestBooksReducer
+        requestbooks : requestBooksReducer,
+        borrowedBooks: boorowedBookReducer
     }
 })

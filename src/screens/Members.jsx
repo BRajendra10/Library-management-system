@@ -5,25 +5,26 @@ import { NavLink } from "react-router-dom";
 import Member from '../components/Member';
 import { useSelector } from 'react-redux'
 import SearchBar from '../components/SearchMember';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
+import MembersRoute from '../routes/MembersRoutes';
 
 function Members() {
   const navigate = useNavigate();
-  const { members } = useSelector((state) => state.members);
   const { login } = useSelector((state) => state.login);
+  const { members } = useSelector((state) => state.members);
 
   return (
     <div className="w-full h-full px-2">
       <div className="w-full h-220 flex flex-col items-center border border-blue-200 bg-blue-100/40 rounded-lg">
         <div className="w-full min-h-[3.7rem] grid grid-cols-20">
           <nav className="col-span-5 2xl:col-span-5 grid grid-cols-3 gap-2">
-            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/members"}>
+            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={""}>
               All <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{members.length}</span>
             </NavLink>
-            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/members/students"}>
+            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"students"}>
               Students <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{members.length - 1}</span>
             </NavLink>
-            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"/members/admin"}>
+            <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"admin"}>
               Admin <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{login.length}</span>
             </NavLink>
           </nav>
@@ -48,7 +49,7 @@ function Members() {
             <li className="col-span-3 flex items-center text-stone-500">Actions</li>
           </ul>
           <div className="absolute top-10 left-0 w-full h-fit flex flex-col gap-1 overflow-scroll z-3">
-            {members.map((el) => <Member data={el} />)}
+            <Outlet/>
           </div>
         </div>
       </div>

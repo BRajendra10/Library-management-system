@@ -7,6 +7,8 @@ import { fetchOverdueData } from './features/overdueSlice'
 import { loginUsersData } from './features/LoginSlice'
 import Dashboard from './screens/Dashboard'
 import { setIsLogedIn } from './features/LoginSlice'
+import { fetchBorrowedBook } from './features/borrowedBooksSlice'
+import { getDate } from './features/borrowedBooksSlice'
 
 function App() {
   const dispatch = useDispatch()
@@ -17,6 +19,8 @@ function App() {
     dispatch(fetchedMembersData())
     dispatch(fetchOverdueData())
     dispatch(loginUsersData())
+    dispatch(fetchBorrowedBook())
+    dispatch(getDate())
   }, [dispatch]);
 
   useEffect(() => {
