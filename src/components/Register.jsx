@@ -25,7 +25,12 @@ const schema = object({
   membershipType: string()
     .required('Membership type is required')
     .oneOf(['student', 'admin'], 'Invalid membership type'),
-  password: string().required('Password is required').min(8, 'Password must be at least 8 characters'),
+  // password: string().required('Password is required').min(8, 'Password must be at least 8 characters'),
+  password: mixed().when('membershipType', {
+    is: 'admin',
+    then: () => string().required('Password is required').min(8, 'Password must be at least 8 characters'),
+    otherwise: () => string().nullable(),
+  }),
   userImage: string().required('Image URL is required').url('Invalid URL format'),
   fineDue: number() // Added validation for fineDue
     .required('Fine amount is required')
@@ -141,6 +146,8 @@ const Register = () => {
                 handleChange(e);
                 if (e.target.value === 'admin') {
                   formik.setFieldValue('year', null);
+                } else{
+                  formik.setFieldValue('password', null);
                 }
               }}
               value={values.membershipType}
@@ -192,6 +199,7 @@ const Register = () => {
               className="w-full p-2 border border-stone-400 rounded-lg"
               onChange={handleChange}
               value={values.password}
+              disabled={values.membershipType === 'student'}
             />
             {errors.password && touched.password && <span className="text-sm text-red-700">{errors.password}</span>}
           </div>
