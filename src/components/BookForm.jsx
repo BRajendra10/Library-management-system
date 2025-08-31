@@ -60,8 +60,7 @@ export default function AddBookForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { bookId, editedBook } = useContext(BookContext);
-  console.log(bookId, editedBook);
-
+  
   return (
     <div className="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-2xl p-6 sm:p-8 overflow-scroll">
       {/* Header */}

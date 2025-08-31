@@ -31,6 +31,11 @@ export const updateBook = createAsyncThunk("books/updateBook", async ({ id, newB
   return res.data;
 });
 
+export const updateBookData = createAsyncThunk("updateBookData", async ({ id, updates }) => {
+  const res = await axios.patch(`${booksDataUrl}/${id}`, updates);
+  return res.data;
+});
+
 //InitialState
 const initialState = {
   books: [],
@@ -89,20 +94,37 @@ const bookSlice = createSlice({
       state.error = action.payload.error;
     });
 
-    builder
-      .addCase(updateBook.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(updateBook.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.books = state.books.map((book) =>
-          book.id === action.payload.id ? action.payload : book
-        );
-      })
-      .addCase(updateBook.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
+    builder.addCase(updateBook.pending, (state) => {
+      state.status = "loading";
+    })
+
+    builder.addCase(updateBook.fulfilled, (state, action) => {
+      state.status = "succeeded";
+      state.books = state.books.map((book) =>
+        book.id === action.payload.id ? action.payload : book
+      );
+    })
+
+    builder.addCase(updateBook.rejected, (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    });
+
+    builder.addCase(updateBookData.pending, (state) => {
+      state.status = " loading...";
+    });
+
+    builder.addCase(updateBookData.fulfilled, (state, action) => {
+      state.status = "success";
+      state.books = state.books.map((book) =>
+        book.id === action.payload.id ? action.payload : book
+      );
+    });
+
+    builder.addCase(updateBookData.rejected, (state, action) => {
+      state.status = "error";
+      state.error = action.payload.error;
+    });
   }
 });
 

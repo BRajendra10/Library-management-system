@@ -7,7 +7,7 @@ import { LendingBookContext } from '../context/LendingBookContext';
 
 export function SearchLendingBook() {
     const { books } = useSelector((state) => state.books);
-    const {setBookResults} = useContext(LendingBookContext);
+    const { setBookResults } = useContext(LendingBookContext);
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
 
@@ -18,8 +18,9 @@ export function SearchLendingBook() {
         if (value.length > 0) {
             const filtered = books.filter(
                 (b) =>
-                    b.title.toLowerCase().includes(value.toLowerCase()) ||
-                    b.author.toLowerCase().includes(value.toLowerCase())
+                    b.status.toLowerCase() === "available" && // Only include available books
+                    (b.title.toLowerCase().includes(value.toLowerCase()) ||
+                        b.author.toLowerCase().includes(value.toLowerCase()))
             );
             setResults(filtered);
             setBookResults(filtered);

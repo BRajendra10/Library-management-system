@@ -1,19 +1,22 @@
 import React, { useContext } from "react";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { NavLink } from "react-router-dom";
 import { GrSearch } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
 import { LendingBookContext } from '../context/LendingBookContext';
 import { SearchLendingBook } from "./SearchLendingBook";
 import { SearchLendingMember } from "./SearchLendingMember";
+import { postBorrowedBooks } from "../features/borrowedBooksSlice";
+import { updateBookData } from "../features/BookSlice";
 
 function LendBook() {
+    const dispatch = useDispatch();
     const { bookResults, memberResults } = useContext(LendingBookContext);
     const { borrowedBooks, today, futureDate } = useSelector((state) => state.borrowedBooks);
 
 
     const handleClicking = () => {
-        const { id, title, author, thumbnail } = bookResults[0];
+        const { id, title, author, thumbnail, borrowDetails, isbn } = bookResults[0];
         const { name, userImage } = memberResults[0];
         const data = {
             "id": borrowedBooks.length + 1,
@@ -32,7 +35,31 @@ function LendBook() {
             "bookThumbnail": thumbnail,
             "memberImage": userImage
         }
-        console.log(data);
+
+        const activeBorrows = borrowDetails.filter(detail => detail.returnDate === null);
+        const availableIsbn = isbn?.find(isbn =>
+            !activeBorrows.some(borrow => borrow.isbn === isbn)
+        );
+
+        const booksBorrowData = {
+            "isbn": availableIsbn,
+            "userId": memberResults[0].id,
+            "memberName": name,
+            "memberImage": userImage,
+            "borrowDate": today,
+            "dueDate": futureDate,
+            "totalDelayDays": 0,
+            "fineRate": 2,
+            "totalFine": 0
+        }
+        dispatch(postBorrowedBooks({newBook: data}));
+        dispatch(updateBookData({
+            id: bookResults[0].id,
+            updates: {
+                borrowDetails: [booksBorrowData],
+                status: availableIsbn ? 'Available' : 'Borrowed'
+            }
+        }))
     }
 
     return (
