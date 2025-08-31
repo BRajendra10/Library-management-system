@@ -8,12 +8,14 @@ import { SearchLendingBook } from "./SearchLendingBook";
 import { SearchLendingMember } from "./SearchLendingMember";
 import { postBorrowedBooks } from "../features/borrowedBooksSlice";
 import { updateBookData } from "../features/BookSlice";
+import { useNavigate } from 'react-router-dom';
+
 
 function LendBook() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { bookResults, memberResults } = useContext(LendingBookContext);
     const { borrowedBooks, today, futureDate } = useSelector((state) => state.borrowedBooks);
-
 
     const handleClicking = () => {
         const { id, title, author, thumbnail, borrowDetails, isbn } = bookResults[0];
@@ -36,8 +38,6 @@ function LendBook() {
             "memberImage": userImage
         }
 
-        // const activeBorrows = borrowDetails.filter(detail => detail.isbn);
-        // const activeBorrows = borrowDetails.filter(detail => detail.isbn);
         const availableIsbn = isbn?.find(isbn =>
             !borrowDetails.find(borrow => borrow.isbn === isbn)
         );
@@ -54,7 +54,6 @@ function LendBook() {
             "totalFine": 0
         }
 
-
         if (availableIsbn) {
             dispatch(postBorrowedBooks({ newBook: data }));
             dispatch(updateBookData({
@@ -64,6 +63,8 @@ function LendBook() {
                     status: borrowDetails.length == 1 ? "Borrowed" : "Available"
                 }
             }))
+
+            navigate('/books');
         }
     }
 
