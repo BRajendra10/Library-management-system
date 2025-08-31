@@ -36,9 +36,10 @@ function LendBook() {
             "memberImage": userImage
         }
 
-        const activeBorrows = borrowDetails.filter(detail => detail.returnDate === null);
+        // const activeBorrows = borrowDetails.filter(detail => detail.isbn);
+        // const activeBorrows = borrowDetails.filter(detail => detail.isbn);
         const availableIsbn = isbn?.find(isbn =>
-            !activeBorrows.some(borrow => borrow.isbn === isbn)
+            !borrowDetails.find(borrow => borrow.isbn === isbn)
         );
 
         const booksBorrowData = {
@@ -52,14 +53,18 @@ function LendBook() {
             "fineRate": 2,
             "totalFine": 0
         }
-        dispatch(postBorrowedBooks({newBook: data}));
-        dispatch(updateBookData({
-            id: bookResults[0].id,
-            updates: {
-                borrowDetails: [booksBorrowData],
-                status: availableIsbn ? 'Available' : 'Borrowed'
-            }
-        }))
+
+
+        if (availableIsbn) {
+            dispatch(postBorrowedBooks({ newBook: data }));
+            dispatch(updateBookData({
+                id: bookResults[0].id,
+                updates: {
+                    borrowDetails: [...borrowDetails, booksBorrowData],
+                    status: borrowDetails.length == 1 ? "Borrowed" : "Available"
+                }
+            }))
+        }
     }
 
     return (
