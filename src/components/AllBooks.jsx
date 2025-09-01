@@ -7,7 +7,7 @@ function AllBooks() {
     return (
         <div className="w-full h-fit flex flex-col gap-1">
             {books?.length ? (
-                books.map((el) => <Book data={el} />)
+                books.map((el) => <Book data={el}  />)
             ) : (
                 <p className="p-2 text-stone-500">No Books found.</p>
             )}
