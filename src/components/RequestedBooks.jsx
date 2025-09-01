@@ -4,20 +4,14 @@ import { fetachedRequestBooksData } from "../features/RequestBookSlice"; // adju
 
 function RequestedBooks() {
   const dispatch = useDispatch();
-  const { requestbooks, status, error } = useSelector((state) => state.requestbooks);
+  const { requestbooks} = useSelector((state) => state.requestbooks);
 
   // fetch request books on mount
   useEffect(() => {
     dispatch(fetachedRequestBooksData());
   }, [dispatch]);
 
-  if (status === "loading...") {
-    return <p>Loading requested books...</p>;
-  }
-
-  if (status === "error") {
-    return <p>Error: {error}</p>;
-  }
+  
 
   return (
     <div>
