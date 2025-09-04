@@ -1,36 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AiOutlineMenu, AiFillSetting } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { IoSearch, IoOptionsSharp } from "react-icons/io5";
 import { RiLayoutMasonryFill, RiCloseLargeFill } from "react-icons/ri";
 import { BiSolidBookAlt } from "react-icons/bi";
 import { HiUsers } from "react-icons/hi2";
 import { PiWarningCircleBold } from "react-icons/pi";
 import Navigation from '../routes/Navigation';
 import user from "../assets/user-1.jpg";
-import { NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux'
-import { SidebarContext } from '../context/sidebarContext';
-import { GrSearch } from "react-icons/gr";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import { removeUsersData } from '../features/LoginSlice';
 
 function Dashboard() {
     const navigate = useNavigate();
     const { admin, isLogedIn } = useSelector((state) => state.login);
     const dispatch = useDispatch();
+    const [isSidebarOpen, setSidebarOpen] = useState(false);
+
     function HandleLogout() {
         dispatch(removeUsersData(admin.id));
     }
 
     return (
-        <div className="w-full h-screen grid grid-cols-30 bg-stone-100">
+        <div className="w-full h-screen grid grid-cols-30 bg-white">
 
-            {/* sidebar modal */}
-            {/* <div className={`w-[16rem] h-[100vh] absolute top-0 left-0 flex-col gap-3 bg-stone-50 duration-700 ${isOpen ? "flex" : "hidden"}`}>
-                Logo
-                <div className="w-full h-[4rem] flex justify-between items-center px-4 py-3">
-                    <div className="h-full flex items-center gap-3">
+            {/* Sidebar for desktop */}
+            <div className="col-span-6 xl:col-span-5 2xl:col-span-4 hidden lg:flex flex-col gap-3 bg-white">
+                <div className="col-span-6 xl:col-span-5 2xl:col-span-4  hidden lg:flex flex-col gap-3 bg-white">
+
+                    <div className="w-full h-[4rem] flex jusitfy-between items-center gap-4 px-4 py-3">
                         <svg className="w-[3rem] h-full object-contain text-blue-500" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
                             <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
                                 <path d="M445 2642 c-38 -6 -64 -25 -80 -57 -13 -29 -15 -134 -15 -849 0 -891 -1 -870 57 -899 17 -9 75 -17 148 -20 320 -16 593 -115 796 -289 31 -26 60 -48 63 -48 4 0 5 384 4 853 l-3 854 -30 43 c-133 194 -354 331 -620 384 -80 16 -283 34 -320 28z" />
@@ -39,47 +37,45 @@ function Dashboard() {
                                 <path d="M2818 1573 l-3 -698 -23 -50 c-56 -122 -132 -162 -330 -175 -239 -15 -430 -68 -578 -160 -85 -53 -163 -116 -129 -105 11 4 79 15 150 26 237 35 595 21 853 -32 153 -31 198 -25 227 31 13 25 15 143 15 905 0 800 -1 879 -17 905 -21 36 -52 50 -113 50 l-49 0 -3 -697z" />
                             </g>
                         </svg>
-                        <span className="text-2xl">Libra</span>
+                        <span className="text-2xl">Library</span>
                     </div>
 
-                    <button className="p-2 text-xl" onClick={() => toggleSidebar()}><RiCloseLargeFill /></button>
+                    <div className="w-full flex justify-center items-center px-4 py-2">
+                        <button className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400" onClick={() => navigate("/lend")}>Lend / return</button>
+                    </div>
+
+                    <nav className="flex flex-col justify-center gap-1 p-3">
+                        <NavLink
+                            className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                            to={"/"}>Overview</NavLink>
+                        <NavLink
+                            className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                            to={"/books"}>Books</NavLink>
+                        <NavLink
+                            className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                            to={"/members"}>Members</NavLink>
+                        <NavLink
+                            className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                            to={"/about"}>About</NavLink>
+                        {isLogedIn ? <button className="text-stone-950 hover:bg-blue-500 text-left hover:text-white duration-300 text-base rounded-lg p-2 px-3" onClick={() => HandleLogout()}>Logout</button> :
+                            <NavLink
+                                className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                                to={"/login"}>Login</NavLink>}
+                        <NavLink
+                            className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                            to={"/settings"}>Settings</NavLink>
+                        <NavLink
+                            className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                            to={"/help-support"}>Help & Support</NavLink>
+                    </nav>
                 </div>
+            </div>
 
-                <div className="w-full flex justify-center items-center px-4 py-2">
-                    <button className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400">Lend / return</button>
-                </div>
+            <div className={`fixed inset-y-0 left-0 w-70 bg-white shadow-lg z-50 transform transition-transform duration-300 lg:hidden
+                ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
 
-                <nav className="py-2 pr-3 flex flex-col justify-between gap-0">
-                    <NavLink
-                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
-                        to={"/"}>Overview</NavLink>
-                    <NavLink
-                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
-                        to={"/books"}>Books</NavLink>
-                    <NavLink
-                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
-                        to={"/members"}>Members</NavLink>
-                </nav>
-
-                Navigation
-                <nav className="py-2 pr-3 flex flex-col justify-between gap-0">
-                    <NavLink
-                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
-                        to={"/settings"}>Settings</NavLink>
-                    <NavLink
-                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
-                        to={"/about"}>About</NavLink>
-                    <NavLink
-                        className={({ isActive }) => `text-stone-600 hover:bg-blue-200 hover:text-stone-950 rounded-r-3xl px-4 py-2 ${isActive ? "text-stone-950" : ""}`}
-                        to={"/help-support"}>Help & Support</NavLink>
-                </nav>
-            </div> */}
-
-            {/* left sidebar after 1280px(xl) for large screens */}
-            <div className="col-span-6 xl:col-span-5 2xl:col-span-4  hidden lg:flex flex-col gap-3 bg-white">
-
-                {/* Logo */}
-                <div className="w-full h-[4rem] flex jusitfy-between items-center gap-4 px-4 py-3">
+                {/* Top bar inside mobile sidebar */}
+                <div className="flex justify-between items-center h-[4rem] px-4">
                     <svg className="w-[3rem] h-full object-contain text-blue-500" version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.000000 300.000000" preserveAspectRatio="xMidYMid meet">
                         <g transform="translate(0.000000,300.000000) scale(0.100000,-0.100000)" fill="currentColor" stroke="none">
                             <path d="M445 2642 c-38 -6 -64 -25 -80 -57 -13 -29 -15 -134 -15 -849 0 -891 -1 -870 57 -899 17 -9 75 -17 148 -20 320 -16 593 -115 796 -289 31 -26 60 -48 63 -48 4 0 5 384 4 853 l-3 854 -30 43 c-133 194 -354 331 -620 384 -80 16 -283 34 -320 28z" />
@@ -89,100 +85,135 @@ function Dashboard() {
                         </g>
                     </svg>
                     <span className="text-2xl">Library</span>
+                    <button onClick={() => setSidebarOpen(false)}>
+                        <RiCloseLargeFill className="text-2xl" />
+                    </button>
                 </div>
 
-                <div className="w-full flex justify-center items-center px-4 py-2">
-                    <button className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400" onClick={() => navigate("/lend")}>Lend / return</button>
-                </div>
+                {/* Sidebar content (reused from desktop) */}
+                <div className="flex flex-col gap-3 h-full overflow-y-auto p-4">
 
-                <nav className="flex flex-col justify-center gap-1 p-3">
-                    <NavLink
-                        className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                        to={"/"}>Overview</NavLink>
-                    <NavLink
-                        className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                        to={"/books"}>Books</NavLink>
-                    <NavLink
-                        className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                        to={"/members"}>Members</NavLink>
-                    <NavLink
-                        className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                        to={"/about"}>About</NavLink>
-                </nav>
-
-                {/* Navigation */}
-                <nav className="flex flex-col justify-center gap-1 p-3">
-                    {isLogedIn ? <button className="text-stone-950 hover:bg-blue-500 text-left hover:text-white duration-300 text-base rounded-lg p-2 px-3" onClick={() => HandleLogout()}>Logout</button> :
-                        <NavLink
-                            className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                            to={"/login"}>Login</NavLink>}
-                    <NavLink
-                        className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                        to={"/settings"}>Settings</NavLink>
-                    <NavLink
-                        className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                        to={"/help-support"}>Help & Support</NavLink>
-                </nav>
-            </div>
-
-            {/* left sidebar before 1280px(xl) for small screens */}
-            <div className="col-span-4 md:col-span-2 max-w-[4.5rem] lg:hidden bg-sky-950">
-                <button className="w-full h-[4rem] flex justify-center items-center">
-                    <AiOutlineMenu className="text-2xl font-bold text-blue-500" />
-                </button>
-
-                <nav className="w-full flex flex-col gap-0 my-5">
-                    <NavLink className={({ isActive }) => `flex justify-center items-center text-2xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/"}>
-                        <RiLayoutMasonryFill />
-                    </NavLink>
-                    <NavLink className={({ isActive }) => `flex justify-center items-center text-2xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/books"}>
-                        <BiSolidBookAlt />
-                    </NavLink>
-                    <NavLink className={({ isActive }) => `flex justify-center items-center text-2xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/members"}>
-                        <HiUsers />
-                    </NavLink>
-                </nav>
-
-                <nav className="w-full flex flex-col gap-0 my-5">
-                    <NavLink className={({ isActive }) => `flex justify-center items-center text-2xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/settings"}>
-                        <AiFillSetting />
-                    </NavLink>
-                    <NavLink className={({ isActive }) => `flex justify-center items-center text-2xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/about"}>
-                        <PiWarningCircleBold />
-                    </NavLink>
-                    <NavLink className={({ isActive }) => `flex justify-center items-center text-2xl p-2 ${isActive ? "text-blue-600" : "text-blue-800"}`} to={"/help-support"}>
-                        <HiUsers />
-                    </NavLink>
-                </nav>
-
-            </div>
-
-            {/* Right side of dashboard */}
-            <div className="col-span-26 md:col-span-28 lg:col-span-24 xl:col-span-25 2xl:col-span-26 min-h-screen flex flex-col bg-white">
-
-                {/* right top navigation */}
-                <div className="w-full h-[4rem] flex justify-end items-center p-2">
-                    <div className="w-fit flex justify-evenly items-center gap-2">
-                        <button className="p-2 text-stone-500 hover:text-stone-950 duration-300">
-                            <IoMdNotificationsOutline className="text-2xl font-normal" />
+                    {/* Lend/Return Button */}
+                    <div className="w-full flex justify-center items-center">
+                        <button
+                            className="w-full p-2 rounded-lg uppercase text-white bg-blue-500 hover:bg-blue-400"
+                            onClick={() => { navigate("/lend"); setSidebarOpen(false); }}
+                        >
+                            Lend / Return
                         </button>
+                    </div>
 
-                        <div className="w-fit h-full flex justify-start gap-3 p-1">
-                            {isLogedIn ? <img
-                                className="w-11 h-11 object-cover rounded-full"
-                                src={admin.userImage}
-                                alt="curr-user"
-                            /> : <img
-                                className="w-11 h-11 object-cover rounded-full"
-                                src={user}
-                                alt="curr-user"
-                            />}
-                        </div>
+                    {/* Main Navigation */}
+                    <nav className="flex flex-col justify-center gap-1">
+                        <NavLink
+                            className={({ isActive }) =>
+                                `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
+                            }
+                            to={"/"}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            Overview
+                        </NavLink>
+                        <NavLink
+                            className={({ isActive }) =>
+                                `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
+                            }
+                            to={"/books"}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            Books
+                        </NavLink>
+                        <NavLink
+                            className={({ isActive }) =>
+                                `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
+                            }
+                            to={"/members"}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            Members
+                        </NavLink>
+                        <NavLink
+                            className={({ isActive }) =>
+                                `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
+                            }
+                            to={"/about"}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            About
+                        </NavLink>
+                        {isLogedIn ? (
+                            <button
+                                className="text-stone-950 hover:bg-blue-500 text-left hover:text-white duration-300 text-base rounded-lg p-2 px-3"
+                                onClick={() => { HandleLogout(); setSidebarOpen(false); }}
+                            >
+                                Logout
+                            </button>
+                        ) : (
+                            <NavLink
+                                className={({ isActive }) =>
+                                    `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
+                                }
+                                to={"/login"}
+                                onClick={() => setSidebarOpen(false)}
+                            >
+                                Login
+                            </NavLink>
+                        )}
+                        <NavLink
+                            className={({ isActive }) =>
+                                `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
+                            }
+                            to={"/settings"}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            Settings
+                        </NavLink>
+                        <NavLink
+                            className={({ isActive }) =>
+                                `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
+                            }
+                            to={"/help-support"}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            Help & Support
+                        </NavLink>
+                    </nav>
+                </div>
+            </div>
 
+
+            {/* Overlay when sidebar is open */}
+            {isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+                    onClick={() => setSidebarOpen(false)}
+                />
+            )}
+
+            {/* Right side content */}
+            <div className="col-span-30 lg:col-span-24 xl:col-span-25 2xl:col-span-26 min-h-screen flex flex-col bg-white">
+
+                {/* Top Bar */}
+                <div className="w-full min-h-[4rem] flex justify-between items-center p-2 px-4">
+                    {/* Mobile Menu Button */}
+                    <button className="lg:hidden p-2 text-blue-600" onClick={() => setSidebarOpen(true)}>
+                        <AiOutlineMenu className="text-2xl" />
+                    </button>
+
+                    {/* Right Side (Notifications + User) */}
+                    <div className="flex items-center gap-3 ml-auto">
+                        <button className="p-2 text-stone-500 hover:text-stone-950 duration-300">
+                            <IoMdNotificationsOutline className="text-2xl" />
+                        </button>
+                        <img
+                            className="w-11 h-11 object-cover rounded-full"
+                            src={isLogedIn ? admin.userImage : user}
+                            alt="curr-user"
+                        />
                     </div>
                 </div>
 
-                {/* All pages */}
+                {/* Page Content */}
                 <Navigation />
             </div>
         </div>
