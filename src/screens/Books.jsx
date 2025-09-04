@@ -14,7 +14,7 @@ function Books() {
     <div className="w-full h-full px-2">
       <div className="w-full h-220 flex flex-col items-center border border-blue-200 bg-blue-100/40 rounded-lg">
         <div className="w-full min-h-[4rem] flex flex-col md:flex-row justify-between items-center">
-          <nav className="w-full md:w-[35rem] h-[8rem] md:h-full bg-blue-100 grid grid-cols-2 md:grid-cols-4 gap-2">
+          <nav className="w-full md:w-[35rem] h-[8rem] md:h-full grid grid-cols-2 md:grid-cols-4 gap-2">
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={""}>
               All <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{books?.length}</span>
             </NavLink>

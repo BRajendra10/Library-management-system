@@ -54,19 +54,19 @@ function Dashboard() {
                         <NavLink
                             className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                             to={"/members"}>Members</NavLink>
-                        <NavLink
-                            className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                            to={"/about"}>About</NavLink>
                         {isLogedIn ? <button className="text-stone-950 hover:bg-blue-500 text-left hover:text-white duration-300 text-base rounded-lg p-2 px-3" onClick={() => HandleLogout()}>Logout</button> :
                             <NavLink
                                 className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                                 to={"/login"}>Login</NavLink>}
-                        <NavLink
+                        {/* <NavLink
                             className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                            to={"/settings"}>Settings</NavLink>
-                        <NavLink
+                            to={"/about"}>About</NavLink> */}
+                        {/* <NavLink
                             className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
-                            to={"/help-support"}>Help & Support</NavLink>
+                            to={"/settings"}>Settings</NavLink> */}
+                        {/* <NavLink
+                            className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                            to={"/help-support"}>Help & Support</NavLink> */}
                     </nav>
                 </div>
             </div>
@@ -132,15 +132,6 @@ function Dashboard() {
                         >
                             Members
                         </NavLink>
-                        <NavLink
-                            className={({ isActive }) =>
-                                `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
-                            }
-                            to={"/about"}
-                            onClick={() => setSidebarOpen(false)}
-                        >
-                            About
-                        </NavLink>
                         {isLogedIn ? (
                             <button
                                 className="text-stone-950 hover:bg-blue-500 text-left hover:text-white duration-300 text-base rounded-lg p-2 px-3"
@@ -159,7 +150,16 @@ function Dashboard() {
                                 Login
                             </NavLink>
                         )}
-                        <NavLink
+                        {/* <NavLink
+                            className={({ isActive }) =>
+                                `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
+                            }
+                            to={"/about"}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            About
+                        </NavLink> */}
+                        {/* <NavLink
                             className={({ isActive }) =>
                                 `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
                             }
@@ -167,8 +167,8 @@ function Dashboard() {
                             onClick={() => setSidebarOpen(false)}
                         >
                             Settings
-                        </NavLink>
-                        <NavLink
+                        </NavLink> */}
+                        {/* <NavLink
                             className={({ isActive }) =>
                                 `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
                             }
@@ -176,19 +176,19 @@ function Dashboard() {
                             onClick={() => setSidebarOpen(false)}
                         >
                             Help & Support
-                        </NavLink>
+                        </NavLink> */}
                     </nav>
                 </div>
             </div>
 
 
             {/* Overlay when sidebar is open */}
-            {isSidebarOpen && (
+            {/* {isSidebarOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 z-40 lg:hidden"
                     onClick={() => setSidebarOpen(false)}
                 />
-            )}
+            )} */}
 
             {/* Right side content */}
             <div className="col-span-30 lg:col-span-24 xl:col-span-25 2xl:col-span-26 min-h-screen flex flex-col bg-white">

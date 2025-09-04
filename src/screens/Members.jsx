@@ -16,7 +16,7 @@ function Members() {
     <div className="w-full h-full px-2">
       <div className="w-full h-220 flex flex-col items-center border border-blue-200 bg-blue-100/40 rounded-lg">
         <div className="w-full min-h-[3.7rem] flex flex-col sm:flex-row justify-between items-center">
-          <nav className="w-full sm:w-[25rem] h-[4rem] sm:h-full grid grid-cols-3 gap-2 bg-blue-200">
+          <nav className="w-full sm:w-[25rem] h-[4rem] sm:h-full grid grid-cols-3 gap-2">
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={""}>
               All <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{members.length}</span>
             </NavLink>

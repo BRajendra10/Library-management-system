@@ -22,7 +22,7 @@ function ReturnBook() {
 
     return (
         <div className="w-full h-full flex flex-col justify-center items-center bg-stone-100">
-            <div className="w-[50rem] h-[4rem] grid grid-cols-2 bg-white">
+            <div className="w-[25rem] sm:w-[40rem] lg:w-[50rem] max-w-[50rem] h-[4rem] grid grid-cols-2 bg-white">
                 <NavLink
                     className={({ isActive }) => `text-lg flex items-center p-3 ${isActive ? "bg-white text-black" : "bg-stone-200 text-stone-400"}`}
                     to={"/lend"}>Lend Book</NavLink>
@@ -30,7 +30,7 @@ function ReturnBook() {
                     className={({ isActive }) => `text-lg flex items-center p-3 ${isActive ? "bg-white text-black" : "bg-stone-200 text-stone-400"}`}
                     to={"/return"}>Return Book</NavLink>
             </div>
-            <div className="w-[50rem] max-h-[30rem] flex flex-col bg-white p-5">
+            <div className="w-[25rem] sm:w-[40rem] lg:w-[50rem] max-w-[50rem] max-h-[30rem] flex flex-col bg-white p-5">
                 <label className="text-lg my-1" htmlFor="student / faculty">Student / Faculty</label>
                 <SearchLendingMember />
 
