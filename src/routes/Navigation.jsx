@@ -5,7 +5,7 @@ import Members from '../screens/Members'
 import Settings from '../screens/Settings'
 import About from '../screens/About'
 import HelpSupport from '../screens/HelpSupport'
-import Login from '../components/Login';
+import Login from '../screens/Login';
 import Register from '../components/Register';
 import BookForm from '../components/BookForm';
 import LendBook from '../components/LendBook';
@@ -16,6 +16,7 @@ import AllMembers from '../components/AllMembers';
 import { Navigate } from 'react-router-dom';
 import MembersRoute from './MembersRoutes';
 import BooksRoutes from './BooksRoutes';
+import AuthRedirect from '../components/AuthRedirect';
 
 function Navigation() {
     return (
@@ -26,7 +27,11 @@ function Navigation() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/about" element={<About />} />
             <Route path="/help-support" element={<HelpSupport />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={
+                <AuthRedirect>
+                    <Login />
+                </AuthRedirect>
+            } />
             <Route path="/register" element={<Register />} />
             <Route path="/addbook" element={<BookForm />} />
             <Route path="/lend" element={<LendBook />} />

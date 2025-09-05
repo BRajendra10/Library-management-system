@@ -9,17 +9,18 @@ import Navigation from '../routes/Navigation';
 import user from "../assets/user-1.jpg";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { removeUsersData } from '../features/LoginSlice';
+import { resetLogin } from '../features/LoginSlice';
 
 function Dashboard() {
     const navigate = useNavigate();
-    const { admin, isLogedIn } = useSelector((state) => state.login);
     const dispatch = useDispatch();
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const { login, isLogedIn } = useSelector((state) => state.login);
 
-    function HandleLogout() {
-        dispatch(removeUsersData(admin.id));
-    }
+    const handleLogout = () => {
+        dispatch(resetLogin());
+        navigate("/login");
+    };
 
     return (
         <div className="w-full h-screen grid grid-cols-30 bg-white">
@@ -54,7 +55,7 @@ function Dashboard() {
                         <NavLink
                             className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                             to={"/members"}>Members</NavLink>
-                        {isLogedIn ? <button className="text-stone-950 hover:bg-blue-500 text-left hover:text-white duration-300 text-base rounded-lg p-2 px-3" onClick={() => HandleLogout()}>Logout</button> :
+                        {isLogedIn ? <button className="text-stone-950 hover:bg-blue-500 text-left hover:text-white duration-300 text-base rounded-lg p-2 px-3" onClick={handleLogout}>Logout</button> :
                             <NavLink
                                 className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                                 to={"/login"}>Login</NavLink>}
@@ -135,7 +136,7 @@ function Dashboard() {
                         {isLogedIn ? (
                             <button
                                 className="text-stone-950 hover:bg-blue-500 text-left hover:text-white duration-300 text-base rounded-lg p-2 px-3"
-                                onClick={() => { HandleLogout(); setSidebarOpen(false); }}
+                                onClick={handleLogout}
                             >
                                 Logout
                             </button>
@@ -207,7 +208,7 @@ function Dashboard() {
                         </button>
                         <img
                             className="w-11 h-11 object-cover rounded-full"
-                            src={isLogedIn ? admin.userImage : user}
+                            src={isLogedIn ? login.userImage : user}
                             alt="curr-user"
                         />
                     </div>

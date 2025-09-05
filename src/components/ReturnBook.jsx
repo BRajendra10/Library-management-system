@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { GrSearch } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
 import { LendingBookContext } from '../context/LendingBookContext';
@@ -9,6 +9,7 @@ import { deleteBorrowedBooks } from "../features/borrowedBooksSlice";
 
 function ReturnBook() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { today, futureDate, borrowedBooks } = useSelector((state) => state.borrowedBooks);
     const { bookResults, memberResults } = useContext(LendingBookContext);
 
@@ -29,6 +30,8 @@ function ReturnBook() {
         dispatch(
             deleteBorrowedBooks(data[0].id)
         )
+
+        navigate("/books");
     }
 
     return (

@@ -3,7 +3,7 @@ import { FaArrowRightToBracket } from "react-icons/fa6";
 import { object, string } from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import { postUsersData } from '../features/LoginSlice';
+import { setLogin } from '../features/LoginSlice';
 
 const schema = object({
   email: string().required().email(),
@@ -13,7 +13,7 @@ const schema = object({
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { admin } = useSelector((state) => state.members);
+  const { members } = useSelector((state) => state.members);
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -21,22 +21,11 @@ function Login() {
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      const matchedUser = admin.find(
-        (el) => el.email === values.email
-      )
-
-      if (matchedUser) {
-        dispatch(postUsersData(matchedUser));
-        navigate("/");
-      } else {
-        console.log("login failed");
-      }
-      formik.resetForm();
+      dispatch(setLogin({values, members}));
+      navigate('/');
     },
   });
 
-  // john.smith@university.edu
-  // admin123
   const { errors, values, touched } = formik;
 
   return (
