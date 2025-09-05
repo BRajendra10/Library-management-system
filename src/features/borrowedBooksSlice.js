@@ -17,6 +17,11 @@ export const postBorrowedBooks = createAsyncThunk("borrowedBooks/postBorrowedBoo
   }
 });
 
+export const deleteBorrowedBooks = createAsyncThunk("deleteBorrowedBooks", async (id) => {
+  await axios.delete(`${borrowedBooksURL}/${id}`);
+  return id;
+})
+
 const initialState = {
   borrowedBooks: [],
   status: "neutral",
@@ -65,7 +70,21 @@ const borrowedBooksSlice = createSlice({
       .addCase(postBorrowedBooks.rejected, (state, action) => {
         state.status = "error";
         state.error = action.error.message;
-      });
+      })
+
+      .addCase(deleteBorrowedBooks.pending, (state) => {
+        state.status = "loading";
+      })
+
+      .addCase(deleteBorrowedBooks.fulfilled, (state, action) => {
+        state.status = "success";
+        state.borrowedBooks = state.borrowedBooks.filter(book => book.id !== action.payload);
+      })
+
+      .addCase(deleteBorrowedBooks.rejected, (state, action) => {
+        state.status = "error";
+        state.error = action.error.message;
+      })
   }
 });
 
