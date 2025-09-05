@@ -18,7 +18,7 @@ function OverdueBooks() {
       {overdueBooks.length ? (
         overdueBooks.map((book) => (
           <div key={book.id}>
-           
+           <img src={book.T}/>
             <h3>{book.bookTitle}</h3>
             <p>Author: {book.bookAuthor}</p>
             <p>Borrowed by: {book.memberName}</p>
