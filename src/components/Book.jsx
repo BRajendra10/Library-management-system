@@ -32,7 +32,7 @@ function Book({ data, index }) {
   };
 
   return (
-    <div className="w-full mb-2">
+    <div className="w-full mb-2" key={index}>
       {/* ✅ Desktop Table Row */}
       <ul
         className={`hidden lg:grid grid-cols-25 p-2 gap-1 ${

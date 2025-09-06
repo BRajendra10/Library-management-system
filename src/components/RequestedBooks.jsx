@@ -20,7 +20,7 @@ function RequestedBooks() {
   return (
     <div className="w-full h-fit flex flex-col gap-1">
       {bookData?.length ? (
-        bookData.map((el) => <Book data={el} />)
+        bookData.map((el, index) => <Book data={el} key={index} />)
       ) : (
         <p className="p-2 text-stone-500">No Books found.</p>
       )}

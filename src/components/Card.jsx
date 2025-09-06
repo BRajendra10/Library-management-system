@@ -1,4 +1,5 @@
-export default function Card({ children, count, label }) {
+export default function Card({ children, count, label, lavel }) {
+  
   return (
     <div className="w-full h-[12rem] flex flex-col justify-between p-6 rounded-xl bg-gradient-to-br from-blue-50 to-white shadow-sm border border-stone-200">
       <div className="flex items-center justify-between">
@@ -7,7 +8,7 @@ export default function Card({ children, count, label }) {
       </div>
       <span className="text-lg font-medium text-stone-700">{label}</span>
       <div className="w-full h-1 bg-stone-200 rounded-full overflow-hidden">
-        <div className="w-2/3 h-full bg-blue-500"></div>
+        <div className={`${lavel} h-full bg-blue-500`}></div>
       </div>
     </div>
   );
