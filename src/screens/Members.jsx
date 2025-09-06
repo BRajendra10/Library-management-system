@@ -12,6 +12,7 @@ function Members() {
   const navigate = useNavigate();
   const { members, admin } = useSelector((state) => state.members);
 
+  
   return (
     <div className="w-full h-full px-2">
       <div className="w-full h-220 flex flex-col items-center border border-blue-200 bg-blue-100/40 rounded-lg">

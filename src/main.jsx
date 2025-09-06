@@ -1,18 +1,18 @@
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { StrictMode } from 'react';
-import './index.css';
-import App from './App.jsx';
 import { SidebarContextProvider } from './context/SidebarContext.jsx';
 import { MemberContextProvider } from './context/editmemberContext';
 import { BookContextProvider } from './context/BookContext';
 import { LendingBookContextProvider } from './context/LendingBookContext';
+import { PersistGate } from "redux-persist/integration/react"
 import { Provider } from 'react-redux';
-import { store } from './store/store.js';
+import { store, persistor } from "./store/store";
+import App from './App.jsx';
+import './index.css';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
         <SidebarContextProvider>
           <MemberContextProvider>
@@ -24,6 +24,6 @@ createRoot(document.getElementById('root')).render(
           </MemberContextProvider>
         </SidebarContextProvider>
       </BrowserRouter>
-    </Provider>
-  </StrictMode>
+    </PersistGate>
+  </Provider>
 );
