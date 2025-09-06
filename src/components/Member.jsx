@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEdit } from "react-icons/tb";
@@ -10,16 +10,25 @@ function Member({ data }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { handleEdit, handleId } = useContext(MemberContext);
+  const { login } = useSelector((state) => state.login);
   const { id, userImage, name, email, phone, lastVisited, department, year, fineDue } = data;
 
   const handleEditMember = () => {
-    handleId(id);
-    handleEdit(data);
-    navigate("/register");
+    if (login.membershipType === "admin") {
+      handleId(id);
+      handleEdit(data);
+      navigate("/register");
+    } else {
+      navigate('/');
+    }
   };
 
   const handleDeleteMember = () => {
-    dispatch(delteMember({ id }));
+    if (login.membershipType === "admin") {
+      dispatch(delteMember({ id }));
+    } else {
+      navigate('/');
+    }
   };
 
   return (
@@ -49,9 +58,8 @@ function Member({ data }) {
         <li className="col-span-2 truncate text-gray-900">{year || "--"}</li>
         <li className="col-span-3 truncate">
           <span
-            className={`${
-              fineDue > 0 ? "text-red-500 font-medium" : "text-gray-900"
-            }`}
+            className={`${fineDue > 0 ? "text-red-500 font-medium" : "text-gray-900"
+              }`}
           >
             {fineDue}
           </span>
@@ -120,9 +128,8 @@ function Member({ data }) {
             <b>Year:</b> {year || "--"}
           </span>
           <span
-            className={`truncate ${
-              fineDue > 0 ? "text-red-500 font-medium" : "text-gray-900"
-            }`}
+            className={`truncate ${fineDue > 0 ? "text-red-500 font-medium" : "text-gray-900"
+              }`}
           >
             <b>Fine:</b> {fineDue}
           </span>

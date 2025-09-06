@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEdit } from "react-icons/tb";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeBooksData } from '../features/BookSlice';
 import { BookContext } from '../context/BookContext';
 
@@ -12,6 +12,7 @@ function Book({ data, index }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const { handleEdit, handleId } = useContext(BookContext);
+  const { login } = useSelector((state) => state.login);
 
   const {
     id, title, author, publisher, isbn,
@@ -22,22 +23,29 @@ function Book({ data, index }) {
   } = data;
 
   const handleDelete = (id) => {
-    dispatch(removeBooksData(id));
+    if (login.membershipType === "admin") {
+      dispatch(removeBooksData(id));
+    } else {
+      navigate('/');
+    }
   };
 
   const editedBookData = () => {
-    handleId(id);
-    handleEdit(data);
-    navigate('/addbook');
+    if (login.membershipType === "admin") {
+      handleId(id);
+      handleEdit(data);
+      navigate('/addbook');
+    } else {
+      navigate('/');
+    }
   };
 
   return (
     <div className="w-full mb-2" key={index}>
       {/* ✅ Desktop Table Row */}
       <ul
-        className={`hidden lg:grid grid-cols-25 p-2 gap-1 ${
-          index % 2 === 0 ? "bg-white" : "bg-gray-50"
-        } hover:bg-gray-100 transition`}
+        className={`hidden lg:grid grid-cols-25 p-2 gap-1 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+          } hover:bg-gray-100 transition`}
       >
         <li className="flex items-center">
           <input type="checkbox" className="w-4 h-4" />
@@ -57,11 +65,10 @@ function Book({ data, index }) {
         </li>
         <li className="col-span-2 flex items-center">
           <span
-            className={`px-2 py-0.5 rounded-full text-sm font-medium ${
-              status === "Borrowed"
+            className={`px-2 py-0.5 rounded-full text-sm font-medium ${status === "Borrowed"
                 ? "bg-red-100 text-red-500"
                 : "bg-green-100 text-green-500"
-            }`}
+              }`}
           >
             {status}
           </span>
@@ -91,9 +98,8 @@ function Book({ data, index }) {
 
       {/* ✅ Mobile Card - Amazon/Flipkart Style */}
       <div
-        className={`lg:hidden w-full bg-white rounded-lg shadow-sm p-3 flex flex-col gap-3 ${
-          index % 2 === 0 ? "bg-white" : "bg-gray-50"
-        }`}
+        className={`lg:hidden w-full bg-white rounded-lg shadow-sm p-3 flex flex-col gap-3 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+          }`}
       >
         {/* Card main layout */}
         <div className="flex gap-3">
@@ -107,11 +113,10 @@ function Book({ data, index }) {
             <span className="text-xs text-gray-400">Publisher: {publisher}</span>
             <div className="flex gap-2 mt-1">
               <span
-                className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                  status === "Borrowed"
+                className={`px-2 py-0.5 rounded-full text-xs font-medium ${status === "Borrowed"
                     ? "bg-red-100 text-red-500"
                     : "bg-green-100 text-green-500"
-                }`}
+                  }`}
               >
                 {status}
               </span>
