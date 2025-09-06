@@ -35,12 +35,9 @@ function Members() {
           <SearchBar />
         </div>
         <div className="relative w-full h-full bg-white rounded-lg overflow-scroll">
-          <ul className="hidden  sticky top-0 left-0 w-full h-[3rem] md:grid grid-cols-25 text-sm/6 p-2 gap-1 bg-white z-5">
-            <li className="flex items-center text-stone-500">
-              <input className="w-4 h-4" type="checkbox" name="select-all-member" id="select-all-member" />
-            </li>
+          <ul className="hidden  sticky top-0 left-0 w-full h-[3rem] md:grid grid-cols-24 text-sm/6 px-4 lg:px-8 py-2 gap-1 bg-white z-5">
             <li className="col-span-5 flex items-center text-stone-500">Name & Email</li>
-            <li className="col-span-2 flex items-center text-stone-500">Member ID</li>
+            <li className="col-span-2 flex items-center text-stone-500">ID</li>
             <li className="col-span-3 flex items-center text-stone-500">Phone number</li>
             <li className="col-span-3 flex items-center text-stone-500">Last visited</li>
             <li className="col-span-3 flex items-center text-stone-500">Department</li>

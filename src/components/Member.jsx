@@ -26,12 +26,9 @@ function Member({ data }) {
     <>
       {/* Desktop / Large Screen Table Row */}
       <ul
-        className="hidden md:grid w-full min-h-[4.5rem] grid-cols-25 items-center p-2 gap-1 text-sm rounded-md hover:bg-gray-100 transition-shadow"
+        className="hidden md:grid w-full min-h-[4.5rem] grid-cols-24 items-center p-2 gap-1 text-sm rounded-md hover:bg-gray-100 transition-shadow"
         key={id}
       >
-        <li className="flex items-center">
-          <input className="w-4 h-4" type="checkbox" />
-        </li>
 
         <li className="col-span-5 flex items-center gap-3 overflow-hidden">
           <img

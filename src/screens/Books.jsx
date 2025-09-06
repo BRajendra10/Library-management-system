@@ -9,6 +9,8 @@ function Books() {
   const navigate = useNavigate();
   const { books } = useSelector((state) => state.books)
   const { overdueBooks } = useSelector((state) => state.overDue);
+  const { requestbooks } = useSelector((state) => state.requestbooks);
+  const { borrowedBooks } = useSelector((state) => state.borrowedBooks);
 
   return (
     <div className="w-full h-full px-2">
@@ -16,20 +18,20 @@ function Books() {
         <div className="w-full min-h-[4rem] flex flex-col md:flex-row justify-between items-center">
           <nav className="w-full md:w-[35rem] h-[8rem] md:h-full grid grid-cols-2 md:grid-cols-4 gap-2">
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={""}>
-              All <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{books?.length}</span>
+              All <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{books.length}</span>
             </NavLink>
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"borrowed"}>
-              Borrowed <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{22}</span>
+              Borrowed <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{borrowedBooks.length}</span>
             </NavLink>
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"overdue"}>
-              Overdue <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{overdueBooks?.length}</span>
+              Overdue <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{overdueBooks.length}</span>
             </NavLink>
             <NavLink className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`} to={"requested"}>
-              Request <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{10}</span>
+              Request <span className="bg-blue-500 text-sm text-white rounded-xl px-2">{requestbooks.length}</span>
             </NavLink>
           </nav>
 
-          <button className="w-full md:w-[9rem] h-[4rem] uppercase text-blue-700 hover:bg-blue-300/50 bg-blue-300" onClick={() => navigate('/addbook')}> + add Book </button>
+          <button className="w-full md:w-[10rem] h-[4rem] uppercase text-blue-700 hover:bg-blue-300/50 bg-blue-300" onClick={() => navigate('/addbook')}> + add Book </button>
         </div>
         <div className="w-full h-[4.5rem] flex justify-between items-center bg-white p-2">
           <SearchBar />

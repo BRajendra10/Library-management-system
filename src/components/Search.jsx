@@ -1,9 +1,11 @@
-import { useSelector, } from 'react-redux'
-import { useState } from "react";
+import { SearchContext } from '../context/SearchContext';
+import { useState, useContext } from 'react'
+import { useSelector } from 'react-redux';
 import { GrSearch } from "react-icons/gr";
-import { RxCross2 } from "react-icons/rx"; 
+import { RxCross2 } from "react-icons/rx";
 
 export default function SearchBar() {
+    const { handleBook } = useContext(SearchContext);
     const { books } = useSelector((state) => state.books);
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
@@ -19,14 +21,17 @@ export default function SearchBar() {
                     b.author.toLowerCase().includes(value.toLowerCase())
             );
             setResults(filtered);
+            handleBook(filtered);
         } else {
             setResults([]);
+            handleBook([]);
         }
     };
 
     const clearSearch = () => {
         setQuery("");
         setResults([]);
+        handleBook([]);
     };
 
     return (
@@ -60,8 +65,9 @@ export default function SearchBar() {
                             key={book.id}
                             className="px-3 py-2 hover:bg-blue-50 cursor-pointer"
                             onClick={() => {
-                                setQuery(book.title); // autofill input
-                                setResults([]); // hide dropdown
+                                setQuery(book.title);
+                                setResults([]);
+                                handleBook([book]);
                             }}
                         >
                             <span className="font-medium">{book.title}</span>{" "}

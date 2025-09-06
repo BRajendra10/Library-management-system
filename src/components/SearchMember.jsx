@@ -1,9 +1,11 @@
+import { SearchContext } from '../context/SearchContext';
+import { useState, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 import { GrSearch } from 'react-icons/gr';
 import { RxCross2 } from 'react-icons/rx';
 
 export default function SearchBar() {
+    const { handleMember } = useContext(SearchContext);
     const { members } = useSelector((state) => state.members);
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
@@ -17,14 +19,17 @@ export default function SearchBar() {
                 m.name.toLowerCase().includes(value.toLowerCase())
             );
             setResults(filteredMembers);
+            handleMember(filteredMembers);
         } else {
             setResults([]);
+            handleMember([]);
         }
     };
 
     const clearSearch = () => {
         setQuery('');
         setResults([]);
+        handleMember([]);
     };
 
     return (
@@ -60,6 +65,7 @@ export default function SearchBar() {
                             onClick={() => {
                                 setQuery(member.name);
                                 setResults([]);
+                                handleMember([member])
                             }}
                         >
                             <div className="flex flex-col">
