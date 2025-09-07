@@ -101,7 +101,16 @@ function ReturnBook() {
                     </div>
                 </div>
 
-                <button className="bg-blue-500 text-white p-3 mt-5" onClick={handleClicking}>Conform Return</button>
+                <button
+                    className={`p-3 mt-5 rounded text-white ${bookResults.length === 1 && memberResults.length === 1
+                            ? "bg-blue-500 hover:bg-blue-600"
+                            : "bg-gray-400 cursor-not-allowed"
+                        }`}
+                    disabled={!(bookResults.length === 1 && memberResults.length === 1)}
+                    onClick={handleClicking}
+                >
+                    Confirm Return
+                </button>
             </div>
         </div>
     )

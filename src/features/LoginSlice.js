@@ -15,8 +15,13 @@ const loginSlice = createSlice({
             
             const data = members.filter((member) => member.email === email && member.password === password);
 
-            state.login = data[0];
-            state.isLogedIn = true;
+            if(data[0]){
+                state.login = data[0];
+                state.isLogedIn = true;
+            }else{
+                state.login = {};
+                state.isLogedIn = false;
+            }
         },
 
         resetLogin: (state) => {

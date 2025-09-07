@@ -10,7 +10,7 @@ import { FiUsers } from "react-icons/fi";
 import { FaHandHolding } from "react-icons/fa6";
 
 function Overview() {
-  const { members } = useSelector((state) => state.members)
+  const { books } = useSelector((state) => state.books);
   const { overdueBooks } = useSelector((state) => state.overDue);
   const { requestbooks } = useSelector((state) => state.requestbooks);
   const { borrowedBooks } = useSelector((state) => state.borrowedBooks);
@@ -23,16 +23,16 @@ function Overview() {
       {/* Top Cards Section */}
       <div className="col-span-12 p-5">
         <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
+          <Card count={books.length} label="Books" lavel="w-4/5">
+            <FiUsers className="text-3xl text-blue-500" />
+          </Card>
+          
           <Card count={borrowedBooks.length} label="Borrowed Books" lavel="w-2/5">
             <FaBook className="text-3xl text-blue-500" />
           </Card>
 
           <Card count={overdueBooks.length} label="Overdue Books" lavel="w-2/5">
             <FaRegClock className="text-3xl text-blue-500" />
-          </Card>
-
-          <Card count={members.length} label="Visitors" lavel="w-4/5">
-            <FiUsers className="text-3xl text-blue-500" />
           </Card>
 
           <Card count={requestbooks.length} label="Book Requests" lavel="w-1/5">
