@@ -5,7 +5,7 @@ const AuthRedirect = ({ children }) => {
   const { isLogedIn } = useSelector((state) => state.login);
 
   if (isLogedIn) {
-    return <Navigate to="/" replace />; // already logged in → kick out of /login
+    return <Navigate to="/" replace />;
   }
 
   return children;

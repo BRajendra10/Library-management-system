@@ -2,7 +2,6 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Overview from '../screens/Overview'
 import Members from '../screens/Members'
-import Settings from '../screens/Settings'
 import Login from '../screens/Login';
 import Register from '../components/Register';
 import BookForm from '../components/BookForm';
@@ -10,7 +9,7 @@ import LendBook from '../components/LendBook';
 import ReturnBook from '../components/ReturnBook';
 import MembersRoute from './MembersRoutes';
 import BooksRoutes from './BooksRoutes';
-import AuthRedirect from '../components/AuthRedirect';
+import AuthRedirect from './AuthRedirect';
 import ProtectedRoute from './ProtectedRoute';
 
 function Navigation() {
