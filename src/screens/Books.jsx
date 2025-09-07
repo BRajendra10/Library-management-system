@@ -37,23 +37,15 @@ function Books() {
           <SearchBar />
         </div>
         <div className="relative w-full h-full bg-white rounded-lg overflow-scroll">
-          <ul className="hidden lg:grid sticky top-0 left-0 w-full h-[3rem] grid-cols-25 text-sm p-2 gap-1 bg-white z-5">
-            <li className="flex items-center text-stone-500">
-              <input
-                className="w-4 h-4"
-                type="checkbox"
-                name="select-all-member"
-                id="select-all-member"
-              />
-            </li>
-            <li className="col-span-2 flex items-center text-stone-500">Thumbnail</li>
-            <li className="col-span-6 flex items-center text-stone-500">Title & Author</li>
-            <li className="col-span-3 flex items-center text-stone-500">Publisher</li>
-            <li className="col-span-2 flex items-center text-stone-500">Book ID</li>
-            <li className="col-span-3 flex items-center text-stone-500">ISBN</li>
-            <li className="col-span-2 flex items-center text-stone-500">Status</li>
-            <li className="col-span-2 flex items-center text-stone-500">Requests</li>
-            <li className="col-span-3 flex items-center text-stone-500">Actions</li>
+          <ul className="hidden lg:grid sticky top-0 left-0 w-full h-[3rem] grid-cols-25 text-sm p-2 gap-1 bg-white border-b z-10">
+            <li className="col-span-2 flex items-center text-stone-500 font-medium">Thumbnail</li>
+            <li className="col-span-6 flex items-center text-stone-500 font-medium">Title & Author</li>
+            <li className="col-span-3 flex items-center text-stone-500 font-medium">Publisher</li>
+            <li className="col-span-2 flex items-center text-stone-500 font-medium">Book ID</li>
+            <li className="col-span-4 flex items-center text-stone-500 font-medium">ISBN</li>
+            <li className="col-span-2 flex items-center text-stone-500 font-medium">Status</li>
+            <li className="col-span-2 flex items-center text-stone-500 font-medium">Requests</li>
+            <li className="col-span-4 flex items-center text-stone-500 font-medium">Actions</li>
           </ul>
           <div className="absolute top-10 left-0 w-full h-fit flex flex-col gap-1 overflow-scroll z-3">
             <Outlet />
