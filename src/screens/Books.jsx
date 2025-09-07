@@ -37,7 +37,7 @@ function Books() {
           <SearchBar />
         </div>
         <div className="relative w-full h-full bg-white rounded-lg overflow-scroll">
-          <ul className="hidden lg:grid sticky top-0 left-0 w-full h-[3rem] grid-cols-25 text-sm p-2 gap-1 bg-white border-b z-10">
+          <ul className="hidden lg:grid sticky top-0 left-0 w-full h-[3rem] grid-cols-25 text-sm px-4 py-2 gap-1 bg-white z-10">
             <li className="col-span-2 flex items-center text-stone-500 font-medium">Thumbnail</li>
             <li className="col-span-6 flex items-center text-stone-500 font-medium">Title & Author</li>
             <li className="col-span-3 flex items-center text-stone-500 font-medium">Publisher</li>
@@ -47,7 +47,7 @@ function Books() {
             <li className="col-span-2 flex items-center text-stone-500 font-medium">Requests</li>
             <li className="col-span-4 flex items-center text-stone-500 font-medium">Actions</li>
           </ul>
-          <div className="absolute top-10 left-0 w-full h-fit flex flex-col gap-1 overflow-scroll z-3">
+          <div className="absolute top-10 left-0 w-full h-fit flex flex-col gap-1 overflow-scroll px-3 py-2 z-3">
             <Outlet />
           </div>
         </div>
