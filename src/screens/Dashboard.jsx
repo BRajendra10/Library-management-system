@@ -55,6 +55,9 @@ function Dashboard() {
                         <NavLink
                             className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
                             to={"/members"}>Members</NavLink>
+                        <NavLink
+                            className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
+                            to={"/about"}>About</NavLink>
                         {isLogedIn ? <button className="text-stone-950 hover:bg-blue-500 text-left hover:text-white duration-300 text-base rounded-lg p-2 px-3" onClick={handleLogout}>Logout</button> :
                             <NavLink
                                 className={({ isActive }) => `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`}
@@ -123,6 +126,15 @@ function Dashboard() {
                             onClick={() => setSidebarOpen(false)}
                         >
                             Members
+                        </NavLink>
+                        <NavLink
+                            className={({ isActive }) =>
+                                `text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
+                            }
+                            to={"/about"}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            About
                         </NavLink>
                         {isLogedIn ? (
                             <button

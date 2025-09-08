@@ -11,6 +11,7 @@ import MembersRoute from './MembersRoutes';
 import BooksRoutes from './BooksRoutes';
 import AuthRedirect from './AuthRedirect';
 import ProtectedRoute from './ProtectedRoute';
+import About from '../screens/About';
 
 function Navigation() {
     return (
@@ -18,6 +19,7 @@ function Navigation() {
             <Route path="/" element={<Overview />} />
             <Route path="/books/*" element={<BooksRoutes />} />
             <Route path="/members/*" element={<MembersRoute />} />
+            <Route path="/about" element={<About />} />
             <Route path="/login" element={
                 <AuthRedirect>
                     <Login />
