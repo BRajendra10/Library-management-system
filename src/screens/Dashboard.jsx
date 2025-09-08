@@ -159,14 +159,6 @@ function Dashboard() {
             </div>
 
 
-            {/* Overlay when sidebar is open */}
-            {/* {isSidebarOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-                    onClick={() => setSidebarOpen(false)}
-                />
-            )} */}
-
             {/* Right side content */}
             <div className="col-span-30 lg:col-span-24 xl:col-span-25 2xl:col-span-26 min-h-screen flex flex-col bg-white">
 
@@ -178,7 +170,7 @@ function Dashboard() {
                     </button>
 
                     {/* Right Side (Notifications + User) */}
-                    <div className="flex items-center gap-3 ml-auto">
+                    <div className="flex items-center gap-3 ml-auto" onClick={() => navigate("/about")}>
                         <button className="p-2 text-stone-500 hover:text-stone-950 duration-300">
                             <IoMdNotificationsOutline className="text-2xl" />
                         </button>
