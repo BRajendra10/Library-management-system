@@ -2,10 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-//Json-data url
 const booksDataUrl = "https://book-server-ahrs.onrender.com/books";
 
-// books api fetched
 export const fetachedBooksData = createAsyncThunk(
   "fetchedBooksData",
   async () => {
@@ -14,22 +12,15 @@ export const fetachedBooksData = createAsyncThunk(
   }
 );
 
-// Delete books data from api
 export const removeBooksData = createAsyncThunk("removeBooksData", async (id) => {
   await axios.delete(`${booksDataUrl}/${id}`);
   return id;
 })
 
-// Post new books data from api
 export const postBookData = createAsyncThunk("postBookData", async (newbookdata) => {
   const res = await axios.post(booksDataUrl, newbookdata)
   return res.data;
 })
-
-export const updateBook = createAsyncThunk("books/updateBook", async ({ id, newBook }) => {
-  const res = await axios.put(`${booksDataUrl}/${id}`, newBook);
-  return res.data;
-});
 
 export const updateBookData = createAsyncThunk("updateBookData", async ({ id, updates }) => {
   const res = await axios.patch(`${booksDataUrl}/${id}`, updates);
@@ -48,7 +39,8 @@ const bookSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    //Get api 
+
+    // GET BOOK 
     builder.addCase(fetachedBooksData.pending, (state) => {
       state.status = " loading...";
     });
@@ -63,7 +55,7 @@ const bookSlice = createSlice({
       state.error = action.payload.error;
     });
 
-    // remove api 
+    // DELETE / REMOVE BOOK
     builder.addCase(removeBooksData.pending, (state) => {
       state.status = "loading"
     })
@@ -79,7 +71,7 @@ const bookSlice = createSlice({
       state.error = action.payload.error;
     });
 
-    // Post New book Data
+    // POST NEW BOOK
     builder.addCase(postBookData.pending, (state) => {
       state.status = "loading";
     })
@@ -94,22 +86,7 @@ const bookSlice = createSlice({
       state.error = action.payload.error;
     });
 
-    builder.addCase(updateBook.pending, (state) => {
-      state.status = "loading";
-    })
-
-    builder.addCase(updateBook.fulfilled, (state, action) => {
-      state.status = "succeeded";
-      state.books = state.books.map((book) =>
-        book.id === action.payload.id ? action.payload : book
-      );
-    })
-
-    builder.addCase(updateBook.rejected, (state, action) => {
-      state.status = "failed";
-      state.error = action.error.message;
-    });
-
+    // UPDATE BOOK
     builder.addCase(updateBookData.pending, (state) => {
       state.status = " loading...";
     });

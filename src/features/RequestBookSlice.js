@@ -60,10 +60,11 @@ const requestBookSlice = createSlice({
     })
 
     builder.addCase(removeRequestBooksData.fulfilled, (state, action) => {
-      state.status = "success"
-      state.requestbooks.splice(action.payload, 1);
-    })
-
+      state.status = "success";
+      state.requestbooks = state.requestbooks.filter(
+        (book) => book.id !== action.payload
+      );
+    });
 
     builder.addCase(removeRequestBooksData.rejected, (state, action) => {
       state.status = "error";
@@ -79,7 +80,6 @@ const requestBookSlice = createSlice({
       state.status = "success"
       state.requestbooks.push(action.payload);
     })
-
 
     builder.addCase(postRequestBookData.rejected, (state, action) => {
       state.status = "error";

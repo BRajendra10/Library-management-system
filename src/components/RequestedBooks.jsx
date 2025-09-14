@@ -1,31 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import Book from './Book'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import BookCard from './BookCard';
 
 function RequestedBooks() {
-  const { books } = useSelector((state) => state.books)
   const { requestbooks } = useSelector((state) => state.requestbooks);
-  const [bookData, setBookData] = useState([]);
-
-  useEffect(() => {
-    const data = books.filter((book) =>
-      requestbooks.find((el) => {
-        if (el.bookId == book.id) return el;
-      })
-    )
-
-    setBookData(data);
-  }, [books, requestbooks])
 
   return (
-    <div className="w-full h-fit flex flex-col gap-1">
-      {bookData?.length ? (
-        bookData.map((el, index) => <Book data={el} key={index} />)
+    <div className="w-full h-fit grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 p-4">
+      {requestbooks.length ? (
+        requestbooks.map((el) => <BookCard type="requested" data={el} key={el.id} />)
       ) : (
-        <p className="p-2 text-stone-500">No Books found.</p>
+        <p className="col-span-full text-center text-slate-500">
+          No requested books found.
+        </p>
       )}
     </div>
-  )
+  );
 }
 
-export default RequestedBooks
+export default RequestedBooks;

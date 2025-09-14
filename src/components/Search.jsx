@@ -35,7 +35,7 @@ export default function SearchBar() {
     };
 
     return (
-        <div className="relative min-w-[15rem]  w-[30rem]">
+        <div className="relative min-w-[15rem] w-[35rem]">
             {/* Search Box */}
             <div className="h-11 flex items-center border border-blue-200 rounded-sm">
                 <div className="w-10 h-full flex justify-center items-center">

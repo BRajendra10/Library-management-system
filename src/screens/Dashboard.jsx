@@ -26,7 +26,7 @@ function Dashboard() {
         <div className="w-full h-screen grid grid-cols-30 bg-white">
 
             {/* Sidebar for desktop */}
-            <div className="col-span-6 xl:col-span-5 2xl:col-span-4 hidden lg:flex flex-col gap-3 bg-white">
+            <div className="2xl:col-span-4 hidden 2xl:flex flex-col gap-3 bg-white">
                 <div className="col-span-6 xl:col-span-5 2xl:col-span-4  hidden lg:flex flex-col gap-3 bg-white">
 
                     <div className="w-full h-[4rem] flex jusitfy-between items-center gap-4 px-4 py-3">
@@ -66,7 +66,7 @@ function Dashboard() {
                 </div>
             </div>
 
-            <div className={`fixed inset-y-0 left-0 w-70 bg-white shadow-lg z-50 transform transition-transform duration-300 lg:hidden
+            <div className={`fixed inset-y-0 left-0 w-70 bg-white shadow-lg z-50 transform transition-transform duration-300 2xl:hidden
                 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
 
                 {/* Top bar inside mobile sidebar */}
@@ -136,6 +136,15 @@ function Dashboard() {
                         >
                             About
                         </NavLink>
+                        <NavLink
+                            className={({ isActive }) =>
+                                `md:hidden text-stone-950 hover:bg-blue-500 hover:text-white duration-300 text-base rounded-lg p-2 px-3 ${isActive ? "bg-blue-500 text-white" : ""}`
+                            }
+                            to={"/addbook"}
+                            onClick={() => setSidebarOpen(false)}
+                        >
+                            Add book
+                        </NavLink>
                         {isLogedIn ? (
                             <button
                                 className="text-stone-950 hover:bg-blue-500 text-left hover:text-white duration-300 text-base rounded-lg p-2 px-3"
@@ -158,14 +167,13 @@ function Dashboard() {
                 </div>
             </div>
 
-
             {/* Right side content */}
-            <div className="col-span-30 lg:col-span-24 xl:col-span-25 2xl:col-span-26 min-h-screen flex flex-col bg-white">
+            <div className="col-span-30 2xl:col-span-26 min-h-screen flex flex-col bg-white">
 
                 {/* Top Bar */}
                 <div className="w-full min-h-[4rem] flex justify-between items-center p-2 px-4">
                     {/* Mobile Menu Button */}
-                    <button className="lg:hidden p-2 text-blue-600" onClick={() => setSidebarOpen(true)}>
+                    <button className="2xl:hidden p-2 text-blue-600" onClick={() => setSidebarOpen(true)}>
                         <AiOutlineMenu className="text-2xl" />
                     </button>
 

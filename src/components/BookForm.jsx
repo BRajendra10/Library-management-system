@@ -6,7 +6,7 @@ import { postBookData } from "../features/BookSlice";
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { BookContext } from '../context/BookContext';
-import { updateBook } from "../features/BookSlice";
+import { updateBookData } from "../features/BookSlice";
 
 // ✅ Validation Schema based on book data structure
 const BookSchema = Yup.object().shape({
@@ -96,7 +96,7 @@ export default function AddBookForm() {
         validationSchema={BookSchema}
         onSubmit={(values, { resetForm }) => {
           if (bookId) {
-            dispatch(updateBook({ id: bookId, newBook: values }))
+            dispatch(updateBookData({ id: bookId, updates: values }))
           } else {
             dispatch(postBookData(values));
           }

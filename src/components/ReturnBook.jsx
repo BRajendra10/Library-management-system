@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { GrSearch } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
 import { LendingBookContext } from '../context/LendingBookContext';
-import { updateBookData } from "../features/BookSlice";
+// import { updateBookData } from "../features/BookSlice";
 import { deleteBorrowedBooks } from "../features/borrowedBooksSlice";
 
 function ReturnBook() {
@@ -14,19 +14,19 @@ function ReturnBook() {
     const { bookResults, memberResults } = useContext(LendingBookContext);
 
     const handleClicking = () => {
-        const { borrowDetails } = bookResults[0];
-        const { id, name } = memberResults[0];
-        const borrowDetailsFiltered = borrowDetails.filter((detail) => detail.userId !== id);
+        // const { borrowDetails } = bookResults[0];
+        const { name } = memberResults[0];
+        // const borrowDetailsFiltered = borrowDetails.filter((detail) => detail.userId !== id);
         const data = borrowedBooks.filter((book) => book.memberName === name);
 
-        dispatch(
-            updateBookData({
-                id: bookResults[0].id,
-                updates: {
-                    borrowDetails: borrowDetailsFiltered,
-                },
-            })
-        );
+        // dispatch(
+        //     updateBookData({
+        //         id: bookResults[0].id,
+        //         updates: {
+        //             borrowDetails: borrowDetailsFiltered,
+        //         },
+        //     })
+        // );
         dispatch(
             deleteBorrowedBooks(data[0].id)
         )
@@ -129,10 +129,6 @@ export function SearchLendingBook() {
     const handleChange = (e) => {
         const value = e.target.value;
         setQuery(value);
-
-        //  b.status.toLowerCase() === "available" && // Only include available books
-        //             (b.title.toLowerCase().includes(value.toLowerCase()) ||
-        //                 b.author.toLowerCase().includes(value.toLowerCase()))
 
         if (value.length > 0) {
             const filtered = books.filter(

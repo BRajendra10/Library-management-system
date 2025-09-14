@@ -9,6 +9,11 @@ export const fetchOverdueData = createAsyncThunk("fetchOverdueData", async () =>
     return res.data;
 })
 
+export const removeOverdueData = createAsyncThunk("removeOverdueData", async (id) => {
+    await axios.delete(`${overdueURL}/${id}`);
+    return id;
+})
+
 const initialState = {
     overdueBooks: [],
     "Fine": 0,
@@ -36,6 +41,20 @@ const overdueSlice = createSlice({
         })
 
         builder.addCase(fetchOverdueData.rejected, (state, action) => {
+            state.status = "error";
+            state.error = action.payload.error;
+        });
+
+        builder.addCase(removeOverdueData.pending, (state) => {
+            state.status = "loading...";
+        });
+
+        builder.addCase(removeOverdueData.fulfilled, (state, action) => {
+            state.status = "success";
+            state.overdueBooks.filter(due => due.id !== action.payload);
+        })
+
+        builder.addCase(removeOverdueData.rejected, (state, action) => {
             state.status = "error";
             state.error = action.payload.error;
         });
