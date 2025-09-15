@@ -8,13 +8,9 @@ export const fetchBorrowedBook = createAsyncThunk("borrowedBooks/fetchBorrowedBo
   return res.data;
 });
 
-export const postBorrowedBooks = createAsyncThunk("borrowedBooks/postBorrowedBooks", async ({ newBook }, { rejectWithValue }) => {
-  try {
-    const res = await axios.post(borrowedBooksURL, newBook);
-    return res.data;
-  } catch (error) {
-    return rejectWithValue(error.response?.data || error.message);
-  }
+export const postBorrowedBooks = createAsyncThunk("borrowedBooks/postBorrowedBooks", async ({ newBook }) => {
+  const res = await axios.post(borrowedBooksURL, newBook);
+  return res.data;
 });
 
 export const deleteBorrowedBooks = createAsyncThunk("deleteBorrowedBooks", async (id) => {

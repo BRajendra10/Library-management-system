@@ -15,15 +15,12 @@ export default function LendBook() {
   );
 
   const handleClicking = () => {
-    const { id, title, author, thumbnail, borrowDetails, isbn } = bookResults[0];
+    const { id, title, author, thumbnail, isbn } = bookResults[0];
     const { name, userImage } = memberResults[0];
 
-    // find first available isbn
-    const availableIsbn = isbn?.find(
-      (isbnCode) => !borrowDetails.find((borrow) => borrow.isbn === isbnCode)
+    const availableIsbn = isbn.filter(
+      (isbnNumber) => !borrowedBooks.some((book) => book.isbn === isbnNumber)
     );
-
-    if (!availableIsbn) return; // no copy available
 
     const data = {
       id: borrowedBooks.length + 1,
@@ -38,21 +35,9 @@ export default function LendBook() {
       totalDelayDays: 0,
       fineRate: 2,
       totalFine: 0,
-      isbn: availableIsbn, // ✅ fixed
+      isbn: availableIsbn[0], // ✅ fixed
       bookThumbnail: thumbnail,
       memberImage: userImage,
-    };
-
-    const booksBorrowData = {
-      isbn: availableIsbn,
-      userId: memberResults[0].id,
-      memberName: name,
-      memberImage: userImage,
-      borrowDate: today,
-      dueDate: futureDate,
-      totalDelayDays: 0,
-      fineRate: 2,
-      totalFine: 0,
     };
 
     dispatch(postBorrowedBooks({ newBook: data }));
@@ -60,10 +45,7 @@ export default function LendBook() {
       updateBookData({
         id: bookResults[0].id,
         updates: {
-          borrowDetails: [...borrowDetails, booksBorrowData],
-          // ✅ updated logic
-          status:
-            borrowDetails.length + 1 === isbn.length ? "Borrowed" : "Available",
+          status: availableIsbn.length === 1 ? "Borrowed" : "Available",
         },
       })
     );
@@ -82,8 +64,7 @@ export default function LendBook() {
       <div className="w-[25rem] sm:w-[40rem] lg:w-[50rem] max-w-[50rem] h-[4rem] grid grid-cols-2 bg-white">
         <NavLink
           className={({ isActive }) =>
-            `text-lg flex items-center p-3 ${
-              isActive ? "bg-white text-black" : "bg-stone-200 text-stone-400"
+            `text-lg flex items-center p-3 ${isActive ? "bg-white text-black" : "bg-stone-200 text-stone-400"
             }`
           }
           to={"/lend"}
@@ -92,8 +73,7 @@ export default function LendBook() {
         </NavLink>
         <NavLink
           className={({ isActive }) =>
-            `text-lg flex items-center p-3 ${
-              isActive ? "bg-white text-black" : "bg-stone-200 text-stone-400"
+            `text-lg flex items-center p-3 ${isActive ? "bg-white text-black" : "bg-stone-200 text-stone-400"
             }`
           }
           to={"/return"}
@@ -172,11 +152,10 @@ export default function LendBook() {
 
         {/* Confirm Button */}
         <button
-          className={`p-3 mt-5 rounded text-white ${
-            bookResults.length === 1 && memberResults.length === 1
-              ? "bg-blue-500 hover:bg-blue-600"
-              : "bg-gray-400 cursor-not-allowed"
-          }`}
+          className={`p-3 mt-5 rounded text-white ${bookResults.length === 1 && memberResults.length === 1
+            ? "bg-blue-500 hover:bg-blue-600"
+            : "bg-gray-400 cursor-not-allowed"
+            }`}
           disabled={!(bookResults.length === 1 && memberResults.length === 1)}
           onClick={handleClicking}
         >

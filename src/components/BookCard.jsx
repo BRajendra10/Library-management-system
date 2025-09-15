@@ -76,25 +76,6 @@ function BookCard({ type = "library", data }) {
     totalFine,
   } = normalized;
 
-  const newBorrowData = {
-    id: crypto.randomUUID(),
-    bookTitle: title,
-    bookAuthor: author,
-    bookId: bookId,
-    memberName: memberName,
-    memberId,
-    borrowDate: today,
-    dueDate: futureDate,
-    returnDate: null,
-    totalDelayDays: 0,
-    fineRate: 2,
-    totalFine: 0,
-    isbn: isbn,
-    bookThumbnail: thumbnail,
-    memberImage: memberImage,
-  };
-
-
   // Handle actions
   const handleDelete = () => {
     if (login.membershipType === "admin") {
@@ -115,15 +96,36 @@ function BookCard({ type = "library", data }) {
   };
 
   const reserve = () => {
+    const availableIsbn = isbn.filter(
+      (isbnNumber) => !borrowedBooks.some((book) => book.isbn === isbnNumber)
+    );
+
+    if (availableIsbn.length === 0) {
+      dispatch(
+        updateBookData({
+          id: bookId,
+          updates: { status: "Borrowed" },
+        })
+      );
+
+      return
+    }
+
     const requestData = {
       id: crypto.randomUUID(),
-      bookId,
       bookTitle: title,
       bookAuthor: author,
-      isbn,
-      bookThumbnail: thumbnail,
-      memberId: login.id,
+      bookId,
       memberName: login.name,
+      memberId: login.id,
+      borrowDate: today,
+      dueDate: futureDate,
+      returnDate: null,
+      totalDelayDays: 0,
+      fineRate: 2,
+      totalFine: 0,
+      isbn: availableIsbn[0],
+      bookThumbnail: thumbnail,
       memberImage: login.userImage,
       requestDate: today, // keep tracking
     };
@@ -147,7 +149,25 @@ function BookCard({ type = "library", data }) {
     dispatch(removeRequestBooksData(id))
   }
 
-  const handleApprove = () => {
+  const handleApprove = () => { // need change
+    const newBorrowData = {
+      id: crypto.randomUUID(),
+      bookTitle: title,
+      bookAuthor: author,
+      bookId: bookId,
+      memberName: memberName,
+      memberId,
+      borrowDate: today,
+      dueDate: futureDate,
+      returnDate: null,
+      totalDelayDays: 0,
+      fineRate: 2,
+      totalFine: 0,
+      isbn: isbn,
+      bookThumbnail: thumbnail,
+      memberImage: memberImage,
+    };
+
     dispatch(postBorrowedBooks({ newBook: newBorrowData }))
     dispatch(removeRequestBooksData(id));
   }
@@ -216,8 +236,8 @@ function BookCard({ type = "library", data }) {
             </div>
           )}
 
-          {/* ISBN (library only) */}
-          {isbn && type === "library" && (
+          {/* ISBN  */}
+          {isbn && (
             <div className="flex flex-wrap gap-2 mt-3">
               {Array.isArray(isbn) ? (
                 isbn.map((num, i) => (
