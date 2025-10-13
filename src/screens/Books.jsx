@@ -1,52 +1,68 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { NavLink } from "react-router-dom";
-// import Book from '../components/Book';
-import SearchBar from '../components/Search';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Book from '../components/Book';
 
 function Books() {
-  const navigate = useNavigate();
-  const { books } = useSelector((state) => state.books)
-  const { overdueBooks } = useSelector((state) => state.overDue);
-  const { requestbooks } = useSelector((state) => state.requestbooks);
-  const { borrowedBooks } = useSelector((state) => state.borrowedBooks);
-
-  const tabs = [
-    { name: "All", path: "", count: books.length },
-    { name: "Borrowed", path: "borrowed", count: borrowedBooks.length },
-    { name: "Overdue", path: "overdue", count: overdueBooks.length },
-    { name: "Requested", path: "requested", count: requestbooks.length },
-  ];
+  const { books } = useSelector((state) => state.books);
 
   return (
-    <div className="w-full h-full px-3">
-      <div className="w-full h-220 flex flex-col items-center border border-blue-200 bg-blue-100/40 rounded-lg">
-        <div className="w-full min-h-[4rem] flex justify-between overflow-x-scroll">
-          <nav className="min-w-[35rem] h-[4rem] grid grid-cols-4 gap-2">
-            {tabs.map((tab) => (
-              <NavLink
-                key={tab.name}
-                to={tab.path}
-                className={({ isActive }) => `flex justify-center gap-2 items-center ${isActive ? "border-b-2 border-b-blue-500 text-stone-950" : ""}`}
-              >
-                {tab.name}
-                <span className="bg-blue-500 text-xs text-white rounded-full px-2 py-0.5">
-                  {tab.count}
-                </span>
-              </NavLink>
-            ))}
-          </nav>
+    <div className="w-full h-screen grid grid-cols-12 bg-blue-100 p-3 md:p-5 gap-5 overflow-y-scroll">
+      <div className="col-span-12 flex flex-col border-b border-zinc-400 gap-5 p-8">
+        <h2 className="text-xl font-semibold">Programming</h2>
 
-          <button className="hidden md:block w-[10rem] h-[4rem] uppercase text-blue-700 hover:bg-blue-300/50 bg-blue-300" onClick={() => navigate('/addbook')}> + add Book </button>
-        </div>
-        <div className="w-full h-[4rem] flex justify-between items-center bg-white p-2">
-          <SearchBar />
-        </div>
-        <div className="relative w-full h-full bg-white rounded-lg overflow-scroll">
-          <Outlet />
+        <div className=" grid grid-cols-6 gap-5">
+            {books.map((el) => (el.category === "Programming") && <Book data={el} />)}
         </div>
       </div>
+
+      <div className="col-span-12 flex flex-col border-b border-zinc-400 gap-5 p-8">
+        <h2 className="text-xl font-semibold">Mathematics</h2>
+
+        <div className=" grid grid-cols-6 gap-5">
+            {books.map((el) => (el.category === "Mathematics") && <Book data={el} />)}
+        </div>
+      </div>
+
+      <div className="col-span-12 flex flex-col border-b border-zinc-400 gap-5 p-8">
+        <h2 className="text-xl font-semibold">Science</h2>
+
+        <div className=" grid grid-cols-6 gap-5">
+            {books.map((el) => (el.category === "Science") && <Book data={el} />)}
+        </div>
+      </div>
+
+      <div className="col-span-12 flex flex-col border-b border-zinc-400 gap-5 p-8">
+        <h2 className="text-xl font-semibold">Romance</h2>
+
+        <div className=" grid grid-cols-6 gap-5">
+            {books.map((el) => (el.category === "Romance") && <Book data={el} />)}
+        </div>
+      </div>
+
+      <div className="col-span-12 flex flex-col border-b border-zinc-400 gap-5 p-8">
+        <h2 className="text-xl font-semibold">Fiction</h2>
+
+        <div className=" grid grid-cols-6 gap-5">
+            {books.map((el) => (el.category === "Fiction") && <Book data={el} />)}
+        </div>
+      </div>
+
+      <div className="col-span-12 flex flex-col border-b border-zinc-400 gap-5 p-8">
+        <h2 className="text-xl font-semibold">Self-Help</h2>
+
+        <div className=" grid grid-cols-6 gap-5">
+            {books.map((el) => (el.category === "Self-Help") && <Book data={el} />)}
+        </div>
+      </div>
+
+      <div className="col-span-12 flex flex-col border-b border-zinc-400 gap-5 p-5">
+        <h2 className="text-xl font-semibold">Philosophy</h2>
+
+        <div className="w-full h-fit grid grid-cols-6 gap-5">
+          {books.map((el) => (el.category === "Philosophy") && <Book data={el} />)}
+        </div>
+      </div>
+
     </div>
   )
 }

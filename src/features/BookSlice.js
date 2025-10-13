@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const booksDataUrl = "https://book-server-ahrs.onrender.com/books";
+const booksDataUrl = "https://lms-server-4hjh.onrender.com/books";
 
 export const fetachedBooksData = createAsyncThunk(
   "fetchedBooksData",
@@ -40,7 +40,7 @@ const bookSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
 
-    // GET BOOK 
+    // FETCH BOOKS
     builder.addCase(fetachedBooksData.pending, (state) => {
       state.status = " loading...";
     });

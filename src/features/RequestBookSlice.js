@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //Json-data url
-const requestbooksDataUrl = "https://book-server-ahrs.onrender.com/requestedBooks";
+const requestbooksDataUrl = "https://lms-server-4hjh.onrender.com/requestedBooks";
 
 // request books api fetched
 export const fetachedRequestBooksData = createAsyncThunk(

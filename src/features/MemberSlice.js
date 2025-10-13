@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //Members data url
-const memberDataUrl = "https://book-server-ahrs.onrender.com/members";
+const memberDataUrl = "https://lms-server-4hjh.onrender.com/members";
 
 //members api data Fetched
 export const fetchedMembersData = createAsyncThunk(

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const borrowedBooksURL = "https://book-server-ahrs.onrender.com/borrowedBooks";
+const borrowedBooksURL = "https://lms-server-4hjh.onrender.com/borrowedBooks";
 
 export const fetchBorrowedBook = createAsyncThunk("borrowedBooks/fetchBorrowedBook", async () => {
   const res = await axios.get(borrowedBooksURL);
