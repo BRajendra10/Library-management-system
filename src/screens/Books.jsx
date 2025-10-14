@@ -11,7 +11,7 @@ function Books() {
         <h2 className="text-xl font-semibold">Programming</h2>
 
         <div className="flex gap-5 overflow-x-auto scrollbar-hide">
-            {books.map((el) => (el.category === "Programming") && <Book data={el} />)}
+            {books.map((el, index) => (el.category === "Programming") && <Book data={el} key={index} />)}
         </div>
       </div>
 
@@ -19,7 +19,7 @@ function Books() {
         <h2 className="text-xl font-semibold">Mathematics</h2>
 
         <div className="flex gap-5 overflow-x-auto scrollbar-hide">
-            {books.map((el) => (el.category === "Mathematics") && <Book data={el} />)}
+            {books.map((el, index) => (el.category === "Mathematics") && <Book data={el} key={index} />)}
         </div>
       </div>
 
@@ -27,7 +27,7 @@ function Books() {
         <h2 className="text-xl font-semibold">Science</h2>
 
         <div className="flex gap-5 overflow-x-auto scrollbar-hide">
-            {books.map((el) => (el.category === "Science") && <Book data={el} />)}
+            {books.map((el, index) => (el.category === "Science") && <Book data={el} key={index} />)}
         </div>
       </div>
 
@@ -35,7 +35,7 @@ function Books() {
         <h2 className="text-xl font-semibold">Romance</h2>
 
         <div className="flex gap-5 overflow-x-auto scrollbar-hide">
-            {books.map((el) => (el.category === "Romance") && <Book data={el} />)}
+            {books.map((el, index) => (el.category === "Romance") && <Book data={el} key={index} />)}
         </div>
       </div>
 
@@ -43,7 +43,7 @@ function Books() {
         <h2 className="text-xl font-semibold">Fiction</h2>
 
         <div className="flex gap-5 overflow-x-auto scrollbar-hide">
-            {books.map((el) => (el.category === "Fiction") && <Book data={el} />)}
+            {books.map((el, index) => (el.category === "Fiction") && <Book data={el} key={index} />)}
         </div>
       </div>
 
@@ -51,7 +51,7 @@ function Books() {
         <h2 className="text-xl font-semibold">Self-Help</h2>
 
         <div className="flex gap-5 overflow-x-auto scrollbar-hide">
-            {books.map((el) => (el.category === "Self-Help") && <Book data={el} />)}
+            {books.map((el, index) => (el.category === "Self-Help") && <Book data={el} key={index} />)}
         </div>
       </div>
 
@@ -59,7 +59,7 @@ function Books() {
         <h2 className="text-xl font-semibold">Philosophy</h2>
 
         <div className="flex gap-5 overflow-x-auto scrollbar-hide">
-          {books.map((el) => (el.category === "Philosophy") && <Book data={el} />)}
+          {books.map((el, index) => (el.category === "Philosophy") && <Book data={el} key={index} />)}
         </div>
       </div>
 

@@ -1,73 +1,38 @@
 import React, { useContext } from "react";
-import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
+import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { FiBookOpen, FiHash, FiBarChart2, FiFileText } from "react-icons/fi";
-import { postBookData } from "../features/BookSlice";
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom';
-import { BookContext } from '../context/BookContext';
-import { updateBookData } from "../features/BookSlice";
+import { FiBookOpen } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { BookContext } from "../context/BookContext";
+import { postBookData, updateBookData } from "../features/BookSlice";
 
-// ✅ Validation Schema based on book data structure
+// ✅ Simplified Validation Schema
 const BookSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   author: Yup.string().required("Author is required"),
-  publisher: Yup.string().required("Publisher is required"),
-  publicationDate: Yup.date().required("Publication date is required"),
-  edition: Yup.string(),
-  series: Yup.string(),
-  language: Yup.string().required("Language is required"),
-  pageCount: Yup.number().positive(),
-  callNumber: Yup.string(),
-  department: Yup.string(),
-  subject: Yup.string(),
-  status: Yup.string().required("Status is required"),
-  description: Yup.string(),
-  isbn: Yup.array().of(Yup.string().required("ISBN required")),
-  keywords: Yup.array().of(Yup.string()),
-  thumbnail: Yup.string().url("Must be a valid URL"),
-  requests: Yup.number().min(0).default(0),
-  requestDetails: Yup.array().of(
-    Yup.object().shape({
-      isbn: Yup.string().required(),
-      userId: Yup.number().required(),
-      memberName: Yup.string().required(),
-      memberImage: Yup.string().url(),
-      requestDate: Yup.date().nullable(),
-      borrowDate: Yup.date().nullable(),
-      dueDate: Yup.date().nullable(),
-      totalDelayDays: Yup.number().min(0).default(0),
-      fineRate: Yup.number().min(0).default(0),
-      totalFine: Yup.number().min(0).default(0),
-    })
-  ),
-  borrowDetails: Yup.array().of(
-    Yup.object().shape({
-      isbn: Yup.string().required(),
-      userId: Yup.number().required(),
-      memberName: Yup.string().required(),
-      memberImage: Yup.string().url(),
-      borrowDate: Yup.date().required(),
-      dueDate: Yup.date().required(),
-      totalDelayDays: Yup.number().min(0).default(0),
-      fineRate: Yup.number().min(0).default(0),
-      totalFine: Yup.number().min(0).default(0),
-    })
-  )
+  category: Yup.string().required("Category is required"),
+  isbn: Yup.array()
+    .of(Yup.string().required("ISBN required"))
+    .min(1, "At least one ISBN is required"),
+  coverImage: Yup.string().url("Must be a valid URL").required("Cover image is required"),
+  tags: Yup.array().of(Yup.string().required("Tag required")),
+  copiesAvailable: Yup.number().min(1, "Must have at least 1 copy").required(),
+  description: Yup.string().required("Description is required"),
 });
 
 export default function AddBookForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { bookId, editedBook } = useContext(BookContext);
-  
+
   return (
-    <div className="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-2xl p-6 sm:p-8 overflow-scroll">
+    <div className="w-full max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-6 sm:p-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 border-b pb-3">
         <h2 className="text-xl font-semibold flex items-center gap-2">
           <FiBookOpen className="text-stone-600" />
-          Add / Edit Book
+          {bookId ? "Edit Book" : "Add Book"}
         </h2>
       </div>
 
@@ -75,126 +40,126 @@ export default function AddBookForm() {
         initialValues={{
           title: editedBook?.title || "",
           author: editedBook?.author || "",
-          publisher: editedBook?.publisher || "",
-          publicationDate: editedBook?.publicationDate || "",
-          edition: editedBook?.edition || "",
-          series: editedBook?.series || "",
-          language: editedBook?.language || "",
-          pageCount: editedBook?.pageCount || "",
-          callNumber: editedBook?.callNumber || "",
-          department: editedBook?.department || "",
-          subject: editedBook?.subject || "",
-          status: "Available",
-          description: editedBook?.description || "",
+          category: editedBook?.category || "",
           isbn: editedBook?.isbn || [""],
-          keywords: editedBook?.keywords || [""],
-          thumbnail: editedBook?.thumbnail || "",
-          requests: editedBook?.requests ?? 0,
-          requestDetails: editedBook?.requestDetails ?? [],
-          borrowDetails: editedBook?.borrowDetails ?? []
+          coverImage: editedBook?.coverImage || "",
+          tags: editedBook?.tags || [""],
+          copiesAvailable: editedBook?.copiesAvailable || 1,
+          description: editedBook?.description || "",
         }}
         validationSchema={BookSchema}
         onSubmit={(values, { resetForm }) => {
           if (bookId) {
-            dispatch(updateBookData({ id: bookId, updates: values }))
+            dispatch(updateBookData({ id: bookId, updates: values }));
           } else {
             dispatch(postBookData(values));
           }
-          navigate("/books");
           resetForm();
+          navigate("/books");
         }}
       >
         {({ values, isSubmitting }) => (
-          <Form className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {/* LEFT COLUMN */}
-            <div className="space-y-8">
-              {/* 🔹 Basic Info */}
-              <section>
-                <div className="grid grid-cols-2 gap-6">
-                  <FormInput name="title" label="Book Title" placeholder="Enter title" />
-                  <FormInput name="author" label="Author" placeholder="Enter author" />
-                  <FormInput name="publisher" label="Publisher" placeholder="Enter publisher" />
-                  <FormInput name="publicationDate" label="Publication Date" type="date" />
-                  <FormInput name="edition" label="Edition" placeholder="Enter edition" />
-                  <FormInput name="series" label="Series" placeholder="Enter series" />
-                </div>
-              </section>
+          <Form className="grid grid-cols-1 gap-8">
+            {/* Basic Info */}
+            <section className="grid sm:grid-cols-2 gap-6">
+              <FormInput name="title" label="Title" placeholder="Enter book title" />
+              <FormInput name="author" label="Author" placeholder="Enter author name" />
+              <FormInput name="category" label="Category" placeholder="e.g. Science" />
+              <FormInput
+                name="coverImage"
+                label="Cover Image URL"
+                placeholder="https://..."
+              />
+            </section>
 
-              {/* 🔹 Identifiers */}
-              <section>
-                <div className="grid grid-cols-2 gap-6">
-                  {/* Multiple ISBNs */}
-                  <FieldArray name="isbn">
-                    {({ push, remove }) => (
-                      <div className="col-span-2">
-                        <label className="mb-2 block text-sm font-medium text-stone-700">ISBN(s)</label>
-                        {values.isbn.map((_, index) => (
-                          <div key={index} className="flex items-center gap-2 mb-2">
-                            <Field
-                              name={`isbn.${index}`}
-                              placeholder="Enter ISBN"
-                              className="flex-1 px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
-                            />
-                            <button type="button" onClick={() => remove(index)} className="text-red-500">✕</button>
-                          </div>
-                        ))}
-                        <button type="button" onClick={() => push("")} className="text-sm text-blue-600">
-                          + Add ISBN
+            {/* ISBN + Tags */}
+            <section className="grid sm:grid-cols-2 gap-6">
+              {/* ISBN FieldArray */}
+              <FieldArray name="isbn">
+                {({ push, remove }) => (
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-2">
+                      ISBN(s)
+                    </label>
+                    {values.isbn.map((_, index) => (
+                      <div key={index} className="flex items-center gap-2 mb-2">
+                        <Field
+                          name={`isbn.${index}`}
+                          placeholder="Enter ISBN"
+                          className="flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => remove(index)}
+                          className="text-red-500"
+                        >
+                          ✕
                         </button>
                       </div>
-                    )}
-                  </FieldArray>
-                  <FormInput name="language" label="Language" placeholder="Enter language" />
-                  <FormInput name="pageCount" label="Pages" type="number" placeholder="e.g. 1312" />
-                </div>
-              </section>
-            </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => push("")}
+                      className="text-sm text-blue-600"
+                    >
+                      + Add ISBN
+                    </button>
+                  </div>
+                )}
+              </FieldArray>
 
-            {/* RIGHT COLUMN */}
-            <div className="space-y-8">
-              {/* 🔹 Metadata */}
-              <section>
-                <div className="grid grid-cols-2 gap-6">
-                  <FormInput name="callNumber" label="Call Number" placeholder="Enter call number" />
-                  <FormInput name="department" label="Department" placeholder="Enter department" />
-                  <FormInput name="subject" label="Subject" placeholder="Enter subject" />
-                  <FormInput name="status" label="Status" placeholder="Available / Borrowed" />
-                  <FormInput name="thumbnail" label="Thumbnail URL" placeholder="https://..." />
-                </div>
-              </section>
-
-              {/* 🔹 Extra Details */}
-              <section>
-                <div className="space-y-6">
-                  {/* Multiple Keywords */}
-                  <FieldArray name="keywords">
-                    {({ push, remove }) => (
-                      <div>
-                        <label className="mb-2 block text-sm font-medium text-stone-700">Keywords</label>
-                        {values.keywords.map((_, index) => (
-                          <div key={index} className="flex items-center gap-2 mb-2">
-                            <Field
-                              name={`keywords.${index}`}
-                              placeholder="Enter keyword"
-                              className="flex-1 px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
-                            />
-                            <button type="button" onClick={() => remove(index)} className="text-red-500">✕</button>
-                          </div>
-                        ))}
-                        <button type="button" onClick={() => push("")} className="text-sm text-blue-600">
-                          + Add Keyword
+              {/* Tags FieldArray */}
+              <FieldArray name="tags">
+                {({ push, remove }) => (
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-2">
+                      Tags
+                    </label>
+                    {values.tags.map((_, index) => (
+                      <div key={index} className="flex items-center gap-2 mb-2">
+                        <Field
+                          name={`tags.${index}`}
+                          placeholder="Enter tag"
+                          className="flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => remove(index)}
+                          className="text-red-500"
+                        >
+                          ✕
                         </button>
                       </div>
-                    )}
-                  </FieldArray>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => push("")}
+                      className="text-sm text-blue-600"
+                    >
+                      + Add Tag
+                    </button>
+                  </div>
+                )}
+              </FieldArray>
+            </section>
 
-                  <FormTextarea name="description" label="Description" placeholder="Write a short description..." />
-                </div>
-              </section>
-            </div>
+            {/* Copies Available + Description */}
+            <section className="grid sm:grid-cols-2 gap-6">
+              <FormInput
+                name="copiesAvailable"
+                type="number"
+                label="Copies Available"
+                placeholder="e.g. 3"
+              />
+              <FormTextarea
+                name="description"
+                label="Description"
+                placeholder="Write a short description..."
+              />
+            </section>
 
-            {/* Submit Button - Full Width */}
-            <div className="lg:col-span-2 pt-6 border-t flex justify-end">
+            {/* Submit */}
+            <div className="pt-4 border-t flex justify-end">
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -210,7 +175,7 @@ export default function AddBookForm() {
   );
 }
 
-// ✅ Reusable input components
+// ✅ Reusable Input Components
 const FormInput = ({ name, label, type = "text", placeholder }) => (
   <div className="flex flex-col">
     <label htmlFor={name} className="mb-1 text-sm font-medium text-stone-700">
@@ -221,14 +186,14 @@ const FormInput = ({ name, label, type = "text", placeholder }) => (
       name={name}
       id={name}
       placeholder={placeholder}
-      className="w-full px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
+      className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
     />
     <ErrorMessage name={name} component="p" className="text-sm text-red-500 mt-1" />
   </div>
 );
 
 const FormTextarea = ({ name, label, placeholder }) => (
-  <div className="flex flex-col">
+  <div className="flex flex-col sm:col-span-2">
     <label htmlFor={name} className="mb-1 text-sm font-medium text-stone-700">
       {label}
     </label>
@@ -238,7 +203,7 @@ const FormTextarea = ({ name, label, placeholder }) => (
       id={name}
       rows="4"
       placeholder={placeholder}
-      className="w-full px-4 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
+      className="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-900"
     />
     <ErrorMessage name={name} component="p" className="text-sm text-red-500 mt-1" />
   </div>

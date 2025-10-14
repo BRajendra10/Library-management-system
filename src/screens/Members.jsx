@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router";
 
 import Member from '../components/Member';
 
@@ -7,6 +8,7 @@ import { GrSearch } from "react-icons/gr";
 import { IoCloseSharp } from "react-icons/io5";
 
 function Members() {
+  const navigate = useNavigate();
   const { members } = useSelector((state) => state.members);
   const [query, setQuery] = useState("");
   const [result, setResult] = useState([]);
@@ -46,7 +48,7 @@ function Members() {
             <input className="w-100 h-10 outline-none p-2 ml-3" type="text" placeholder="Search members by name, membership type" value={query} onChange={(e) => handleChange(e.target.value)} />
           </div>
 
-          <button className="bg-blue-950 text-sm text-white rounded-lg px-4 py-3">+ Add member</button>
+          <button className="bg-blue-950 text-sm text-white rounded-lg px-4 py-3" onClick={() => navigate("/register")}>+ Add member</button>
         </div>
 
         <div className="w-full h-fit grid grid-cols-5 gap-5">

@@ -17,11 +17,11 @@ function Overview() {
             <IoIosBookmarks size={18} className="text-white" />
           </Card>
 
-          <Card title={"Issued Books"} count={"20"} >
+          <Card title={"Issued Books"} count={"0"} >
             <IoIosBookmarks size={18} className="text-white" />
           </Card>
 
-          <Card title={"Revenu"} count={"20"} >
+          <Card title={"Revenu"} count={"0"} >
             <RiMoneyDollarCircleFill size={20} className="text-white" />
           </Card>
 

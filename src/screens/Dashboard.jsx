@@ -11,8 +11,7 @@ import { RiLayoutMasonryFill, RiCloseLargeFill, RiExchangeBoxLine } from "react-
 import { BiSolidBookAlt } from "react-icons/bi";
 import { HiUsers } from "react-icons/hi2";
 import { PiWarningCircleBold } from "react-icons/pi";
-import { CiGrid42 } from "react-icons/ci";
-import { BsPeople, BsBookHalf } from "react-icons/bs";
+import { BsPeople, BsBookHalf, BsFillGrid1X2Fill } from "react-icons/bs";
 import { MdLogin, MdLogout } from "react-icons/md";
 
 function Dashboard() {
@@ -40,16 +39,22 @@ function Dashboard() {
                     <nav className="flex flex-col justify-center gap-1 p-3">
                         <NavLink
                             className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                            to={"/"}><CiGrid42 size={"18"} /> Overview</NavLink>
-                        <NavLink
-                            className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                            to={"/books"}><BsBookHalf size={"18"} />Books</NavLink>
+                            to={"/"}><BsFillGrid1X2Fill size={"18"} /> Overview</NavLink>
                         <NavLink
                             className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
                             to={"/members"}><BsPeople size={"18"} />Members</NavLink>
                         <NavLink
                             className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
+                            to={"/books"}><BsBookHalf size={"18"} />Books</NavLink>
+                        <NavLink
+                            className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
                             to={"/lend"}><RiExchangeBoxLine size={"18"} />Lend & Return</NavLink>
+                        <NavLink
+                            className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
+                            to={"/addbook"}><RiExchangeBoxLine size={"18"} />Add new book</NavLink>
+                        <NavLink
+                            className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
+                            to={"/register"}><RiExchangeBoxLine size={"18"} />Add new member</NavLink>
                         {isLogedIn ?
                             <button className="text-white text-left text-base flex items-center gap-3 rounded-lg p-2 px-3" onClick={handleLogout}><MdLogout size={"18"} />Logout</button> :
                             <NavLink
@@ -59,7 +64,7 @@ function Dashboard() {
                 </div>
             </div>
 
-            <div className={`fixed inset-y-0 left-0 w-80 bg-blue-950 text-white shadow-lg z-50 transform transition-transform duration-300 2xl:hidden
+            <div className={`fixed inset-y-0 left-0 w-70 bg-blue-950 text-white shadow-lg z-50 transform transition-transform duration-300 2xl:hidden
                 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
 
                 <div className="w-full h-[4.5rem] flex justify-between items-center gap-4 px-4 py-3">
@@ -73,16 +78,22 @@ function Dashboard() {
                 <nav className="flex flex-col justify-center gap-1 p-3">
                     <NavLink
                         className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                        to={"/"}><CiGrid42 size={"18"} /> Overview</NavLink>
-                    <NavLink
-                        className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                        to={"/books"}><BsBookHalf size={"18"} />Books</NavLink>
+                        to={"/"}><BsFillGrid1X2Fill size={"18"} /> Overview</NavLink>
                     <NavLink
                         className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
                         to={"/members"}><BsPeople size={"18"} />Members</NavLink>
                     <NavLink
                         className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
+                        to={"/books"}><BsBookHalf size={"18"} />Books</NavLink>
+                    <NavLink
+                        className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
                         to={"/lend"}><RiExchangeBoxLine size={"18"} />Lend & Return</NavLink>
+                    <NavLink
+                        className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
+                        to={"/addbook"}><RiExchangeBoxLine size={"18"} />Add new book</NavLink>
+                    <NavLink
+                        className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
+                        to={"/register"}><RiExchangeBoxLine size={"18"} />Add new member</NavLink>
                     {isLogedIn ?
                         <button className="text-white text-left text-base flex items-center gap-3 rounded-lg p-2 px-3" onClick={handleLogout}><MdLogout size={"18"} />Logout</button> :
                         <NavLink
