@@ -1,10 +1,12 @@
 import React from 'react'
+import { useNavigate } from "react-router";
 
 function Book({ data }) {
+  const navigate = useNavigate();
 
   return (
-    <div className="bg-white flex flex-col gap-3 rounded-xl shadow-xl p-2" key={data.id}>
-      <div className="w-full h-60 rounded-xl">
+    <div className="w-60 bg-white flex-shrink-0 flex flex-col gap-3 rounded-xl shadow-xl p-2" key={data.id} onClick={() => navigate("/description", {state: {bookData: data}})}>
+      <div className="w-full h-65 rounded-xl">
         <img className="w-full h-full rounded-t-xl object-fit-contain" src={data.coverImage} alt="" />
       </div>
 

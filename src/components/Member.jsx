@@ -1,10 +1,11 @@
 import React from 'react'
 
 function Member({ data }) {
+  console.log(data);
 
   return (
     <div className="flex flex-col justify-center items-center bg-white shadow-xl rounded-xl p-5 gap-3" key={data.id}>
-      <img className="w-15 h-13 rounded-full" src="https://i.pinimg.com/736x/5a/86/d3/5a86d3fbabe7bbf436fe6a7475f04f76.jpg" alt="" />
+      <img className="w-15 h-15 rounded-full" src={data.profileImage} alt="" />
 
       <div className="flex flex-col items-center">
         <h3 className="text-sm font-bold">{data.name}</h3>

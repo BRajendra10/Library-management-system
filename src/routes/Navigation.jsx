@@ -13,6 +13,7 @@ import Books from '../screens/Books';
 import Members from '../screens/Members'
 import Login from '../screens/Login';
 import Register from '../components/Register';
+import Description from '../components/Description';
 
 
 function Navigation() {
@@ -21,6 +22,7 @@ function Navigation() {
             <Route path="/" element={<Overview />} />
             <Route path="/books" element={<Books />} />
             <Route path="/members" element={<Members />} />
+            <Route path="/description" element={<Description />} />
             <Route path="/login" element={
                 <AuthRedirect>
                     <Login />

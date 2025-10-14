@@ -19,7 +19,7 @@ function Dashboard() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isSidebarOpen, setSidebarOpen] = useState(false);
-    const { isLogedIn } = useSelector((state) => state.login);
+    const { login, isLogedIn } = useSelector((state) => state.login);
 
     const handleLogout = () => {
         dispatch(resetLogin());
@@ -109,7 +109,7 @@ function Dashboard() {
                         </button>
                         <img
                             className="w-10 h-10 object-cover rounded-full"
-                            src="https://i.pinimg.com/736x/5a/86/d3/5a86d3fbabe7bbf436fe6a7475f04f76.jpg"
+                            src={isLogedIn && login.profileImage}
                             alt="curr-user"
                         />
                     </div>
