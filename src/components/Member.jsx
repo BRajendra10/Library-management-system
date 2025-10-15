@@ -1,10 +1,9 @@
 import React from 'react'
 
-function Member({ data }) {
-  console.log(data);
+function Member({ data, index }) {
 
   return (
-    <div className="flex flex-col justify-center items-center bg-white shadow-xl rounded-xl p-5 gap-3" key={data.id}>
+    <div className="flex flex-col justify-center items-center bg-white shadow-xl rounded-xl p-5 gap-3" key={index}>
       <img className="w-15 h-15 rounded-full" src={data.profileImage} alt="" />
 
       <div className="flex flex-col items-center">
