@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { resetLogin } from '../features/LoginSlice';
 
+import { CiGrid42 } from "react-icons/ci";
 import { AiOutlineMenu, AiFillSetting } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { RiLayoutMasonryFill, RiCloseLargeFill, RiExchangeBoxLine } from "react-icons/ri";
@@ -39,7 +40,7 @@ function Dashboard() {
                     <nav className="flex flex-col justify-center gap-1 p-3">
                         <NavLink
                             className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                            to={"/"}><BsFillGrid1X2Fill size={"18"} /> Overview</NavLink>
+                            to={"/"}><CiGrid42 size={"18"} /> Overview</NavLink>
                         <NavLink
                             className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
                             to={"/members"}><BsPeople size={"18"} />Members</NavLink>
@@ -78,7 +79,7 @@ function Dashboard() {
                 <nav className="flex flex-col justify-center gap-1 p-3">
                     <NavLink
                         className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                        to={"/"}><BsFillGrid1X2Fill size={"18"} /> Overview</NavLink>
+                        to={"/"}><CiGrid42 size={"18"} /> Overview</NavLink>
                     <NavLink
                         className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
                         to={"/members"}><BsPeople size={"18"} />Members</NavLink>
