@@ -30,6 +30,7 @@ export const updateBookData = createAsyncThunk("updateBookData", async ({ id, up
 //InitialState
 const initialState = {
   books: [],
+  totalBooks: 0,
   status: "neutral",
   error: null,
 };
@@ -48,6 +49,7 @@ const bookSlice = createSlice({
     builder.addCase(fetachedBooksData.fulfilled, (state, action) => {
       state.status = "success";
       state.books = action.payload;
+      state.totalBooks = action.payload.length;
     });
 
     builder.addCase(fetachedBooksData.rejected, (state, action) => {

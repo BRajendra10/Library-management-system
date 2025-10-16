@@ -1,6 +1,5 @@
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { SidebarContextProvider } from './context/SidebarContext.jsx';
 import { MemberContextProvider } from './context/editmemberContext';
 import { BookContextProvider } from './context/BookContext';
 import { LendingBookContextProvider } from './context/LendingBookContext';
@@ -14,15 +13,13 @@ createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
-          <SidebarContextProvider>
-            <MemberContextProvider>
-              <BookContextProvider>
-                <LendingBookContextProvider>
-                  <App />
-                </LendingBookContextProvider>
-              </BookContextProvider>
-            </MemberContextProvider>
-          </SidebarContextProvider>
+        <MemberContextProvider>
+          <BookContextProvider>
+            <LendingBookContextProvider>
+              <App />
+            </LendingBookContextProvider>
+          </BookContextProvider>
+        </MemberContextProvider>
       </BrowserRouter>
     </PersistGate>
   </Provider>

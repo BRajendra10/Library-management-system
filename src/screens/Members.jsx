@@ -10,7 +10,6 @@ function Members() {
   const { members } = useSelector((state) => state.members);
 
   const [query, setQuery] = useState("");
-  const [result, setResult] = useState([]);
   const [dropdown, setDropdown] = useState([]);
 
   useEffect(() => {
@@ -19,10 +18,8 @@ function Members() {
         const filtered = members.filter((member) =>
           member.name.toLowerCase().includes(query.toLowerCase())
         );
-        setResult(filtered);
         setDropdown(filtered);
       } else {
-        setResult([]);
         setDropdown([]);
       }
     }, 400);
@@ -32,21 +29,18 @@ function Members() {
 
   const handleClick = () => {
     setQuery("");
-    setResult([]);
     setDropdown([]);
   };
 
   const handleChange = (value) => {
     setQuery(value);
     if (!value) {
-      setResult([]);
       setDropdown([]);
     }
   };
 
   const handleSelect = (member) => {
     setQuery(member.name);
-    setResult([member]);
     setDropdown([]);
   };
 

@@ -14,6 +14,7 @@ import Books from '../screens/Books';
 import Members from '../screens/Members'
 import Login from '../screens/Login';
 import Description from '../components/Description';
+import Settings from '../screens/Settings';
 
 
 function Navigation() {
@@ -25,6 +26,7 @@ function Navigation() {
             <Route path="/description" element={<Description />} />
             <Route path="/addbook" element={<BookForm />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/settings" element={<Settings />} />
             <Route path="/login" element={
                 <AuthRedirect>
                     <Login />
