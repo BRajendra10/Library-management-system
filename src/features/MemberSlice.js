@@ -33,6 +33,7 @@ export const updateMemberData = createAsyncThunk("updateMemberData", async ({ up
 const initialState = {
   members: [],
   admin: [],
+  totalMembers: 0,
   status: "neutral",
   error: null,
 };
@@ -55,6 +56,7 @@ const memberSlice = createSlice({
     builder.addCase(fetchedMembersData.fulfilled, (state, action) => {
       state.status = "success";
       state.members = action.payload;
+      state.totalMembers = action.payload.length;
     });
 
     builder.addCase(fetchedMembersData.rejected, (state, action) => {

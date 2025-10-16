@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
+
 import Navigation from '../routes/Navigation';
+import { resetLogin } from '../features/LoginSlice';
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { resetLogin } from '../features/LoginSlice';
 
-import { CiGrid42 } from "react-icons/ci";
-import { AiOutlineMenu, AiFillSetting } from "react-icons/ai";
+import { AiOutlineMenu } from "react-icons/ai";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { RiLayoutMasonryFill, RiCloseLargeFill, RiExchangeBoxLine } from "react-icons/ri";
-import { BiSolidBookAlt } from "react-icons/bi";
-import { HiUsers } from "react-icons/hi2";
-import { PiWarningCircleBold } from "react-icons/pi";
-import { BsPeople, BsBookHalf, BsFillGrid1X2Fill } from "react-icons/bs";
-import { MdLogin, MdLogout } from "react-icons/md";
+import { RiCloseLargeFill } from "react-icons/ri";
+import { CiGrid42 } from "react-icons/ci";
+import { LuLogIn, LuLogOut } from "react-icons/lu";
+import { BsBookHalf, BsPeople } from "react-icons/bs";
+import { TbArrowsExchange } from "react-icons/tb";
+import { IoSettingsOutline } from "react-icons/io5";
+
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -49,18 +50,15 @@ function Dashboard() {
                             to={"/books"}><BsBookHalf size={"18"} />Books</NavLink>
                         <NavLink
                             className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                            to={"/lend"}><RiExchangeBoxLine size={"18"} />Lend & Return</NavLink>
+                            to={"/lend"}><TbArrowsExchange size={"18"} />Lend & Return</NavLink>
                         <NavLink
                             className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                            to={"/addbook"}><RiExchangeBoxLine size={"18"} />Add new book</NavLink>
-                        <NavLink
-                            className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                            to={"/register"}><RiExchangeBoxLine size={"18"} />Add new member</NavLink>
+                            to={"/settings"}><IoSettingsOutline size={"18"} />Settings</NavLink>
                         {isLogedIn ?
-                            <button className="text-white text-left text-base flex items-center gap-3 rounded-lg p-2 px-3" onClick={handleLogout}><MdLogout size={"18"} />Logout</button> :
+                            <button className="text-white text-left text-base flex items-center gap-3 rounded-lg p-2 px-3" onClick={handleLogout}><LuLogOut size={"18"} />Logout</button> :
                             <NavLink
                                 className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                                to={"/login"}><MdLogin size={"18"} />Login</NavLink>}
+                                to={"/login"}><LuLogIn size={"18"} />Login</NavLink>}
                     </nav>
                 </div>
             </div>
@@ -88,18 +86,15 @@ function Dashboard() {
                         to={"/books"}><BsBookHalf size={"18"} />Books</NavLink>
                     <NavLink
                         className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                        to={"/lend"}><RiExchangeBoxLine size={"18"} />Lend & Return</NavLink>
+                        to={"/lend"}><TbArrowsExchange size={"18"} />Lend & Return</NavLink>
                     <NavLink
-                        className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                        to={"/addbook"}><RiExchangeBoxLine size={"18"} />Add new book</NavLink>
-                    <NavLink
-                        className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                        to={"/register"}><RiExchangeBoxLine size={"18"} />Add new member</NavLink>
+                            className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
+                            to={"/settings"}><IoSettingsOutline size={"18"} />Settings</NavLink>
                     {isLogedIn ?
-                        <button className="text-white text-left text-base flex items-center gap-3 rounded-lg p-2 px-3" onClick={handleLogout}><MdLogout size={"18"} />Logout</button> :
+                        <button className="text-white text-left text-base flex items-center gap-3 rounded-lg p-2 px-3" onClick={handleLogout}><LuLogOut size={"18"} />Logout</button> :
                         <NavLink
                             className={({ isActive }) => `text-white text-base flex items-center gap-3 rounded-lg p-2 px-3 ${isActive ? "bg-blue-500" : ""}`}
-                            to={"/login"}><MdLogin size={"18"} />Login</NavLink>}
+                            to={"/login"}><LuLogIn size={"18"} />Login</NavLink>}
                 </nav>
             </div>
 
