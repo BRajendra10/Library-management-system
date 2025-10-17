@@ -2,6 +2,7 @@ import React from "react";
 
 import { useLocation, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
+
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
 import { removeBooksData } from "../features/BookSlice";
@@ -18,15 +19,9 @@ function Description() {
     };
 
     const handleDelete = () => {
-        const confirmDelete = window.confirm(
-            `Are you sure you want to delete "${bookData.title}"?`
-        );
-        if (confirmDelete) {
-            // Placeholder for your delete logic (e.g., API call or Firestore delete)
-            dispatch(removeBooksData(bookData.id));
-            console.log("Deleting book:", bookData.id);
-            navigate("/books");
-        }
+        dispatch(removeBooksData(bookData.id));
+        console.log("Deleting book:", bookData.id);
+        navigate("/books");
     };
 
     return (
