@@ -19,7 +19,7 @@ export const postMemberData = createAsyncThunk("postMemberData", async ({ newMem
   return res.data;
 })
 
-export const delteMember = createAsyncThunk("delteMember", async ({ id }) => {
+export const delteMember = createAsyncThunk("delteMember", async (id) => {
   await axios.delete(`${memberDataUrl}/${id}`);
   return id;
 })

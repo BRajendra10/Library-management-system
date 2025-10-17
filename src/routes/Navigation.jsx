@@ -4,7 +4,6 @@ import { Routes, Route } from 'react-router-dom';
 import BookForm from '../components/BookForm';
 import Register from '../components/Register';
 import LendBook from '../components/LendBook';
-import About from '../screens/About';
 
 import AuthRedirect from './AuthRedirect';
 import ProtectedRoute from './ProtectedRoute';
@@ -16,7 +15,6 @@ import Login from '../screens/Login';
 import Description from '../components/Description';
 import Settings from '../screens/Settings';
 import Profile from '../components/Profile';
-
 
 function Navigation() {
     return (
