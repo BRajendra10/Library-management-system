@@ -1,6 +1,12 @@
 import React from 'react'
+import { useNavigate } from "react-router";
 
 function Member({ data, index }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/profile", { state: { member: data } })
+  }
 
   return (
     <div className="flex flex-col justify-center items-center bg-white shadow-xl rounded-xl p-5 gap-3" key={index}>
@@ -23,7 +29,7 @@ function Member({ data, index }) {
         </div>
       </div>
 
-      <button className="w-full p-2 text-white text-sm rounded-lg bg-blue-900">View profile</button>
+      <button className="w-full p-2 text-white text-sm rounded-lg bg-blue-900" onClick={() => handleClick()}>View profile</button>
     </div>
   )
 }

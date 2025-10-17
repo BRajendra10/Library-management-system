@@ -15,6 +15,7 @@ import Members from '../screens/Members'
 import Login from '../screens/Login';
 import Description from '../components/Description';
 import Settings from '../screens/Settings';
+import Profile from '../components/Profile';
 
 
 function Navigation() {
@@ -27,6 +28,7 @@ function Navigation() {
             <Route path="/addbook" element={<BookForm />} />
             <Route path="/register" element={<Register />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={
                 <AuthRedirect>
                     <Login />
