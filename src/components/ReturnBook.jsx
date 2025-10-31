@@ -1,138 +1,29 @@
-import React, { useContext, useState } from "react";
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { GrSearch } from "react-icons/gr";
 import { RxCross2 } from "react-icons/rx";
-import { LendingBookContext } from '../context/LendingBookContext';
 import { updateBookData } from "../features/BookSlice";
 import { deleteBorrowedBooks } from "../features/borrowedBooksSlice";
 
-function ReturnBook() {
+export default function ReturnBook() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { today, futureDate, borrowedBooks } = useSelector((state) => state.borrowedBooks);
-    const { bookResults, memberResults } = useContext(LendingBookContext);
 
-    const handleClicking = () => {
-        const { name } = memberResults[0];
-        const data = borrowedBooks.filter((book) => book.memberName === name);
-
-        dispatch(
-            updateBookData({
-                id: bookResults[0].id,
-                updates: {
-                    status: "Available"
-                },
-            })
-        );
-        dispatch(
-            deleteBorrowedBooks(data[0].id)
-        )
-
-        navigate("/books");
-    }
-
-    return (
-        <div className="w-full h-full flex flex-col justify-center items-center bg-stone-100">
-            <div className="w-[25rem] sm:w-[40rem] lg:w-[50rem] max-w-[50rem] h-[4rem] grid grid-cols-2 bg-white">
-                <NavLink
-                    className={({ isActive }) => `text-lg flex items-center p-3 ${isActive ? "bg-white text-black" : "bg-stone-200 text-stone-400"}`}
-                    to={"/lend"}>Lend Book</NavLink>
-                <NavLink
-                    className={({ isActive }) => `text-lg flex items-center p-3 ${isActive ? "bg-white text-black" : "bg-stone-200 text-stone-400"}`}
-                    to={"/return"}>Return Book</NavLink>
-            </div>
-            <div className="w-[25rem] sm:w-[40rem] lg:w-[50rem] max-w-[50rem] max-h-[30rem] flex flex-col bg-white p-5">
-                <label className="text-lg my-1" htmlFor="student / faculty">
-                    Student / Faculty
-                </label>
-                <SearchLendingMember />
-
-                <label className="text-lg my-1 mt-3" htmlFor="Book">
-                    Book
-                </label>
-                <SearchLendingBook />
-
-                <div className="w-full h-[4.5rem] flex justify-between gap-1 bg-stone-100 mt-5">
-                    {bookResults.length === 1 && bookResults.map((el) => {
-                        return <div className="flex items-center gap-3 max-w-[20rem] w-fit p-2 bg-red-100">
-                            <img
-                                className="w-10 h-14 object-cover rounded"
-                                src={el.thumbnail}
-                                alt="book"
-                            />
-
-                            <div className="flex flex-col max-w-[10rem]">
-                                <h4 className="text-sm font-semibold text-stone-800">
-                                    {el.title}{" "}
-                                </h4>
-                                <span className="text-xs text-stone-500 bg-stone-100 py-[2px] rounded">
-                                    {el.author}
-                                </span>
-                            </div>
-                        </div>
-                    })}
-
-                    {memberResults.length === 1 && memberResults.map((el) => {
-                        return <div className="flex items-center gap-3 max-w-[20rem] w-fit p-2 bg-red-100">
-                            <img
-                                className="w-10 h-10 rounded-full object-cover"
-                                src={el.userImage}
-                                alt="user"
-                            />
-                            <div className="flex flex-col">
-                                <h4 className="text-sm font-semibold text-stone-800">{el.name}</h4>
-                                <span className="text-xs text-stone-500 bg-stone-100 py-[2px] rounded">
-                                    {el.email}
-                                </span>
-                            </div>
-                        </div>
-                    })}
-
-                    <div className="w-[8rem] flex flex-col justify-center items-center gap-1 bg-red-100">
-                        <h4 className="text-sm font-semibold">Lending Date</h4>
-                        <span className="text-xs bg-white text-stone-500">{today}</span>
-                    </div>
-                    <div className="w-[8rem] flex flex-col justify-center items-center gap-1 bg-red-100">
-                        <h4 className="text-sm font-semibold">Due Date</h4>
-                        <span className="text-xs bg-white text-stone-500">{futureDate}</span>
-                    </div>
-                </div>
-
-                <button
-                    className={`p-3 mt-5 rounded text-white ${bookResults.length === 1 && memberResults.length === 1
-                            ? "bg-blue-500 hover:bg-blue-600"
-                            : "bg-gray-400 cursor-not-allowed"
-                        }`}
-                    disabled={!(bookResults.length === 1 && memberResults.length === 1)}
-                    onClick={handleClicking}
-                >
-                    Confirm Return
-                </button>
-            </div>
-        </div>
-    )
-}
-
-export default ReturnBook
-
-
-/* ----------------- Book Search ----------------- */
-export function SearchLendingBook() {
+    const { borrowedBooks, today } = useSelector((state) => state.borrowedBooks);
     const { books } = useSelector((state) => state.books);
-    const { setBookResults } = useContext(LendingBookContext);
+
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([]);
+    const [selectedRecord, setSelectedRecord] = useState(null);
 
     const handleChange = (e) => {
         const value = e.target.value;
         setQuery(value);
-
         if (value.length > 0) {
-            const filtered = books.filter(
+            const filtered = borrowedBooks.filter(
                 (b) =>
-                    b.title.toLowerCase().includes(value.toLowerCase()) ||
-                    b.author.toLowerCase().includes(value.toLowerCase())
+                    b.bookTitle.toLowerCase().includes(value.toLowerCase()) ||
+                    b.memberName.toLowerCase().includes(value.toLowerCase())
             );
             setResults(filtered);
         } else {
@@ -143,118 +34,190 @@ export function SearchLendingBook() {
     const clearSearch = () => {
         setQuery("");
         setResults([]);
-        setBookResults([]);
+        setSelectedRecord(null);
     };
 
-    return (
-        <div className="relative max-w-full my-1">
-            <div className="h-11 flex items-center border border-blue-200 rounded-sm">
-                <input
-                    className="flex-1 h-full py-1 px-2 outline-none"
-                    type="text"
-                    value={query}
-                    onChange={handleChange}
-                    placeholder="Search books by title or author"
-                />
-                {query && (
-                    <div className="w-10 h-full flex justify-center items-center">
-                        <RxCross2
-                            className="text-lg text-stone-950 cursor-pointer"
-                            onClick={clearSearch}
-                        />
-                    </div>
-                )}
-            </div>
+    const handleReturn = () => {
+        if (!selectedRecord) return;
+        const bookToUpdate = books.find((b) => b.id === selectedRecord.bookId);
+        if (!bookToUpdate) return;
 
-            {results.length > 0 && (
-                <ul className="absolute top-12 left-0 w-full bg-white border border-blue-200 rounded-sm shadow-lg max-h-60 overflow-y-auto z-10">
-                    {results.map((book) => (
-                        <li
-                            key={book.id}
-                            className="px-3 py-2 hover:bg-blue-50 cursor-pointer"
-                            onClick={() => {
-                                setQuery(book.title);
-                                setResults([]);
-                                setBookResults([book]); // ✅ set selected book
-                            }}
-                        >
-                            <span className="font-medium">{book.title}</span>{" "}
-                            <span className="text-stone-500 text-sm">by {book.author}</span>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
-    );
-}
-
-/* ----------------- Member Search ----------------- */
-export function SearchLendingMember() {
-    const { members } = useSelector((state) => state.members);
-    const { setMemberResults } = useContext(LendingBookContext);
-    const [query, setQuery] = useState("");
-    const [results, setResults] = useState([]);
-
-    const handleChange = (e) => {
-        const value = e.target.value;
-        setQuery(value);
-
-        if (value.length > 0) {
-            const filteredMembers = members?.filter((m) =>
-                m.name.toLowerCase().includes(value.toLowerCase())
-            );
-            setResults(filteredMembers);
-        } else {
-            setResults([]);
-        }
+        dispatch(
+            updateBookData({
+                id: bookToUpdate.id,
+                updates: { copiesAvailable: bookToUpdate.copiesAvailable + 1 },
+            })
+        );
+        dispatch(deleteBorrowedBooks(selectedRecord.id));
+        navigate("/books");
     };
 
-    const clearSearch = () => {
+    useEffect(() => {
         setQuery("");
         setResults([]);
-        setMemberResults([]);
-    };
+        setSelectedRecord(null);
+    }, []);
 
     return (
-        <div className="relative max-w-full my-1">
-            <div className="h-11 flex items-center border border-blue-200 rounded-sm">
-                <input
-                    className="flex-1 h-full py-1 px-2 outline-none"
-                    type="text"
-                    value={query}
-                    onChange={handleChange}
-                    placeholder="Search members by name"
-                />
-                {query && (
-                    <div className="w-10 h-full flex justify-center items-center">
-                        <RxCross2
-                            className="text-lg text-stone-950 cursor-pointer"
-                            onClick={clearSearch}
-                        />
-                    </div>
-                )}
+        <div className="min-h-screen w-full flex flex-col items-center justify-start bg-gradient-to-br from-blue-100 via-sky-100 to-indigo-100 gap-1 py-10">
+            {/* Tabs */}
+            <div className="w-[90%] max-w-3xl h-[3.5rem] grid grid-cols-2 border border-blue-200 rounded-t-xl overflow-hidden bg-white shadow-sm">
+                <NavLink
+                    to={"/lend"}
+                    className={({ isActive }) =>
+                        `text-center flex items-center justify-center font-semibold text-lg transition-all duration-300 ${isActive
+                            ? "bg-gradient-to-r from-blue-500 to-indigo-500 text-white"
+                            : "text-gray-400 hover:bg-gray-100"
+                        }`
+                    }
+                >
+                    Lend Book
+                </NavLink>
+                <NavLink
+                    to={"/return"}
+                    className={({ isActive }) =>
+                        `text-center flex items-center justify-center font-semibold text-lg transition-all duration-300 ${isActive
+                            ? "bg-gradient-to-r from-blue-500 to-indigo-500 text-white"
+                            : "text-gray-400 hover:bg-gray-100"
+                        }`
+                    }
+                >
+                    Return Book
+                </NavLink>
             </div>
 
-            {results.length > 0 && (
-                <ul className="absolute top-12 left-0 w-full bg-white border border-blue-200 rounded-sm shadow-lg max-h-60 overflow-y-auto z-10">
-                    {results.map((member) => (
-                        <li
-                            key={member.id}
-                            className="px-3 py-2 hover:bg-blue-50 cursor-pointer"
-                            onClick={() => {
-                                setQuery(member.name);
-                                setResults([]);
-                                setMemberResults([member]); // ✅ set selected member
-                            }}
-                        >
-                            <div className="flex flex-col">
-                                <span className="font-medium">{member.name}</span>
-                                <span className="text-stone-500 text-sm">{member.email}</span>
+            {/* Main Card */}
+            <div className="w-[90%] max-w-3xl bg-white rounded-b-2xl shadow-lg p-6 border border-blue-100">
+                <label className="text-lg font-semibold text-stone-700 mb-2 block">
+                    Search by Book or Member
+                </label>
+
+                {/* Search Input */}
+                <div className="relative">
+                    <div className="flex items-center border border-blue-300 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-blue-400">
+                        <input
+                            type="text"
+                            value={query}
+                            onChange={handleChange}
+                            placeholder="Search borrowed books by title or member name..."
+                            className="flex-1 px-4 py-2 rounded-lg outline-none text-gray-700 placeholder:text-gray-400"
+                        />
+                        {query && (
+                            <button
+                                onClick={clearSearch}
+                                className="p-2 text-gray-500 hover:text-red-500"
+                            >
+                                <RxCross2 size={20} />
+                            </button>
+                        )}
+                    </div>
+
+                    {results.length > 0 && (
+                        <ul className="absolute top-12 left-0 w-full bg-white border border-blue-200 rounded-lg shadow-lg max-h-60 overflow-y-auto z-10 transition-all duration-200">
+                            {results.map((record) => (
+                                <li
+                                    key={record.id}
+                                    onClick={() => {
+                                        setQuery(`${record.bookTitle} - ${record.memberName}`);
+                                        setResults([]);
+                                        setSelectedRecord(record);
+                                    }}
+                                    className="px-4 py-2 hover:bg-blue-50 cursor-pointer"
+                                >
+                                    <p className="font-medium text-gray-800">
+                                        {record.bookTitle}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                        Borrowed by: {record.memberName}
+                                    </p>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+
+                {/* Selected Record */}
+                {selectedRecord && (
+                    <div className="mt-6 bg-gradient-to-br from-sky-50 to-blue-100 p-4 rounded-xl shadow-inner">
+                        <h3 className="text-lg font-semibold text-gray-700 mb-4">
+                            Book Return Details
+                        </h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {/* Book */}
+                            <div className="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm">
+                                <img
+                                    src={selectedRecord.bookThumbnail}
+                                    alt="book"
+                                    className="w-12 h-16 object-cover rounded-md"
+                                />
+                                <div>
+                                    <h4 className="font-semibold text-gray-800 text-sm">
+                                        {selectedRecord.bookTitle}
+                                    </h4>
+                                    <p className="text-xs text-gray-500">
+                                        {selectedRecord.bookAuthor}
+                                    </p>
+                                </div>
                             </div>
-                        </li>
-                    ))}
-                </ul>
-            )}
+
+                            {/* Member */}
+                            <div className="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm">
+                                <img
+                                    src={selectedRecord.memberImage}
+                                    alt="user"
+                                    className="w-12 h-12 object-cover rounded-full"
+                                />
+                                <div>
+                                    <h4 className="font-semibold text-gray-800 text-sm">
+                                        {selectedRecord.memberName}
+                                    </h4>
+                                    <p className="text-xs text-gray-500">
+                                        ID: {selectedRecord.memberId}
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Dates */}
+                            <div className="flex flex-col justify-center bg-white p-3 rounded-lg shadow-sm text-center">
+                                <h4 className="font-semibold text-gray-700 text-sm">
+                                    Borrowed On
+                                </h4>
+                                <span className="text-xs text-gray-600">
+                                    {selectedRecord.borrowDate}
+                                </span>
+                            </div>
+
+                            <div className="flex flex-col justify-center bg-white p-3 rounded-lg shadow-sm text-center">
+                                <h4 className="font-semibold text-gray-700 text-sm">
+                                    Due Date
+                                </h4>
+                                <span className="text-xs text-gray-600">
+                                    {selectedRecord.dueDate}
+                                </span>
+                            </div>
+
+                            <div className="flex flex-col justify-center bg-white p-3 rounded-lg shadow-sm text-center">
+                                <h4 className="font-semibold text-gray-700 text-sm">
+                                    Returned On
+                                </h4>
+                                <span className="text-xs text-gray-600">{today}</span>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Confirm Button */}
+                <button
+                    onClick={handleReturn}
+                    disabled={!selectedRecord}
+                    className={`mt-6 w-full py-3 text-lg font-semibold rounded-lg shadow-md transition-all duration-300 ${selectedRecord
+                            ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:shadow-lg hover:scale-[1.02]"
+                            : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                        }`}
+                >
+                    Confirm Return
+                </button>
+            </div>
         </div>
     );
 }

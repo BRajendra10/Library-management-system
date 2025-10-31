@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import BookForm from '../components/BookForm';
 import Register from '../components/Register';
 import LendBook from '../components/LendBook';
+import ReturnBook from '../components/ReturnBook';
 
 import AuthRedirect from './AuthRedirect';
 import ProtectedRoute from './ProtectedRoute';
@@ -39,7 +40,7 @@ function Navigation() {
             } />
             <Route path="/return" element={
                 <ProtectedRoute>
-                    <LendBook />
+                    <ReturnBook />
                 </ProtectedRoute>
             } />
         </Routes>
