@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import { FaUserPlus } from 'react-icons/fa6';
 import { object, string, number, array } from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { postMemberData, updateMemberData } from '../features/MemberSlice';
-import { MemberContext } from '../context/editmemberContext';
 
 const schema = object({
   name: string().required('Name is required'),
@@ -27,27 +26,33 @@ const schema = object({
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { memberId, editedMember } = useContext(MemberContext);
+  const location = useLocation();
+  let member = null;
+  if(location.state) {
+    member = location.state.member
+  }
+  
 
   const formik = useFormik({
     initialValues: {
-      membershipId: editedMember?.membershipId || '',
-      name: editedMember?.name || '',
-      email: editedMember?.email || '',
-      password: editedMember?.password || '',
-      membershipType: editedMember?.membershipType || 'Student',
-      fine: editedMember?.fine || 0,
-      status: editedMember?.status || 'Active',
-      borrowedBooks: editedMember?.borrowedBooks || [],
-      profileImage: editedMember?.profileImage || '',
+      membershipId: member?.membershipId || '',
+      name: member?.name || '',
+      email: member?.email || '',
+      password: member?.password || '',
+      membershipType: member?.membershipType || 'Student',
+      fine: member?.fine || 0,
+      status: member?.status || 'Active',
+      borrowedBooks: member?.borrowedBooks || [],
+      profileImage: member?.profileImage || '',
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      if (memberId) {
-        dispatch(updateMemberData({ updatedMember: values, id: memberId }));
+      if (member?.id) {
+        dispatch(updateMemberData({ updatedMember: values, id: member.id }));
       } else {
         dispatch(postMemberData({ newMember: values }));
       }
+
       formik.resetForm();
       navigate('/members');
     },
@@ -59,7 +64,7 @@ const Register = () => {
     <div className="w-full h-screen flex justify-center items-center bg-stone-100 p-4">
       <div className="w-full max-w-2xl bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl text-center font-semibold mb-4">
-          {memberId ? 'Update Member' : 'Register Member'}
+          {member?.id ? 'Update Member' : 'Register Member'}
         </h2>
 
         <form className="w-full grid md:grid-cols-2 gap-4" onSubmit={handleSubmit}>
@@ -186,7 +191,7 @@ const Register = () => {
               className="w-32 h-10 bg-sky-500 text-base flex justify-center items-center gap-2 text-white rounded-sm px-4"
               type="submit"
             >
-              <FaUserPlus /> {memberId ? 'Update' : 'Register'}
+              <FaUserPlus /> {member?.id ? 'Update' : 'Register'}
             </button>
           </div>
         </form>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
@@ -27,7 +27,10 @@ export default function AddBookForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { bookData } = location.state;
+  let bookData;
+  if (location.state) {
+    bookData = location.state.bookData;
+  }
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-6 sm:p-8">
@@ -35,7 +38,7 @@ export default function AddBookForm() {
       <div className="flex items-center justify-between mb-6 border-b pb-3">
         <h2 className="text-xl font-semibold flex items-center gap-2">
           <FiBookOpen className="text-stone-600" />
-          {bookData.id ? "Edit Book" : "Add Book"}
+          {bookData?.id ? "Edit Book" : "Add Book"}
         </h2>
       </div>
 

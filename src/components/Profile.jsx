@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router";
+// import { useLocation } from "react-router";
 import { MdEmail } from "react-icons/md";
 import { FaBookOpen, FaDollarSign } from "react-icons/fa";
+
+import { delteMember } from "../features/MemberSlice";
+import { useLocation, useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
 
 // Reusable component for displaying a label + value + optional icon
 function DetailItem({ icon, label, value, valueClass }) {
@@ -14,16 +18,27 @@ function DetailItem({ icon, label, value, valueClass }) {
   );
 }
 
-function Profile({ onEdit, onDelete }) {
+function Profile() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const { member } = location.state;
+
+  const handleDelete = () => {
+    dispatch(delteMember(member.id));
+    navigate("/members");
+  }
+
+  const handleEdit = () => {
+     navigate("/register", { state: { member: member } })
+  }
 
   const [activeTab, setActiveTab] = useState("info");
 
   return (
     <div className="min-h-screen bg-blue-100 flex items-center justify-center p-4">
       <div className="bg-white shadow-xl rounded-2xl w-full max-w-3xl p-6 transition-transform transform hover:scale-105">
-        
+
         {/* Header */}
         <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 bg-blue-950 rounded-xl p-4 text-white">
           <img
@@ -42,17 +57,15 @@ function Profile({ onEdit, onDelete }) {
         {/* Tabs */}
         <div className="mt-6 flex border-b border-blue-200">
           <button
-            className={`py-2 px-4 font-semibold ${
-              activeTab === "info" ? "border-b-2 border-blue-950 text-blue-950" : "text-blue-400"
-            }`}
+            className={`py-2 px-4 font-semibold ${activeTab === "info" ? "border-b-2 border-blue-950 text-blue-950" : "text-blue-400"
+              }`}
             onClick={() => setActiveTab("info")}
           >
             Profile Info
           </button>
           <button
-            className={`py-2 px-4 font-semibold ${
-              activeTab === "books" ? "border-b-2 border-blue-950 text-blue-950" : "text-blue-400"
-            }`}
+            className={`py-2 px-4 font-semibold ${activeTab === "books" ? "border-b-2 border-blue-950 text-blue-950" : "text-blue-400"
+              }`}
             onClick={() => setActiveTab("books")}
           >
             Borrowed Books
@@ -99,13 +112,13 @@ function Profile({ onEdit, onDelete }) {
         {/* Action Buttons */}
         <div className="mt-6 flex flex-col md:flex-row justify-between gap-4">
           <button
-            onClick={() => onEdit && onEdit(member)}
+            onClick={() => handleEdit()}
             className="flex-1 bg-blue-950 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded-xl transition transform hover:scale-105"
           >
             Edit Profile
           </button>
           <button
-            onClick={() => onDelete && onDelete(member)}
+            onClick={() => handleDelete()}
             className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl transition transform hover:scale-105"
           >
             Delete Profile
